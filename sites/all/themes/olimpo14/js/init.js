@@ -6,7 +6,7 @@
 
 skel.init(
 	{
-		prefix: 'css/style',
+		prefix: '/sites/all/themes/olimpo14/css/style',
 		resetCSS: true,
 		useOrientation: true,
 		breakpoints: {
