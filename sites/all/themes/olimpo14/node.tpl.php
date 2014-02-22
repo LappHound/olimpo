@@ -15,5 +15,13 @@
       <li><a href="#" class="fa fa-facebook">128</a></li>
     </ul>
   </div>
-  <?php print $content; ?> 
+  <?php if (isset($picture)) : ?>
+    <?php print $picture; ?>
+  <?php endif; ?>
+  <?php print $content; ?>
+  <?php if (isset($disqus_comments)) : ?>
+    <div class="comments">
+      <?php print $disqus_comments; ?>
+    </div>
+  <?php endif; ?>
 </article>
