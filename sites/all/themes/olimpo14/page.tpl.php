@@ -26,7 +26,7 @@
             <header id="header">
               <!-- Logo -->
               <div id="logo">
-                <h1><a href="#" id="logo">Club Deportivo Olimpo Sedaví</a></h1>
+                <h1><a href="/" class="logo"><?php print $logo; ?></a></h1>
                 <span>Club Deportivo Olimpo Sedaví</span>
               </div>
               <!-- Nav -->
@@ -43,18 +43,12 @@
         </div>
       </div>
     </div>
+    <?php if (!empty($messages)): print $messages; endif; ?>
     <!-- Main Wrapper -->
-    <div id="main-wrapper">
+      <div id="<?php print drupal_is_front_page() ? 'feature-wrapper' : 'main-wrapper'; ?>">
       <div class="container">
         <div class="row">
-          <div class="4u">
-            <div id="sidebar">
-              <?php print $sidebar; ?>
-            </div>
-          </div>
-          <div class="8u">
-            <?php print $content ?>
-          </div>
+          <?php print $content ?>
         </div>
       </div>
     </div>
