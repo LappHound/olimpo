@@ -5,12 +5,12 @@ core = 6.x
 engine = phptemplate
 
 ;stylesheets[all][] = css/style-desktop.css
-;stylesheets[all][] = css/style-wide.css
 ;stylesheets[all][] = css/style.css
 
+scripts[] = js/jquery.min.js
+scripts[] = js/config.js
 scripts[] = js/skel.min.js
 scripts[] = js/skel-panels.min.js
-scripts[] = js/init.js
 
 version = "6.30"
 project = "drupal"

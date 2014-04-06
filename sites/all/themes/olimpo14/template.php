@@ -10,14 +10,12 @@ function olimpo14_preprocess_node(&$variables) {
 function olimpo14_preprocess_page(&$variables) {
   $variables['theme_path'] = drupal_get_path('theme', 'olimpo14');
   $logo = $variables['theme_path'] . base_path() . 'logo.png';
-  $menu = array(
+  $variables['menu'] = array(
     l('Home', '<front>'),
     l('Noticias', 'news'),
     l('Sobre nosotros', 'about'),
     l('Más cosas', 'more')
   );
-  $title = 'Club Deportivo Olimpo Sedavi';
-  $variables['sidebar'] = theme('sidebar', theme('image', $logo, $title, $title), $menu);
 }
 
 
