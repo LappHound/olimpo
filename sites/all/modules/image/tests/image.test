@@ -8,11 +8,11 @@ class ImageTestCase extends DrupalWebTestCase {
   protected $image;
   protected $another_image;
 
-  public static function getInfo() {
+  function getInfo() {
     return array(
-      'name' => 'Image functionality',
-      'description' => 'Test Image module functionality.',
-      'group' => 'Image',
+      'name' => t('Image functionality'),
+      'description' => t('Test Image module functionality.'),
+      'group' => t('Image'),
     );
   }
 

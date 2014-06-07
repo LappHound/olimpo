@@ -5,9 +5,9 @@ dependencies[] = image
 dependencies[] = taxonomy
 core = 6.x
 
-; Information added by drupal.org packaging script on 2012-03-20
-version = "6.x-1.2"
-core = "6.x"
+; Information added by drupal.org packaging script on 2013-09-30
+version = "7.x-1.x-dev"
+core = "7.x"
 project = "image"
-datestamp = "1332228655"
+datestamp = "1380582650"
 

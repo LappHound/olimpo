@@ -78,12 +78,10 @@ class image_attach_views_handler_field_attached_images extends image_handler_fie
         $attached_images[$data->nid][] = $data->iid;
       }
 
-      // Place the data into the $values array for each result, beneath a
-      // unique key in case this field is on the view several times.
-      $this->handler_key = $this->options['id'];
+      // Place the data into the $values array for each result.
       foreach ($values as $id => $v) {
         if (isset($attached_images[$v->{$this->aliases['image_attach_nid']}])) {
-          $values[$id]->image_attach_iids[$this->handler_key] = $attached_images[$v->{$this->aliases['image_attach_nid']}];
+          $values[$id]->image_attach_iids = $attached_images[$v->{$this->aliases['image_attach_nid']}];
         }
       }
     }
@@ -93,19 +91,33 @@ class image_attach_views_handler_field_attached_images extends image_handler_fie
    * Render the field.
    */
   function render($values) {
-    if (isset($values->image_attach_iids[$this->handler_key])) {
-      // Images need to loaded as full nodes to check node_access() for each of them.
-      foreach ($values->image_attach_iids[$this->handler_key] as $iid) {
-        $image_nodes[$iid] = node_load($iid);
+    if (isset($values->image_attach_iids)) {
+      $derivative = $this->options['image_derivative'];
+      foreach ($values->image_attach_iids as $iid) {
+        // Create fake nodes suitable for image_display().
+        $node = new stdClass();
+        $node->nid = $iid;
+
+        // image_load() will load the files for all derivatives. Derivatives larger
+        // than the original fall back to the original. Stale derivatives will be
+        // regenerated.
+        image_load($node);
+        $image_img = image_display($node, $derivative);
+
+        switch ($this->options['as_link']) {
+          case 'node':
+            $output = l($image_img, 'node/' . $values->{$this->aliases['nid']}, array('html' => TRUE));
+            break;
+
+          case 'image':
+            $output = l($image_img, 'node/' . $node->nid, array('html' => TRUE));
+            break;
+
+          default:
+            $output = $image_img;
+            break;
+        }
       }
-
-      $options = array(
-        'size' => $this->options['image_derivative'],
-        'link' => $this->options['as_link'],
-      );
-
-      $output = theme('image_attach_attached_images', $values->{$this->aliases['image_attach_nid']}, $image_nodes, $options);
-
       return $output;
     }
   }
