@@ -4,12 +4,8 @@ class ImageGalleryTest extends DrupalTestCase {
 
   protected $web_user;
 
-  public static function getInfo() {
-    return array(
-      'name' => 'Image Gallery tests',
-      'description' => 'Test Image Gallery module functionality.',
-      'group' => 'Image',
-    );
+  function get_info() {
+    return array('name' => t('Image Gallery tests'), 'desc' => t('Test Image Gallery module functionality.'), 'group' => 'Image');
   }
 
   function setUp() {

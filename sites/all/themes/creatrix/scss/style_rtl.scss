@@ -1,0 +1,231 @@
+/*----------------------------------------------------------------------
+# Package - JM Template
+# ----------------------------------------------------------------------
+# Author - JoomlaMan http://www.joomlaman.com
+# Copyright Copyright under commercial licence (C) 2012 - 2013 JoomlaMan
+# License http://www.gnu.org/licenses/gpl-3.0.html GNU/GPLv3
+-----------------------------------------------------------------------*/
+.rtl{
+    direction: rtl;
+    &body > *{direction: rtl;}
+    .col-lg-1, .col-lg-2, .col-lg-3, .col-lg-4, .col-lg-5, .col-lg-6, .col-lg-7, .col-lg-8, .col-lg-9, .col-lg-10, .col-lg-11, .col-lg-12{
+        float: right;
+    }
+    .unstyled i {
+        margin: 0 0 0 10px;
+    }
+    .region-menu{
+        .superhero-dropdown{
+            > ul {
+                float: left;
+            }
+        }
+    }
+    
+    // Block
+    .sp-tweet{
+        .sp-avatar{
+            margin: 0 0 0 5px;
+        }
+    }
+    // End Block
+    
+    // =========== top ============
+    #section-top{
+        ul{
+            float: left;
+        }
+    }
+
+    // =========== topls ============
+    #section-topls{
+        
+    }
+    // =========== end topls ============
+    
+    // =========== font awesome ============
+    .fa-angle-left:before {
+        content: "\f105";
+    }
+    .fa-angle-right:before {
+        content: "\f104";
+    }
+    // =========== end font awesome ============
+    
+    .view-latest-work, .view-clients, .view-testimonial, .view-team{
+        direction: ltr;
+        
+        .fa-angle-left:before {
+            content: "\f104";
+        }
+        .fa-angle-right:before {
+            content: "\f105";
+        }
+    }
+    .view-testimonial{
+        text-align: right;
+    }
+    .view-blog-categories {
+        li a {
+            &:before {
+                content: "" !important;
+                padding: 0 !important;
+            }
+            &:after {
+                content: "\f104";
+                font-family: FontAwesome;
+                padding-left: 10px;
+                color: $color_main;
+            }
+            &:hover {
+                &:after {
+                    color: $white;
+                }
+            }
+        }
+    }
+    .sh-blog {
+        .ItemDate {
+            border-left: 1px solid;
+            border-right: none;
+        }
+        .ItemInfoText {
+            padding-left: 60px;
+            padding-right: 0;   
+        }
+    }
+    // =========== footer ============
+    #section-footer{
+        ul{
+            text-align: left;
+        }
+    }
+    // =========== end footer ============
+    .contact-social{
+        ul{
+            li{
+                float: right;
+                margin-left: 20px;
+                margin-right: 0;
+            }
+        }
+    }
+    #section-top .region-top-first {
+        float: left;
+    }
+    .pright40 {
+        padding-left: 40px;
+        padding-right: 0;
+    }
+    .borderright {
+        border-left: 1px solid #EEEEEE;
+        border-right: none;
+    }
+    /*==================  Button  ==================*/
+    .btn {
+        @include border-radius(5px 0 0 5px);
+        &:before {
+            border-width: 0;
+        }
+        &:after {
+            background: none repeat scroll 0 0 rgba(0, 0, 0, 0) !important;
+            border-color: rgba(255, 255, 255, 0) #FFFFFF rgba(255, 255, 255, 0) rgba(255, 255, 255, 0);
+            border-image: none;
+            border-style: solid;
+            border-width: 16px;
+            content: "";
+            height: 0;
+            line-height: 0;
+            position: absolute;
+            right: 0;
+            top: 0;
+            width: 0;
+        }
+        &.btn-primary {
+            border-left: 1px solid $color_main !important ;
+            border-top: 1px solid $color_main !important;
+            border-bottom: 1px solid $color_main !important;
+            border-right: none !important;
+        }
+        &.btn-lg {
+            &:after {
+                border-width: 21px;
+            }
+        }
+        &.btn-xs {
+            &:after {
+                border-width: 12px;
+            }
+        }
+        &.btn-mini {
+            &:after {
+                border-width: 8px;
+            }
+        }
+        &.checkout-cancel {
+            padding: 0 31px 0 15px !important;
+            @include border-radius(5px 0 0 5px !important);
+            &:before {
+                border-width: 0 !important;
+            }
+        }
+    }
+    #section-bottom #newsletter-subscribe-form #subscribe {
+        button {
+            right: inherit;
+            left: 0;
+            &:after {
+                border-width: 0px !important;
+            }
+        }
+        &:before {
+            right: inherit;
+            left: 4px;
+        }
+    }
+    /*==================  Start Shop  ==================*/
+    .shop-icon {
+        .iconLeft {
+            float: right;
+        }
+    }
+    .view-products-categories {
+        direction: ltr;
+    }
+    .sh-block-content > .node .field-name-commerce-price .field-item {
+        right: inherit;
+        left: 15px;
+    }
+    ul.list-unstyled {
+        padding-right: 0;
+    }
+    #block-block-82 {
+        float: left !important;
+    }
+    .commerce-add-to-cart .form-submit {
+        @include border-radius(5px 0 0 5px);
+        padding:0 35px+ $btnLineHeightL/2 0 34px;
+        &:before {
+            border-width: 0;
+        }
+         &:after {
+            border-color: rgba(255, 255, 255, 0) #fae4cc rgba(255, 255, 255, 0) rgba(255, 255, 255, 0);
+            border-width: 21px;
+         }
+    }
+    .commerce-add-to-cart label {
+        float: right;
+        margin: 8px 0px 8px 10px;
+        text-align: left;
+    }
+    #block-commerce-cart-cart .block-contents .content {
+        width: 100%;
+        left: inherit;
+        right: 0;
+        .btn_close {
+            right: auto;
+            left: 0;
+        }
+    }
+    /*==================  End Shop  ==================*/
+}

@@ -1,14 +1,16 @@
-; $Id: emfield.info,v 1.1.6.5 2008/07/25 11:45:51 alexua Exp $
-
 name = Embedded Media Field
-description = Provides an engine for modules to integrate various 3rd party content providers, such as Video Neighborhood, Image Neighborhood, and Audio Neighborhood.
-core = 6.x
-dependencies[] = content
-package = CCK
+description = Provides an embedded media widget for file fields.
+dependencies[] = media
+dependencies[] = media_internet
+package = Media
+core = 7.x
+files[] = emfield.install
+files[] = emfield.module
 
-; Information added by drupal.org packaging script on 2010-12-08
-version = "6.x-1.26"
-core = "6.x"
+
+; Information added by drupal.org packaging script on 2012-12-06
+version = "7.x-1.0-alpha2"
+core = "7.x"
 project = "emfield"
-datestamp = "1291844141"
+datestamp = "1354762061"
 

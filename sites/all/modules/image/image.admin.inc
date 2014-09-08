@@ -109,11 +109,10 @@ function image_admin_settings() {
  */
 function image_admin_settings_validate($form, &$form_state) {
   // Check that the sizes provided have the required amount of information.
-  $image_sizes = $form_state['values']['image_sizes'];
-  foreach (element_children($image_sizes) as $key) {
+  foreach (element_children($form['image_sizes']) as $key) {
     // If there's a label they must provide at either a height or width.
-    if ($key != IMAGE_ORIGINAL && !empty($image_sizes[$key]['label'])) {
-      if (empty($image_sizes[$key]['width']) && empty($image_sizes[$key]['height'])) {
+    if ($key != IMAGE_ORIGINAL && !empty($form['image_sizes'][$key]['label']['#value'])) {
+      if (empty($form['image_sizes'][$key]['width']['#value']) && empty($form['image_sizes'][$key]['height']['#value'])) {
         form_set_error("image_sizes][$key][width", t('You must specify width, height or both dimensions.'));
       }
     }

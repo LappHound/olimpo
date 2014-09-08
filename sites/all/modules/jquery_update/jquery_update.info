@@ -1,12 +1,15 @@
-; $Id$
 name = jQuery Update
-description = Updates Drupal to use the latest version of jQuery.
-package = User Interface
-core = 6.x
+description = Update jQuery and jQuery UI to a more recent version.
+package = User interface
+core = 7.x
+files[] = jquery_update.module
+files[] = jquery_update.install
 
-; Information added by drupal.org packaging script on 2008-06-23
-version = "6.x-1.1"
-core = "6.x"
+configure = admin/config/development/jquery_update
+
+; Information added by Drupal.org packaging script on 2014-04-02
+version = "7.x-2.4"
+core = "7.x"
 project = "jquery_update"
-datestamp = "1214262616"
+datestamp = "1396482246"
 

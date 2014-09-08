@@ -71,7 +71,7 @@ function image_gallery_page($type = NULL, $tid = 0) {
       $breadcrumb[] = l($parent->name, 'image/tid/' . $parent->tid);
     }
     drupal_set_breadcrumb($breadcrumb);
-    drupal_set_title(check_plain($gallery->name));
+    drupal_set_title($gallery->name);
   }
 
   return theme('image_gallery', $galleries, $images);

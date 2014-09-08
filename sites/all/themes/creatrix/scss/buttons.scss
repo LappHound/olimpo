@@ -1,0 +1,443 @@
+//
+// Buttons
+// --------------------------------------------------
+
+
+// Base styles
+// --------------------------------------------------
+
+// Core
+.btn, .line-item-summary-view-cart a, .checkout-buttons #edit-cancel, .checkout a, #edit-back, .commerce-add-to-cart-confirmation-close {
+  outline: 0;
+  display: inline-block;
+  @include ie7-inline-block();
+  padding:0 15px 0 15px+ $btnLineHeight/2;
+  margin-bottom: 0; // For input.btn
+  font-size: $baseFontSize;
+  font-family: 'NovecentowideUltraLightBold';
+  line-height: $btnLineHeight;
+  *line-height: $btnLineHeight;
+  text-align: center;
+  vertical-align: middle;
+  cursor: pointer;
+  color: $white;
+  background: $lightenBG;
+  text-shadow:none;
+  position: relative;
+  border: 0;
+  *border: 0; // Remove the border to prevent IE7's black border on input:focus
+  @include border-radius(0 5px 5px 0);
+  @include ie7-restore-left-whitespace(); // Give IE7 some love
+  @include box-shadow(none);
+  @include transition(all 0.3s linear 0s);
+
+  // Hover state
+  &:hover {
+    outline: 0;
+    color: $white!important;
+    text-decoration: none;
+    background-color: darken($color_main, 10%);
+    *background-color: darken($color_main, 15%); /* Buttons in IE7 don't get borders, so darken on hover */
+
+    // transition is only when going to hover, otherwise the background
+    // behind the gradient (there for IE<=9 fallback) gets mismatched
+    @include transition(all 0.3s linear 0s);
+  }
+
+  // Focus state for keyboard and accessibility
+  &:focus {
+    //.tab-focus();
+    outline: 0;
+    @include transition(all 0.3s linear 0s);
+     outline: 0;
+    color: $white!important;
+    text-decoration: none;
+    background-color: darken($color_main, 10%);
+    *background-color: darken($color_main, 15%);
+  }
+
+  // Active state
+  &.active,
+  &:active {
+    background-color: darken($color_main, 10%);
+    background-color: darken($color_main, 15%) e("\9");
+    background-image: none;
+    outline: 0;
+    @include box-shadow(none);
+    @include transition(all 0.3s linear 0s);
+  }
+
+  // Disabled state
+  &.disabled,
+  &[disabled] {
+    cursor: default;
+    background-color: darken($color_main, 10%);
+    background-image: none;
+    @include opacity(65);
+    @include box-shadow(none);
+  }
+  // add button bullet style
+
+  &:before{
+    background: none repeat scroll 0 0 rgba(0, 0, 0, 0) !important;
+    border-image: none;
+    border-style: solid;
+    border-width: $btnLineHeight / 2;
+    border-color: rgba(255, 255, 255, 0) rgba(255, 255, 255, 0) rgba(255, 255, 255, 0) rgba(255, 255, 255, 1) ;
+    height: 0;
+    line-height: 0;
+    width: 0;
+    position: absolute;
+    left: 0;
+    top: 0;
+    content: "";
+  }
+  &.btn-default, .checkout-buttons .checkout-cancel{
+    color: $color_link;
+  }
+  &.btn-link{
+    background: $color_main;
+    color:$white;
+    &:hover,
+    &:active,
+    &:focus{
+      background: darken($color_main,10%);
+    }
+  }
+
+  //Buttons Color style
+  &.btn-white,
+  &.white{
+    border: 1px solid $white;
+    border-left: 0;
+    &:before{
+      border-color: rgba(255, 255, 255, 0) rgba(255, 255, 255, 0) rgba(255, 255, 255, 0) $color_main; 
+    }
+    &[type="submit"]{
+      border: 1px solid $white;
+    }
+  }
+
+  &.btn-rounded,
+  &.rounded{
+    @include border-radius(5px);
+    border-style: solid solid solid solid;
+    border-width: 1px;
+    padding-left: 40px;
+    padding-right: 40px;
+    &:before{
+      display: none;
+    }
+  } 
+  
+  &.btn-square,
+  &.square{
+    @include border-radius(0);
+    border-style: solid solid solid solid;
+    border-width: 1px;
+    padding-left: 40px;
+    padding-right: 40px;
+    &:before{
+      display: none;
+    }
+  }
+}
+
+.BtnRounded{
+  .btn{
+    @include border-radius(5px);
+    border-style: solid solid solid solid;
+    border-width: 0px;
+    padding-left: 15px;
+    padding-right: 15px;
+    &:before{
+      display: none;
+    }
+  }
+}
+
+.line-item-summary-view-cart a {
+    background: $color_main;
+    color:$white;
+    padding:0 34px 0 35px+ $btnLineHeightL/2 !important;
+    font-size: $baseFontSize + 2px !important;
+    line-height: $btnLineHeightL !important;
+    @include border-radius(0px 8px 8px 0px !important);
+    &:hover,
+    &:active,
+    &:focus{
+      background: darken($color_main,10% !important);
+    }
+    &:before {
+      border-color: rgba(255, 255, 255, 0) rgba(255, 255, 255, 0) rgba(255, 255, 255, 0) #f0d9c2;
+      border-width: $btnLineHeightL / 2;
+    }
+}
+
+// Button Sizes
+// --------------------------------------------------
+#edit-checkout, #edit-continue, #edit-back, .commerce-add-to-cart-confirmation-close {
+  color: $color_main;
+}
+// Large
+.btn-lg, .commerce-add-to-cart-confirmation-close, .node-type-commerce-product #messages .checkout a  {
+  padding:0 34px 0 35px+ $btnLineHeightL/2;
+  font-size: $baseFontSize + 2px;
+  line-height: $btnLineHeightL;
+  @include border-radius(0 8px 8px 0);
+  &:before{
+    border-width: $btnLineHeightL / 2;
+  }
+}
+.commerce-add-to-cart-confirmation-close {
+   padding:0 35px+ $btnLineHeightL/2 0 34px;
+   @include border-radius(5px 0 0 5px);
+   &:before {
+    content: "";
+    border-width: 0;
+   }
+   &:after {
+    background: none repeat scroll 0 0 rgba(0, 0, 0, 0) !important;
+    border-image: none;
+    border-style: solid;
+    border-width: 21px;
+    border-color: rgba(255, 255, 255, 0) #FFFFFF rgba(255, 255, 255, 0) rgba(255, 255, 255, 0);
+    height: 0;
+    line-height: 0;
+    width: 0;
+    position: absolute;
+    right: 0;
+    top: 0;
+    content: "";
+   }
+
+}
+.btn-lg [class^="icon-"] {
+  margin-top: 2px;
+}
+
+// Small
+.btn-xs {
+  padding:0 10px 0 10px+ $btnLineHeightS/2;
+  font-size: $baseFontSize - 2px;
+  line-height: $btnLineHeightS;
+  &:before{
+    border-width: $btnLineHeightS / 2;
+  }
+}
+.btn-xs [class^="icon-"] {
+  margin-top: 0;
+}
+
+// Mini
+.btn-mini {
+  padding:0 5px 0 5px+ $btnLineHeightMini/2;
+  font-size: $baseFontSize - 3px;
+  line-height: $btnLineHeightMini;
+  &:before{
+    border-width: $btnLineHeightMini / 2;
+  }
+}
+
+
+// Block button
+.btn-block {
+  display: block;
+  width: 100%;
+  padding-left: 0;
+  padding-right: 0;
+  @include box-sizing(border-box);
+}
+.btn-block + .btn-block {
+  margin-top: 5px;
+}
+
+
+// Alternate buttons
+// --------------------------------------------------
+
+// Provide *some* extra contrast for those who can get it
+.btn-primary.active,
+.btn-warning.active,
+.btn-danger.active,
+.btn-success.active,
+.btn-info.active,
+.btn-inverse.active {
+  //color: rgba(255,255,255,.75);
+}
+
+// Set the backgrounds
+// -------------------------
+.btn {
+  // reset here as of 2.0.3 due to Recess property order
+}
+.btn-primary {
+  //.buttonBackground(@btnPrimaryBackground, @btnPrimaryBackgroundHighlight);
+  background:fadeout($color_main, 60%);
+  border: 1px solid $color_main!important;
+  border-left: 0!important;
+  color: $color_link;
+  &:hover,
+  &:active,
+  &:focus{
+    background: $color_main;
+  }
+  &.link{
+    color: $white;
+  }
+}
+// Warning appears are orange
+.btn-warning {
+  //.buttonBackground(@btnWarningBackground, @btnWarningBackgroundHighlight);
+  background: $btnWarningBackground;
+  color: $white;
+  &:hover,
+  &:active,
+  &:focus{
+    background: darken($btnWarningBackground, 10%);
+  }
+}
+// Danger and error appear as red
+.btn-danger {
+  //.buttonBackground(@btnDangerBackground, @btnDangerBackgroundHighlight);
+  background: $btnDangerBackground;
+  color: $white;
+  &:hover,
+  &:active,
+  &:focus{
+    background: darken($btnDangerBackground, 10%);
+  }
+}
+// Success appears as green
+.btn-success {
+  //.buttonBackground(@btnSuccessBackground, @btnSuccessBackgroundHighlight);
+  background: $btnSuccessBackground;
+  color: $white;
+  &:hover,
+  &:active,
+  &:focus{
+    background: darken($btnSuccessBackground, 10%);
+  }
+}
+// Info appears as a neutral blue
+.btn-info {
+  //.buttonBackground(@btnInfoBackground, @btnInfoBackgroundHighlight);
+  background: $btnInfoBackground;
+  color: $white;
+  &:hover,
+  &:active,
+  &:focus{
+    background: darken($btnInfoBackground, 10%);
+  }
+}
+// Inverse appears as dark gray
+.btn-inverse {
+  //.buttonBackground(@btnInverseBackground, @btnInverseBackgroundHighlight);
+  background: $btnInverseBackground;
+  color: $white;
+  &:hover,
+  &:active,
+  &:focus{
+    background: darken($btnInverseBackground, 10%);
+  }
+}
+
+
+// Cross-browser Jank
+// --------------------------------------------------
+
+button.btn,
+input[type="submit"].btn {
+
+  // Firefox 3.6 only I believe
+  &::-moz-focus-inner {
+    padding: 0;
+    border: 0;
+  }
+
+  // IE7 has some default padding on button controls
+  *padding-top: 3px;
+  *padding-bottom: 3px;
+
+  &.btn-lg {
+    *padding-top: 7px;
+    *padding-bottom: 7px;
+  }
+  &.btn-xs {
+    *padding-top: 3px;
+    *padding-bottom: 3px;
+  }
+  &.btn-mini {
+    *padding-top: 1px;
+    *padding-bottom: 1px;
+  }
+}
+
+
+// buttons none
+.btnNoStyle{
+  .btn{
+    &:before,
+    &:after{
+      display: none;
+    }
+    padding: 0 15px;
+    background: none;
+    @include border-radius(0);
+
+    &.active,
+    &:hover{
+      background: none;
+    }
+  }
+}
+// --------------------------------------------------
+.btn-trans,btn.trans{
+    background:darken($color_main, 10%);
+    
+    &:hover,
+    &:active,
+    &:focus{
+            background:darken($color_main, 15%);
+    }
+}
+.rtl {
+  .btn-trans {
+    @include border-radius(0 !important);
+    &:after {
+      border-width: 0 !important;
+    }
+  }
+}
+#section-strapline {
+  .btn-trans {
+    font-family: 'open_sansitalic';
+    font-size: 21px;
+    line-height: 42px;
+    padding: 0 40px;
+  }
+}
+
+
+// Make a button look and behave like a link
+
+// RTL Version 
+.rtl {
+  .btn{
+    @include border-radius(5px 0 0 5px);
+    padding:0 $btnLineHeight/2+15px 0 15px;
+
+    &:before{
+      left: 0;
+      right: 0;
+    }
+
+    &.btn-lg {
+      padding:0 35px+ $btnLineHeightL/2 0 34px;
+    }
+    &.btn-rounded,
+    &.rounded{
+      @include border-radius(5px);
+    }
+  }
+}
