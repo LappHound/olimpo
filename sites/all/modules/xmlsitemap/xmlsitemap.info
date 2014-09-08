@@ -1,7 +1,8 @@
 name = XML sitemap
 description = Creates an XML sitemap conforming to the <a href="http://sitemaps.org/">sitemaps.org protocol</a>.
 package = XML sitemap
-core = 7.x
+core = 6.x
+php = 5.1
 files[] = xmlsitemap.module
 files[] = xmlsitemap.inc
 files[] = xmlsitemap.admin.inc
@@ -11,12 +12,15 @@ files[] = xmlsitemap.xmlsitemap.inc
 files[] = xmlsitemap.pages.inc
 files[] = xmlsitemap.install
 files[] = xmlsitemap.test
+recommends[] = ctools
+recommends[] = elements
 recommends[] = robotstxt
+recommends[] = vertical_tabs
 configure = admin/config/search/xmlsitemap
 
 ; Information added by Drupal.org packaging script on 2014-03-17
-version = "7.x-2.0"
-core = "7.x"
+version = "6.x-2.0"
+core = "6.x"
 project = "xmlsitemap"
-datestamp = "1395016731"
+datestamp = "1395017031"
 

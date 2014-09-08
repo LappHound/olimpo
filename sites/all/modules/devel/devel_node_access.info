@@ -1,14 +1,12 @@
+; $Id: devel_node_access.info,v 1.7.2.1 2008/05/17 03:49:30 weitzman Exp $
 name = Devel node access
-description = Developer blocks and page illustrating relevant node_access records.
+description = Developer block and page illustrating relevant node_access records.
 package = Development
-dependencies[] = menu
-core = 7.x
-configure = admin/config/development/devel
-tags[] = developer
+core = 6.x
 
-; Information added by Drupal.org packaging script on 2014-05-01
-version = "7.x-1.5"
-core = "7.x"
+; Information added by drupal.org packaging script on 2010-08-13
+version = "6.x-1.22"
+core = "6.x"
 project = "devel"
-datestamp = "1398963366"
+datestamp = "1281718291"
 

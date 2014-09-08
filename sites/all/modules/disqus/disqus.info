@@ -1,19 +1,10 @@
 name = Disqus
 description = Uses the Disqus web service to enhance comments.
-core = 7.x
-php = 5
+core = 6.x
 
-files[] = disqus.admin.inc
-files[] = disqus.install
-files[] = disqus.module
-files[] = disqus.php
-files[] = disqus.views.inc
-
-configure = admin/config/services/disqus
-
-; Information added by  packaging script on 2013-11-17
-version = "7.x-1.10"
-core = "7.x"
+; Information added by drupal.org packaging script on 2011-09-02
+version = "6.x-1.9"
+core = "6.x"
 project = "disqus"
-datestamp = "1384712905"
+datestamp = "1314928616"
 

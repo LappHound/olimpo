@@ -2,41 +2,58 @@
 
 /**
  * @file
- * Administrative page callbacks for the Database Logging module.
+ * Administrative page callbacks for the dblog module.
  */
 
 /**
- * Page callback: Displays a listing of database log messages.
+ * dblog module settings form.
  *
- * Messages are truncated at 56 chars. Full-length messages can be viewed on the
- * message details page.
- *
- * @see dblog_clear_log_form()
- * @see dblog_event()
- * @see dblog_filter_form()
- * @see dblog_menu()
- *
- * @ingroup logging_severity_levels
+ * @ingroup forms
+ * @see system_settings_form()
+ */
+function dblog_admin_settings() {
+  $form['dblog_row_limit'] = array(
+    '#type' => 'select',
+    '#title' => t('Discard log entries above the following row limit'),
+    '#default_value' => variable_get('dblog_row_limit', 1000),
+    '#options' => drupal_map_assoc(array(100, 1000, 10000, 100000, 1000000)),
+    '#description' => t('The maximum number of rows to keep in the database log. Older entries will be automatically discarded. (Requires a correctly configured <a href="@cron">cron maintenance task</a>.)', array('@cron' => url('admin/reports/status')))
+  );
+
+  return system_settings_form($form);
+}
+
+/**
+ * Menu callback; displays a listing of log messages.
  */
 function dblog_overview() {
   $filter = dblog_build_filter_query();
   $rows = array();
+  $icons = array(
+    WATCHDOG_DEBUG    => '',
+    WATCHDOG_INFO     => '',
+    WATCHDOG_NOTICE   => '',
+    WATCHDOG_WARNING  => theme('image', 'misc/watchdog-warning.png', t('warning'), t('warning')),
+    WATCHDOG_ERROR    => theme('image', 'misc/watchdog-error.png', t('error'), t('error')),
+    WATCHDOG_CRITICAL => theme('image', 'misc/watchdog-error.png', t('critical'), t('critical')),
+    WATCHDOG_ALERT    => theme('image', 'misc/watchdog-error.png', t('alert'), t('alert')),
+    WATCHDOG_EMERG    => theme('image', 'misc/watchdog-error.png', t('emergency'), t('emergency')),
+  );
   $classes = array(
-    WATCHDOG_DEBUG     => 'dblog-debug',
-    WATCHDOG_INFO      => 'dblog-info',
-    WATCHDOG_NOTICE    => 'dblog-notice',
-    WATCHDOG_WARNING   => 'dblog-warning',
-    WATCHDOG_ERROR     => 'dblog-error',
-    WATCHDOG_CRITICAL  => 'dblog-critical',
-    WATCHDOG_ALERT     => 'dblog-alert',
-    WATCHDOG_EMERGENCY => 'dblog-emerg',
+    WATCHDOG_DEBUG    => 'dblog-debug',
+    WATCHDOG_INFO     => 'dblog-info',
+    WATCHDOG_NOTICE   => 'dblog-notice',
+    WATCHDOG_WARNING  => 'dblog-warning',
+    WATCHDOG_ERROR    => 'dblog-error',
+    WATCHDOG_CRITICAL => 'dblog-critical',
+    WATCHDOG_ALERT    => 'dblog-alert',
+    WATCHDOG_EMERG    => 'dblog-emerg',
   );
 
-  $build['dblog_filter_form'] = drupal_get_form('dblog_filter_form');
-  $build['dblog_clear_log_form'] = drupal_get_form('dblog_clear_log_form');
+  $output = drupal_get_form('dblog_filter_form');
 
   $header = array(
-    '', // Icon column.
+    ' ',
     array('data' => t('Type'), 'field' => 'w.type'),
     array('data' => t('Date'), 'field' => 'w.wid', 'sort' => 'desc'),
     t('Message'),
@@ -44,60 +61,44 @@ function dblog_overview() {
     array('data' => t('Operations')),
   );
 
-  $query = db_select('watchdog', 'w')->extend('PagerDefault')->extend('TableSort');
-  $query->leftJoin('users', 'u', 'w.uid = u.uid');
-  $query
-    ->fields('w', array('wid', 'uid', 'severity', 'type', 'timestamp', 'message', 'variables', 'link'))
-    ->addField('u', 'name');
+  $sql = "SELECT w.wid, w.uid, w.severity, w.type, w.timestamp, w.message, w.variables, w.link, u.name FROM {watchdog} w INNER JOIN {users} u ON w.uid = u.uid";
+  $tablesort = tablesort_sql($header);
   if (!empty($filter['where'])) {
-    $query->where($filter['where'], $filter['args']);
+    $result = pager_query($sql ." WHERE ". $filter['where'] . $tablesort, 50, 0, NULL, $filter['args']);
   }
-  $result = $query
-    ->limit(50)
-    ->orderByHeader($header)
-    ->execute();
+  else {
+    $result = pager_query($sql . $tablesort, 50);
+  }
 
-  foreach ($result as $dblog) {
+  while ($dblog = db_fetch_object($result)) {
     $rows[] = array('data' =>
       array(
         // Cells
-        array('class' => 'icon'),
+        $icons[$dblog->severity],
         t($dblog->type),
-        format_date($dblog->timestamp, 'short'),
-        theme('dblog_message', array('event' => $dblog, 'link' => TRUE)),
-        theme('username', array('account' => $dblog)),
+        format_date($dblog->timestamp, 'small'),
+        l(truncate_utf8(_dblog_format_message($dblog), 56, TRUE, TRUE), 'admin/reports/event/'. $dblog->wid, array('html' => TRUE)),
+        theme('username', $dblog),
         filter_xss($dblog->link),
       ),
       // Attributes for tr
-      'class' => array(drupal_html_class('dblog-' . $dblog->type), $classes[$dblog->severity]),
+      'class' => "dblog-". preg_replace('/[^a-z]/i', '-', $dblog->type) .' '. $classes[$dblog->severity]
     );
   }
 
-  $build['dblog_table'] = array(
-    '#theme' => 'table',
-    '#header' => $header,
-    '#rows' => $rows,
-    '#attributes' => array('id' => 'admin-dblog'),
-    '#empty' => t('No log messages available.'),
-  );
-  $build['dblog_pager'] = array('#theme' => 'pager');
+  if (!$rows) {
+    $rows[] = array(array('data' => t('No log messages available.'), 'colspan' => 6));
+  }
 
-  return $build;
+  $output .= theme('table', $header, $rows, array('id' => 'admin-dblog'));
+  $output .= theme('pager', NULL, 50, 0);
+
+  return $output;
 }
 
 /**
- * Page callback: Shows the most frequent log messages of a given event type.
- *
- * Messages are not truncated on this page because events detailed herein do not
- * have links to a detailed view.
- *
- * @param string $type
- *   Type of database log events to display (e.g., 'search').
- *
- * @return array
- *   A build array in the format expected by drupal_render().
- *
- * @see dblog_menu()
+ * Menu callback; generic function to display a page of the most frequent
+ * dblog events of a specified type.
  */
 function dblog_top($type) {
 
@@ -105,54 +106,32 @@ function dblog_top($type) {
     array('data' => t('Count'), 'field' => 'count', 'sort' => 'desc'),
     array('data' => t('Message'), 'field' => 'message')
   );
-  $count_query = db_select('watchdog');
-  $count_query->addExpression('COUNT(DISTINCT(message))');
-  $count_query->condition('type', $type);
 
-  $query = db_select('watchdog', 'w')->extend('PagerDefault')->extend('TableSort');
-  $query->addExpression('COUNT(wid)', 'count');
-  $query = $query
-    ->fields('w', array('message', 'variables'))
-    ->condition('w.type', $type)
-    ->groupBy('message')
-    ->groupBy('variables')
-    ->limit(30)
-    ->orderByHeader($header);
-  $query->setCountQuery($count_query);
-  $result = $query->execute();
+  $result = pager_query("SELECT COUNT(wid) AS count, message, variables FROM {watchdog} WHERE type = '%s' GROUP BY message, variables ". tablesort_sql($header), 30, 0, "SELECT COUNT(DISTINCT(message)) FROM {watchdog} WHERE type = '%s'", $type);
 
   $rows = array();
-  foreach ($result as $dblog) {
-    $rows[] = array($dblog->count, theme('dblog_message', array('event' => $dblog)));
+  while ($dblog = db_fetch_object($result)) {
+    $rows[] = array($dblog->count, truncate_utf8(_dblog_format_message($dblog), 56, TRUE, TRUE));
   }
 
-  $build['dblog_top_table']  = array(
-    '#theme' => 'table',
-    '#header' => $header,
-    '#rows' => $rows,
-    '#empty' => t('No log messages available.'),
-  );
-  $build['dblog_top_pager'] = array('#theme' => 'pager');
+  if (empty($rows)) {
+    $rows[] = array(array('data' => t('No log messages available.'), 'colspan' => 2));
+  }
 
-  return $build;
+  $output  = theme('table', $header, $rows);
+  $output .= theme('pager', NULL, 30, 0);
+
+  return $output;
 }
 
 /**
- * Page callback: Displays details about a specific database log message.
- *
- * @param int $id
- *   Unique ID of the database log message.
- *
- * @return array|string
- *   If the ID is located in the Database Logging table, a build array in the
- *   format expected by drupal_render(); otherwise, an empty string.
- *
- * @see dblog_menu()
+ * Menu callback; displays details about a log message.
  */
 function dblog_event($id) {
   $severity = watchdog_severity_levels();
-  $result = db_query('SELECT w.*, u.name, u.uid FROM {watchdog} w INNER JOIN {users} u ON w.uid = u.uid WHERE w.wid = :id', array(':id' => $id))->fetchObject();
-  if ($dblog = $result) {
+  $output = '';
+  $result = db_query('SELECT w.*, u.name, u.uid FROM {watchdog} w INNER JOIN {users} u ON w.uid = u.uid WHERE w.wid = %d', $id);
+  if ($dblog = db_fetch_object($result)) {
     $rows = array(
       array(
         array('data' => t('Type'), 'header' => TRUE),
@@ -160,11 +139,11 @@ function dblog_event($id) {
       ),
       array(
         array('data' => t('Date'), 'header' => TRUE),
-        format_date($dblog->timestamp, 'long'),
+        format_date($dblog->timestamp, 'large'),
       ),
       array(
         array('data' => t('User'), 'header' => TRUE),
-        theme('username', array('account' => $dblog)),
+        theme('username', $dblog),
       ),
       array(
         array('data' => t('Location'), 'header' => TRUE),
@@ -176,7 +155,7 @@ function dblog_event($id) {
       ),
       array(
         array('data' => t('Message'), 'header' => TRUE),
-        theme('dblog_message', array('event' => $dblog)),
+        _dblog_format_message($dblog),
       ),
       array(
         array('data' => t('Severity'), 'header' => TRUE),
@@ -191,23 +170,14 @@ function dblog_event($id) {
         $dblog->link,
       ),
     );
-    $build['dblog_table'] = array(
-      '#theme' => 'table',
-      '#rows' => $rows,
-      '#attributes' => array('class' => array('dblog-event')),
-    );
-    return $build;
+    $attributes = array('class' => 'dblog-event');
+    $output = theme('table', array(), $rows, $attributes);
   }
-  else {
-    return '';
-  }
+  return $output;
 }
 
 /**
- * Builds a query for database log administration filters based on session.
- *
- * @return array
- *   An associative array with keys 'where' and 'args'.
+ * Build query for dblog administration filters based on session.
  */
 function dblog_build_filter_query() {
   if (empty($_SESSION['dblog_overview_filter'])) {
@@ -225,7 +195,7 @@ function dblog_build_filter_query() {
       $args[] = $value;
     }
     if (!empty($filter_where)) {
-      $where[] = '(' . implode(' OR ', $filter_where) . ')';
+      $where[] = '('. implode(' OR ', $filter_where) .')';
     }
   }
   $where = !empty($where) ? implode(' AND ', $where) : '';
@@ -236,16 +206,9 @@ function dblog_build_filter_query() {
   );
 }
 
+
 /**
- * Creates a list of database log administration filters that can be applied.
- *
- * @return array
- *   Associative array of filters. The top-level keys are used as the form
- *   element names for the filters, and the values are arrays with the following
- *   elements:
- *   - title: Title of the filter.
- *   - where: The filter condition.
- *   - options: Array of options for the select list for the filter.
+ * List dblog administration filters that can be applied.
  */
 function dblog_filters() {
   $filters = array();
@@ -257,14 +220,14 @@ function dblog_filters() {
   if (!empty($types)) {
     $filters['type'] = array(
       'title' => t('Type'),
-      'where' => "w.type = ?",
+      'where' => "w.type = '%s'",
       'options' => $types,
     );
   }
 
   $filters['severity'] = array(
     'title' => t('Severity'),
-    'where' => 'w.severity = ?',
+    'where' => 'w.severity = %d',
     'options' => watchdog_severity_levels(),
   );
 
@@ -272,54 +235,41 @@ function dblog_filters() {
 }
 
 /**
- * Returns HTML for a log message.
+ * Formats a log message for display.
  *
- * @param array $variables
- *   An associative array containing:
- *   - event: An object with at least the message and variables properties.
- *   - link: (optional) Format message as link, event->wid is required.
- *
- * @ingroup themeable
+ * @param $dblog
+ *   An object with at least the message and variables properties
  */
-function theme_dblog_message($variables) {
-  $output = '';
-  $event = $variables['event'];
-  // Check for required properties.
-  if (isset($event->message) && isset($event->variables)) {
-    // Messages without variables or user specified text.
-    if ($event->variables === 'N;') {
-      $output = $event->message;
-    }
-    // Message to translate with injected variables.
-    else {
-      $output = t($event->message, unserialize($event->variables));
-    }
-    if ($variables['link'] && isset($event->wid)) {
-      // Truncate message to 56 chars.
-      $output = truncate_utf8(filter_xss($output, array()), 56, TRUE, TRUE);
-      $output = l($output, 'admin/reports/event/' . $event->wid, array('html' => TRUE));
-    }
+function _dblog_format_message($dblog) {
+  // Legacy messages and user specified text
+  if ($dblog->variables === 'N;') {
+    return $dblog->message;
   }
-  return $output;
+  // Message to translate with injected variables
+  else {
+    return t($dblog->message, unserialize($dblog->variables));
+  }
 }
 
+
 /**
- * Form constructor for the database logging filter form.
- *
- * @see dblog_filter_form_validate()
- * @see dblog_filter_form_submit()
- * @see dblog_overview()
+ * Return form for dblog administration filters.
  *
  * @ingroup forms
+ * @see dblog_filter_form_submit()
+ * @see dblog_filter_form_validate()
  */
-function dblog_filter_form($form) {
+function dblog_filter_form() {
+  $session = &$_SESSION['dblog_overview_filter'];
+  $session = is_array($session) ? $session : array();
   $filters = dblog_filters();
 
   $form['filters'] = array(
     '#type' => 'fieldset',
     '#title' => t('Filter log messages'),
+    '#theme' => 'dblog_filters',
     '#collapsible' => TRUE,
-    '#collapsed' => empty($_SESSION['dblog_overview_filter']),
+    '#collapsed' => empty($session),
   );
   foreach ($filters as $key => $filter) {
     $form['filters']['status'][$key] = array(
@@ -329,32 +279,27 @@ function dblog_filter_form($form) {
       '#size' => 8,
       '#options' => $filter['options'],
     );
-    if (!empty($_SESSION['dblog_overview_filter'][$key])) {
-      $form['filters']['status'][$key]['#default_value'] = $_SESSION['dblog_overview_filter'][$key];
+    if (!empty($session[$key])) {
+      $form['filters']['status'][$key]['#default_value'] = $session[$key];
     }
   }
 
-  $form['filters']['actions'] = array(
-    '#type' => 'actions',
-    '#attributes' => array('class' => array('container-inline')),
-  );
-  $form['filters']['actions']['submit'] = array(
+  $form['filters']['buttons']['submit'] = array(
     '#type' => 'submit',
     '#value' => t('Filter'),
   );
-  if (!empty($_SESSION['dblog_overview_filter'])) {
-    $form['filters']['actions']['reset'] = array(
+  if (!empty($session)) {
+    $form['filters']['buttons']['reset'] = array(
       '#type' => 'submit',
       '#value' => t('Reset')
     );
   }
+
   return $form;
 }
 
 /**
- * Form validation handler for dblog_filter_form().
- *
- * @see dblog_filter_form_submit()
+ * Validate result from dblog administration filter form.
  */
 function dblog_filter_form_validate($form, &$form_state) {
   if ($form_state['values']['op'] == t('Filter') && empty($form_state['values']['type']) && empty($form_state['values']['severity'])) {
@@ -363,9 +308,7 @@ function dblog_filter_form_validate($form, &$form_state) {
 }
 
 /**
- * Form submission handler for dblog_filter_form().
- *
- * @see dblog_filter_form_validate()
+ * Process result from dblog administration filter form.
  */
 function dblog_filter_form_submit($form, &$form_state) {
   $op = $form_state['values']['op'];
@@ -383,36 +326,4 @@ function dblog_filter_form_submit($form, &$form_state) {
       break;
   }
   return 'admin/reports/dblog';
-}
-
-/**
- * Form constructor for the form that clears out the log.
- *
- * @see dblog_clear_log_submit()
- * @ingroup forms
- */
-function dblog_clear_log_form($form) {
-  $form['dblog_clear'] = array(
-    '#type' => 'fieldset',
-    '#title' => t('Clear log messages'),
-    '#description' => t('This will permanently remove the log messages from the database.'),
-    '#collapsible' => TRUE,
-    '#collapsed' => TRUE,
-  );
-  $form['dblog_clear']['clear'] = array(
-    '#type' => 'submit',
-    '#value' => t('Clear log messages'),
-    '#submit' => array('dblog_clear_log_submit'),
-  );
-
-  return $form;
-}
-
-/**
- * Form submission handler for dblog_clear_log_form().
- */
-function dblog_clear_log_submit() {
-  $_SESSION['dblog_overview_filter'] = array();
-  db_delete('watchdog')->execute();
-  drupal_set_message(t('Database log cleared.'));
 }

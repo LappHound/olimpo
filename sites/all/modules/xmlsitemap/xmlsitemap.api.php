@@ -175,23 +175,20 @@ function hook_xmlsitemap_context_url_options_alter(array &$options, array $conte
 /**
  * Alter the query selecting data from {xmlsitemap} during sitemap generation.
  *
- * @param $query
- *   A Query object describing the composite parts of a SQL query.
+ * Do not alter LIMIT or OFFSET as the query will be passed through
+ * db_query_range() with a set limit and offset.
  *
- * @see hook_query_TAG_alter()
+ * @param $query
+ *   An array of a query object, keyed by SQL keyword (SELECT, FROM, WHERE, etc).
+ * @param $args
+ *   An array of arguments to be passed to db_query() with $query.
+ * @param $sitemap
+ *   The XML sitemap object.
  */
-function hook_query_xmlsitemap_generate_alter(QueryAlterableInterface $query) {
-  $sitemap = $query->getMetaData('sitemap');
+function hook_query_xmlsitemap_generate_alter(array &$query, array &$args, stdClass $sitemap) {
   if (!empty($sitemap->context['vocabulary'])) {
-    $node_condition = db_and();
-    $node_condition->condition('type', 'taxonomy_term');
-    $node_condition->condition('subtype', $sitemap->context['vocabulary']);
-    $normal_condition = db_and();
-    $normal_condition->condition('type', 'taxonomy_term', '<>');
-    $condition = db_or();
-    $condition->condition($node_condition);
-    $condition->condition($normal_condition);
-    $query->condition($condition);
+    $query['WHERE'] .= " AND ((x.type = 'taxonomy_term' AND x.subtype = '%s') OR (x.type <> 'taxonomy_term')";
+    $args[] = $sitemap->context['vocabulary'];
   }
 }
 

@@ -1,12 +1,11 @@
 name = Help
 description = Manages the display of online help.
-package = Core
+package = Core - optional
 version = VERSION
-core = 7.x
-files[] = help.test
+core = 6.x
 
-; Information added by Drupal.org packaging script on 2014-05-08
-version = "7.28"
+; Information added by Drupal.org packaging script on 2014-04-16
+version = "6.31"
 project = "drupal"
-datestamp = "1399522731"
+datestamp = "1397686953"
 

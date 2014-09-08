@@ -1,0 +1,17 @@
+name = Olimpo 2014
+description = Fully responsive
+version = VERSION
+core = 6.x
+engine = phptemplate
+
+;stylesheets[all][] = css/style-desktop.css
+;stylesheets[all][] = css/style.css
+
+scripts[] = js/jquery.min.js
+scripts[] = js/config.js
+scripts[] = js/skel.min.js
+scripts[] = js/skel-panels.min.js
+
+version = "6.30"
+project = "drupal"
+datestamp = "1393055447"

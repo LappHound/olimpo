@@ -269,15 +269,15 @@ function image_update_5200() {
   $cond = " IN ('" . implode("', '", $args) . "')";
 
   // Upgrade from 5.x-1.x to 5.x-2.x.
-  // Group by clause prevents duplicate insertions from bad data:
+  // IGNORE prevents duplicate insertions from bad data:
   // @see http://drupal.org/node/207557
   if (db_table_exists('file_revisions')) {
-    $ret[] = update_sql("INSERT INTO {image} SELECT DISTINCT f.nid, f.fid, f.filename FROM {files} f INNER JOIN {node} n ON f.nid = n.nid WHERE n.type = 'image' AND f.filename" . $cond . " GROUP BY nid,filename");
+    $ret[] = update_sql("INSERT IGNORE INTO {image} SELECT DISTINCT f.nid, f.fid, f.filename FROM {files} f INNER JOIN {node} n ON f.nid = n.nid WHERE n.type = 'image' AND f.filename" . $cond);
     $ret[] = update_sql("DELETE FROM {file_revisions} WHERE EXISTS (SELECT * FROM {image} WHERE {image}.fid = {file_revisions}.fid)");
   }
   // Upgrade from 5.x to 6.x-1.x.
   else {
-    $ret[] = update_sql("INSERT INTO {image} SELECT DISTINCT u.nid, f.fid, f.filename FROM {upload} u INNER JOIN {files} f ON u.fid = f.fid INNER JOIN {node} n ON u.nid = n.nid WHERE n.type = 'image' AND f.filename" . $cond . " GROUP BY nid,filename");
+    $ret[] = update_sql("INSERT IGNORE INTO {image} SELECT DISTINCT u.nid, f.fid, f.filename FROM {upload} u INNER JOIN {files} f ON u.fid = f.fid INNER JOIN {node} n ON u.nid = n.nid WHERE n.type = 'image' AND f.filename" . $cond);
     $ret[] = update_sql("DELETE FROM {upload} WHERE EXISTS (SELECT * FROM {image} WHERE {image}.fid = {upload}.fid)");
   }
 
@@ -316,20 +316,20 @@ function image_update_6100() {
     'default' => 0,
   ));
 
-  /**
-   * We remove and re-add primary keys and indexes because the column types
-   * are changed.
-   * Sometimes however these don't exist in the first place (@see
-   * <http://drupal.org/node/562810>; the @ takes care of suppressing the
-   * error message this causes.
-   */
+  // We remove and re-add primary keys and indexes because the column types
+  // are changed. Sometimes however these don't exist in the first place.
+  // @see http://drupal.org/node/562810
+  // Try to suppress errors during removal.
   @db_drop_primary_key($ret, 'image');
   db_add_primary_key($ret, 'image', array('nid', 'image_size'));
   @db_drop_index($ret, 'image', 'image_fid');
   db_add_index($ret, 'image', 'fid', array('fid'));
 
   // Notify the user that they may get harmless fail messages here.
-  $ret[] = array('success' => TRUE, 'query' => t('If you see a message of the form "Failed: ALTER TABLE {image} DROP PRIMARY KEY" or "DROP INDEX image_fid" here it is harmless.'));
+  $ret[] = array(
+    'success' => TRUE,
+    'query' => t('You can safely ignore the error message "Failed: ALTER TABLE {image} DROP PRIMARY KEY" or "DROP INDEX image_fid".'),
+  );
   return $ret;
 }
 
@@ -373,6 +373,24 @@ function image_update_6103() {
       $ret[] = update_sql($query);
     }
   }
+  return $ret;
+}
+
+/**
+ * Fix default value for {image}.image_size, introduced in image_update_5200().
+ */
+function image_update_6104() {
+  $ret = array();
+  db_drop_primary_key($ret, 'image');
+  db_change_field($ret, 'image', 'image_size', 'image_size', array(
+    'description' => 'Primary Key: The {files}.filename of the image file. For image module this indicates the file size.',
+    'type' => 'varchar',
+    'length' => 32,
+    'not null' => TRUE,
+    'default' => '',
+  ), array(
+    'primary key' => array('nid', 'image_size'),
+  ));
   return $ret;
 }
 
