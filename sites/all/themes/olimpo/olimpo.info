@@ -11,9 +11,7 @@ stylesheets[screen][] = styles/header.css
 stylesheets[screen][] = styles/mobile-menu.css
 stylesheets[print][] = print.css
 
-scripts[] = js/olimpo-2014.js
 scripts[] = js/mobile-menu.js
-scripts[] = js/pager.js
 
 ; Information added by drupal.org packaging script on 2010-08-11
 version = "6.19"
