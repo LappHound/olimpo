@@ -98,7 +98,6 @@
   <body class="<?php print $body_classes; ?>">
 
     <a id="navigation-top"></a>
-    <?= isset($ribbon) ? $ribbon : ''; ?>
 
     <div class="container--wrapper" id="container--wrapper">
 
@@ -106,15 +105,7 @@
 
       <div id="container" class="container">
 
-        <?
-        if (!in_array('page-poker-red-not_found', $template_files)):
-          require("$directory/header.tpl.php");
-        endif;
-        ?>
-
-        <? if ($takeover) : ?>
-          <?= $takeover; ?>
-        <? endif; ?>
+        <? require("$directory/header.tpl.php"); ?>
 
         <div id="main" class="main" role="main">
 
