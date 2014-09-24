@@ -4,9 +4,16 @@ description = Tableless, recolorable, multi-column, fluid width theme (default).
 version = VERSION
 core = 6.x
 engine = phptemplate
-stylesheets[all][] = style.css
+
+stylesheets[all][] = styles/style.css
+stylesheets[screen][] = styles/drag-and-drop.css
+stylesheets[screen][] = styles/header.css
+stylesheets[screen][] = styles/mobile-menu.css
 stylesheets[print][] = print.css
-scripts[] = olimpo.js
+
+scripts[] = js/olimpo-2014.js
+scripts[] = js/mobile-menu.js
+scripts[] = js/pager.js
 
 ; Information added by drupal.org packaging script on 2010-08-11
 version = "6.19"

@@ -29,14 +29,6 @@
  * @see template_preprocess_block()
  */
 ?>
-
-<div id="block-<?php print $block->module . '-' . $block->delta; ?>" class="<?= isset($block->class) ? $block->class : ''; ?>">
-  <? if (isset($block->tabs) || (isset($block->title) && strlen($block->title))) : ?>
-    <header>
-      <?= isset($block->title) && strlen($block->title) ? "<h2>$block->title</h2>" : '' ?>
-      <?= isset($block->tabs) ? $block->tabs : ''; ?>
-    </header>
-  <? endif; ?>
-  <?= isset($block->content) ? $block->content : ''; ?>
-  <?= isset($edit_links) ? $edit_links : ''; ?>
-</div>
+<div id="block-<?php print $block->module . '-' . $block->delta; ?>" class="search">
+    <?php print $block->content; ?>
+</div> <!-- /block -->
