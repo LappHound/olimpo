@@ -1,0 +1,62 @@
+<?php
+
+
+function frontpage_menu_alter(&$items) {
+  $items['node']['page callback'] = 'frontpage_main';
+}
+
+
+function frontpage_main() {
+  $feed_url = url('rss.xml', array('absolute' => TRUE));
+  $items = frontpage_get_frontpage_items();
+  $special = array_pop($items);
+
+  drupal_add_feed($feed_url, variable_get('site_name', 'Drupal') . ' ' . t('RSS'));
+  drupal_set_title('');
+
+  return theme('frontpage_main', $special, $items);
+}
+
+
+function frontpage_get_frontpage_items() {
+  $items = array();
+  $sql = "SELECT *
+    FROM {node} n
+    INNER JOIN {node_revisions} r ON r.nid = n.nid AND r.vid = n.vid
+    WHERE n.type = 'noticia' AND n.status = 1
+    ORDER BY n.created DESC";
+  $db_result = db_query_range($sql, 0, NOTICIAS_N);
+  while ($item = db_fetch_object($db_result)) {
+    $items[] = $item;
+  }
+  return $items;
+}
+
+
+function frontpage_theme($path, $existing) {
+  $templates = array();
+  $templates['frontpage_main'] = array(
+    'template' => 'frontpage_main',
+    'arguments' => array('special' => NULL, 'items' => array()),
+  );
+  $templates['frontpage_item'] = array(
+    'template' => 'frontpage_item',
+    'arguments' => array('item' => NULL, 'class' => NULL),
+    'preprocess functions' => array('frontpage_preprocess_frontpage_item')
+  );
+  $templates['frontpage_columns'] = array(
+    'template' => 'frontpage_columns',
+    'arguments' => array('items' => array()),
+  );
+  return $templates;
+}
+
+
+function frontpage_preprocess_frontpage_item(&$variables) {
+  $item = $variables['item'];
+
+  $image = $item->image;
+  $default_image_class = 'article-media article-pic';
+  $variables['title_link'] = l($item->title, 'node/' . $item->nid);
+  $variables['image_link'] = l($image, 'node/' . $item->nid, array('attributes' => array('class' => $default_image_class), 'html' => TRUE));
+}
