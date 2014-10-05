@@ -9,7 +9,7 @@ function frontpage_menu_alter(&$items) {
 function frontpage_main() {
   $feed_url = url('rss.xml', array('absolute' => TRUE));
   $items = frontpage_get_frontpage_items();
-  $special = array_pop($items);
+  $special = array_shift($items);
 
   drupal_add_feed($feed_url, variable_get('site_name', 'Drupal') . ' ' . t('RSS'));
   drupal_set_title('');
@@ -27,7 +27,7 @@ function frontpage_get_frontpage_items() {
     INNER JOIN {noticias} nn ON nn.nid = n.nid
     WHERE n.status = 1
     ORDER BY n.created DESC";
-  $db_result = db_query_range($sql, 0, NOTICIAS_N);
+  $db_result = db_query_range($sql, 0, NOTICIAS_N + 1);
   while ($item = db_fetch_object($db_result)) {
     $items[] = $item;
   }
