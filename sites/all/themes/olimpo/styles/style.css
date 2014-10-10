@@ -6608,3 +6608,20 @@ margin: auto auto 10px !important;
 .chipcount td:nth-child(3) {
   padding-right: 5px;
 }
+
+/* CUSTOM */
+.container .main {
+background: #f1f1f1;
+}
+
+.item {
+background: #fff;
+border: 1px solid #ccc;
+padding: 20px;
+}
+
+.item header {
+border-bottom: 1px solid #ccc;
+padding-bottom: 10px;
+margin-bottom: 10px;
+}
