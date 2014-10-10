@@ -1,24 +1,24 @@
-<?php if(is_array($noticias)) {
-foreach($noticias as $noticia) {
-    if($noticia['filepath'])
-        $picture = theme_image($noticia['filepath'],$noticia['title'],$noticia['title'],array('height' => '100px', 'width' => '160px'), FALSE);
-    ?>
-<div id="noticia-<?php print $noticia['nid']?>" class="noticias">
-	<div class="cabeceraNoticia">
-            <h2><?php print l($noticia['title'],'node/'.$noticia['nid']); ?></h2>
-	</div>
-    <div class="cuerpoNoticia">
-        <?php if($noticia['filepath'])
-            print '<div class="all-attached-images">'.$picture.'</div>';
-        ?>
-        <span class="fecha"><?php print format_date($noticia['created'])?></span>
-        <p>
-            <?php print $noticia['teaser']?>
-        </p>
+<section class="news">
+    <header>
+        <h1>Noticias</h1>
+        <h2 class="preface">Todas las noticias que hemos publicado desde el Club Deportivo Olimpo, desde 2010.</h2>
+    </header>
+    <div class="content">
+        <? foreach($noticias as $noticia) : ?>
+            <article id="noticia-<?= $noticia['nid']; ?>" class="article-archived">
+                <header>
+                    <h2>
+                        <?= l($noticia['title'], 'node/' . $noticia['nid']); ?>
+                    </h2>
+                </header>
+                <ul class="metadata">
+                    <li><?= format_date($noticia['created']); ?></li>
+                </ul>
+                <p><?= $noticia['drophead']; ?></p>
+            </article>
+        <? endforeach; ?>
     </div>
-</div>
-<?php }
-	print $pager;
-}
-else
-	print '<p>Lo sentimos, por el momento no hay noticias</p>';?>
+    <footer>
+        <?= $pager; ?>
+    </footer>
+</section>

@@ -1,11 +1,11 @@
 <article class="<?= $class ?> <?= $item->unpublish ? ' unpublished' : ''; ?>"  itemtype="http://schema.org/Article" itemscope>
 
   <?= theme('ep_educared_news_lead_in', $item->lead_in); ?>
-  <?php if (isset($item->image) && $item->include_picture) : ?>
+  <?php if (isset($image_link)) : ?>
     <figure>
       <?= $image_link; ?>
-      <? if (isset($item->caption) && trim($item->caption) != '') : ?>
-        <figcaption><?= $item->caption; ?></figcaption>
+      <? if (isset($image_caption)) : ?>
+        <figcaption><?= $image_caption; ?></figcaption>
       <? endif; ?>
     </figure>
   <?php endif; ?>

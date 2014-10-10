@@ -94,12 +94,14 @@ function noticias_prepare_news($db_result) {
 }
 
 function noticias_get_noticias() {
-    $sql = "SELECT n.nid, n.vid, n.title, f.filepath, n.created, nr.teaser "
-    ."FROM {node} n LEFT JOIN {node_revisions} nr ON n.nid=nr.nid AND nr.vid = (SELECT MAX(nrr.vid) FROM {node_revisions} nrr WHERE nrr.nid=n.nid) "
-    ."LEFT JOIN {image_attach} im ON n.nid = im.nid "
-    ."LEFT JOIN {image} i ON im.iid = i.nid AND i.image_size = 'preview' "
-    ."LEFT JOIN {files} f ON f.fid = i.fid "
-    ."WHERE n.type = 'noticia' AND n.status = 1 ORDER BY n.created DESC";
+    $sql = "SELECT n.nid, n.title, f.filepath, n.created, nn.drophead
+      FROM {node} n
+      INNER JOIN {noticias} nn ON nn.nid = n.nid
+      LEFT JOIN {image_attach} im ON n.nid = im.nid
+      LEFT JOIN {image} i ON im.iid = i.nid AND i.image_size = '_original'
+      LEFT JOIN {files} f ON f.fid = i.fid
+      WHERE n.type = 'noticia' AND n.status = 1
+      ORDER BY n.created DESC";
     return $sql;
 }
 

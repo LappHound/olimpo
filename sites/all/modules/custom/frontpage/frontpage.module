@@ -22,9 +22,12 @@ function frontpage_main() {
 
 function frontpage_get_frontpage_items() {
   $items = array();
-  $sql = "SELECT *
+  $sql = "SELECT n.nid, n.title, nn.drophead, f.filepath, n.created
     FROM {node} n
     INNER JOIN {noticias} nn ON nn.nid = n.nid
+    LEFT JOIN {image_attach} im ON n.nid = im.nid
+    LEFT JOIN {image} i ON im.iid = i.nid AND i.image_size = '_original'
+    LEFT JOIN {files} f ON f.fid = i.fid
     WHERE n.status = 1
     ORDER BY n.created DESC";
   $db_result = db_query_range($sql, 0, NOTICIAS_N + 1);
@@ -57,8 +60,10 @@ function frontpage_theme($path, $existing) {
 function frontpage_preprocess_frontpage_item(&$variables) {
   $item = $variables['item'];
 
-  $image = $item->image;
-  $default_image_class = 'article-media article-pic';
   $variables['title_link'] = l($item->title, 'node/' . $item->nid);
-  $variables['image_link'] = l($image, 'node/' . $item->nid, array('attributes' => array('class' => $default_image_class), 'html' => TRUE));
+  if (!is_null($item->filepath) && file_exists($item->filepath)) {
+      $image = theme('image', $item->filepath, $item->title, $item->title);
+      $default_image_class = 'article-media article-pic';
+      $variables['image_link'] = l($image, 'node/' . $item->nid, array('attributes' => array('class' => $default_image_class), 'html' => TRUE));
+  }
 }

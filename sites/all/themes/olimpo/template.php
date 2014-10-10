@@ -13,6 +13,8 @@ function olimpo_preprocess_page(&$vars) {
         unset($scripts['core']['misc/jquery.js']);
     }
     $vars['scripts'] = drupal_get_js('header', $scripts);
+    $vars['main_menu'] = olimpo_theme_menu(array('main-menu--02', 'js__main-menu--02', 'mq-small--hidden'));
+    $vars['left_menu'] = olimpo_theme_menu(array('rwd__main-menu'));
 }
 
 
@@ -24,6 +26,50 @@ function _olimpo_use_new_jquery() {
 
 function _olimpo_get_jquery_path() {
     return drupal_get_path('theme', 'olimpo') . base_path() . "js/jquery/jquery-2.0.3.min.js";
+}
+
+
+function olimpo_theme_menu($classes = array()) {
+  $class = implode(' ', $classes);
+  $menu = olimpo_get_header_menu();
+  $output = '';
+  foreach ($menu as $item) {
+    $item_attributes = olimpo_is_menu_item_active($item) ? ' class="active"' : '';
+    $path = base_path() . $item['path_alias'];
+    $output .= "<li><a href=\"$path\"$item_attributes>{$item['name']}</a></li>";
+  }
+  return "<ul class=\"$class\">$output</ul>";
+}
+
+
+function olimpo_get_header_menu() {
+  return array(
+    array(
+      'name' => 'Noticias',
+      'path' => 'noticias',
+      'path_alias' => 'noticias'
+    ),
+    array(
+      'name' => 'Gimnasio',
+      'path' => 'node/14',
+      'path_alias' => 'gimnasio'
+    ),
+    array(
+      'name' => 'Imágenes',
+      'path' => 'imagenes',
+      'path_alias' => 'imagenes'
+    ),
+    array(
+      'name' => 'Palmarés',
+      'path' => 'record-book',
+      'path_alias' => 'palmares'
+    )
+  );
+}
+
+
+function olimpo_is_menu_item_active($item) {
+  return arg(0) == $item['path'];
 }
 
 
