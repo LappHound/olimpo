@@ -62,7 +62,7 @@ z-index: 1000;
   width: 44px;
   height: 38px;
   cursor: pointer;
-  
+
   left: .5em;
   position: relative;
   background-clip: content-box;
@@ -150,13 +150,13 @@ margin: auto;
 font-size: 14px;
 padding: 0 10px 0 30px;
 }
-  .input--search::-webkit-input-placeholder,  
+  .input--search::-webkit-input-placeholder,
   .input--search:-moz-placeholder,
   .input--search::-moz-placeholder,
   .input--search:-ms-input-placeholder {
   text-transform: uppercase;
   }
-  
+
 .rwd__main-nav {
 background: #ddd;
 width: 250px;
@@ -212,7 +212,7 @@ height: 100%;
       .rwd__main-nav .input--search::-moz-placeholder          { text-transform: uppercase; }
       .rwd__main-nav .input--search:-ms-input-placeholder      { text-transform: uppercase; }
       .rwd__main-nav .input--search:-moz-placeholder           { text-transform: uppercase; }
-    
+
 .rwd__main-menu {
 margin: 0;
 padding: 0;

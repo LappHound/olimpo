@@ -4664,7 +4664,7 @@ padding: 14px 0;
 }
 
 .main-nav--02 {
-background: #C6DEF3;
+background: url('../images/menu.png') no-repeat scroll center top #0069ff;
 }
 .main-nav--02__area-logo {
 margin: 0;
@@ -4672,8 +4672,8 @@ padding: 7px 0 8px;
 }
 .main-logo--02 {
     display: block;
-    width: 145px;
-    height: 45px;
+    width: 175px;
+    height: 175px;
     padding-top: 25px;
     overflow: hidden;
     background-image: url(../images/logotype.png);
@@ -4821,7 +4821,7 @@ padding: 7px 0 8px;
 
 
 .main-footer {
-    background: #222;
+    background: #0069ff;
 
     max-width: none;
     text-align: right;
@@ -4851,7 +4851,7 @@ padding: 7px 0 8px;
 }
 .list--legal-info li {
     display: inline-block;
-    color: #bbb;
+    color: #fff;
     font-family: 'Open Sans', sans-serif;
     font-size: 12px;
     text-transform: uppercase;
@@ -4861,7 +4861,7 @@ padding: 7px 0 8px;
 }
 .list--legal-info li ~ li:before {
     content: '';
-    background: #444;
+    background: #fff;
     height: 9px;
     width: 1px;
     position: absolute;
