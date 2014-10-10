@@ -1644,13 +1644,6 @@ article .heading {
     margin: 0;
     padding: 0;
 }
-.article-ultra .metadata,
-.article-main .metadata,
-.article-standard .metadata {
-    border: 0;
-    margin: 15px 0;
-    padding: 0;
-}
 
 /* Article pics */
 .article-main img /*,
@@ -1663,8 +1656,8 @@ article .heading {
 
 .metadata {
     font-family: 'Open Sans', sans-serif;
-    /* padding: 15px 0; :: WAS MESSING WITH METADATA IN SEGUIMIENTO CRONICA */
     overflow: hidden;
+    text-align: center;
 }
 
 .article-full .metadata ul {
@@ -1673,7 +1666,7 @@ margin: 0;
 }
 .metadata li {
     line-height: 30px;
-    padding-right: 5px;
+    padding-right: 15px;
 
     display: inline-block;
     vertical-align: top;
@@ -1712,7 +1705,7 @@ margin: 0;
 
     position: relative;
     top: -4px;
-    left: -7px;
+    left: -5px;
 }
 .metadata-updated {
     background: #85b503;
@@ -1732,11 +1725,6 @@ margin: 0;
     display: inline-block;
     margin-bottom: 0;
     vertical-align: top;
-}
-/* article metadata */
-.article-ultra .metadata {
-    padding: 0;
-    text-align: center;
 }
 
 .article-tags .list__social-links {
@@ -2008,9 +1996,6 @@ margin-right: 5px;
 .metadata li ~ li {
     padding-left: 5px;
 }
-.front .metadata li ~ li {
-    margin-left: -8px;
-}
 /* Left border */
 .metadata li ~ li:before {
     content: '';
@@ -2020,9 +2005,6 @@ margin-right: 5px;
     left: -4px;
     width: 1px;
     height: 14px;
-}
-.front .metadata li:before {
-    display: none;
 }
 
 .article-tags ul { display: inline-block; vertical-align: top; }
@@ -6460,9 +6442,10 @@ position: absolute;
     top: 5px;
 	}
     .loginbox__link {
-    color: #fff;
-    text-transform: uppercase;
-    font-family: 'Open Sans', sans-serif;
+    display: block;
+    width: 30px;
+    height: 30px;
+    text-indent: -9999em;
     }
     .rwd__main-nav .loginbox__link {
     line-height: 1.5em;
@@ -6472,12 +6455,11 @@ position: absolute;
 	text-align: center;
     }
       .loginbox__link--login {
-      color: #37b173;
+      color: #37b173 !important;
       }
       .loginbox__link--logout {
-      color: #d24146;
+      color: #d24146 !important;
       }
-
 
 
 .frontpage-admin-menu {
@@ -6620,8 +6602,11 @@ border: 1px solid #ccc;
 padding: 20px;
 }
 
-.item header {
-border-bottom: 1px solid #ccc;
-padding-bottom: 10px;
-margin-bottom: 10px;
+.item header h2 {
+  text-align: center;
+}
+
+.item .metadata {
+  margin-top: 15px;
+  margin-bottom: 15px;
 }

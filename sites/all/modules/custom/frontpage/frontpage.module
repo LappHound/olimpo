@@ -49,6 +49,10 @@ function frontpage_theme($path, $existing) {
     'arguments' => array('item' => NULL, 'class' => NULL),
     'preprocess functions' => array('frontpage_preprocess_frontpage_item')
   );
+  $templates['frontpage_item_metadata'] = array(
+    'template' => 'frontpage_item_metadata',
+    'arguments' => array('item' => NULL)
+  );
   $templates['frontpage_columns'] = array(
     'template' => 'frontpage_columns',
     'arguments' => array('items' => array()),

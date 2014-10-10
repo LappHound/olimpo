@@ -21,20 +21,19 @@
           <li><a href="#" class="rwd--menu__item rwd--menu__item--search js__rwd--menu__item-search">Buscar</a></li>
           <li><a href="/user" class="rwd--menu__item rwd--menu__item--user js__rwd--menu__item-profile">Perfil</a></li>
         </ul>
-        <ul class="loginbox">
-          <? if (user_is_anonymous()) : ?>
-            <li><?= l(t('Login'), 'user/login', array('attributes' => array('class' => 'loginbox__link loginbox__link--login'))); ?></li>
-          <? else : ?>
-            <li><?= l($user->name, "user/$user->uid", array('attributes' => array('class' => 'loginbox__link'))); ?></li>
-            <li><?= l(t('Log out'), 'logout', array('attributes' => array('class' => 'loginbox__link loginbox__link--logout'))); ?></li>
-          <? endif; ?>
-        </ul>
       </div><!-- .wrapper -->
     </div>
     <div class="main-nav--02__area-menu">
       <div class="wrapper--980">
         <?= isset($main_menu) ? $main_menu : '' ?>
-        <?= $search_form ?>
+        <ul class="list--social-channels--02">
+            <li>
+              <?= l('Twitter','http://twitter.com/#!/deportivolimpo',array('attributes'=>array('class'=>'list--social__item list--social__item--twitter'),'query'=>array('utm_medium'=>'boton_footer','utm_campaing'=>'twitter','utm_source'=>'footer')))?>
+            </li>
+            <li>
+              <?= l('Facebook','https://www.facebook.com/pages/Deportivo-olimpo-sedavi/286962194763653',array('attributes'=>array('class'=>'list--social__item list--social__item--facebook'),'query'=>array('utm_medium'=>'boton_footer','utm_campaing'=>'facebook','utm_source'=>'footer')))?>
+            </li>
+        </ul>
       </div>
     </div>
   </nav>
