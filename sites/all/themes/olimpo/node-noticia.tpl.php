@@ -48,36 +48,40 @@
  * @see template_preprocess_node()
  */
 ?>
-<div id="node-<?php print $node->nid; ?>" class="noticias">
 
-  <?php $picture; ?>
+<section id="node-<?= $node->nid; ?>" class="<?= (isset($classes) ? $classes : '') . $ep_classes ?>">
 
-  <?php if (!$page): ?>
-    <h1 class="title">
-      <span><a href="<?php print $node_url; ?>" title="<?php print $title ?>"><?php print $title; ?></a></span>
-    </h1>
-  <?php endif; ?>
+  <article class="article-full">
+    <header class="article-full-header">
+      <h1><?= $title; ?></h1>
 
-  <?php if ($unpublished): ?>
-    <div class="unpublished"><?php print t('Unpublished'); ?></div>
-  <?php endif; ?>
+      <? if (isset($drophead) && $drophead) : ?>
+        <p class="preface">
+          <?= strip_tags($drophead); ?>
+        </p>
+      <? endif; ?>
 
-  <?php if ($submitted or $terms): ?>
-    <p class="postinfo">
-      <?php if ($submitted): ?>
-          <?php print $submitted; ?>
-      <?php endif; ?>
-      <?php if ($terms): ?>
-        <!--span><?php print t(' in ') . $terms; ?></span-->
-      <?php endif; ?>
-    </p>
-  <?php endif; ?>
-	<div class="post">
-    <?php print $content; ?>
-  </div> <!-- /post -->
+      <div class="metadata">
+        <ul>
+          <li><time datetime="<?= date('Y-m-d', $node->created); ?>"><?= strftime('%e de %B de %Y', $node->created); ?></time></li>
+          <li><?= l('Ir a los comentarios', "node/$node->nid", array('fragment' => 'comments')); ?></li>
+        </ul>
+        <?= theme('social_share_links', "node/$node->nid", $share_title, $share_summary, $share_description, $share_image, $share_medium_top, $share_campaign); ?>
+      </div>
+    </header>
 
-  <div class="postbottom">
-      <div class="fri"><?php print $links; ?></div>
-  </div>
+    <? if (isset($picture)): ?>
+      <figure class="newsPic">
+        <?= $picture; ?>
+      </figure>
+    <? endif; ?>
 
-</div> <!-- /node -->
+    <?= $node->body; ?>
+
+    <? if (isset($disqus_comments)) : ?>
+      <h2 id="comments"><?= t('Comments') ?></h2>
+      <?= $disqus_comments; ?>
+    <? endif; ?>
+
+  </article>
+</section>

@@ -98,3 +98,24 @@ function olimpo_preprocess_node(&$variables) {
     }
 }
 
+
+function theme_facebook_share($url, $title, $text, $image = NULL, $link_text = 'Share', $class = 'btn btn-large btn-facebook') {
+  $url = urlencode($url);
+  $title = urlencode($title);
+  $summary = urlencode($text);
+  $image = urlencode($image);
+  return "<a class=\"$class\" onClick=\"window.open('http://www.facebook.com/sharer.php?s=100&amp;p[title]=$title&amp;p[summary]=$summary&amp;p[url]=$url&amp;&amp;p[images][0]=$image','sharer','toolbar=0,status=0,width=548,height=325');\" href=\"javascript: void(0)\">$link_text</a>";
+}
+
+
+function theme_twitter_share($url, $text, $link_text = 'Tweet', $class = 'btn btn-large btn-twitter') {
+  $url = urlencode($url);
+  $text = urlencode($text);
+  return "<a class=\"$class\" onClick=\"window.open('http://twitter.com/share?url=$url&text=$text&via=poker_red','sharer','toolbar=0,status=0,width=548,height=325');\" href=\"javascript: void(0)\">$link_text</a>";
+}
+
+
+function theme_google_plus_share($url, $class = 'btn btn--share btn--share-googleplus') {
+  $url = urlencode($url);
+  return "<a class='$class' onClick=\"window.open('http://plus.google.com/share?url=$url','sharer','toolbar=0,status=0,width=548,height=325');\" href=\"javascript: void(0)\"></a>";
+}
