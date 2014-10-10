@@ -154,7 +154,7 @@ figcaption:before,
 .takeover__stats .gg-row:before,
 .mobile-takeover__show-share,
 .mobile__takeover-share__close {
-    background-image: url(sprite-main--20140220.svg);
+    background-image: url(sprite-main--20140220.png);
     background-repeat: no-repeat;
     content: '';
     text-indent: -999em;
@@ -1518,7 +1518,7 @@ position: absolute;
 .footer-social-links li { display: inline;  }
 .no-svg .fsl { background-image: url(sprite-social_1.png); }
 .fsl {
-    background-image: url(sprite-social_1.svg);
+    background-image: url(sprite-social_1.png);
     background-repeat: no-repeat;
     width: 30px;
     height: 30px;
@@ -2644,7 +2644,6 @@ text-align: center;
 
 .logo-event {
     background-image: url(sprite-tournaments--20131218.png);
-    background-image: url(sprite-tournaments--20131218.svg);
     background-repeat: no-repeat;
     text-indent: -999em;
     overflow: hidden;
@@ -3053,7 +3052,6 @@ margin-bottom: 30px;
 .dsq-combo-popular + .dsq-combo-popular li:before {
     content: '';
     background: url(list-numbered.png) no-repeat center top;
-    background: url(list-numbered.svg) no-repeat center top;
     background-color: #e1e6e9;
     border-radius: 10em;
     width: 45px;
@@ -4451,7 +4449,7 @@ margin-top: 2em;
     overflow: hidden;
 }
 .btn--share:before {
-    background-image: url(sprite-social-share.svg);
+    background-image: url(sprite-social-share.png);
     content: '';
     width: 30px;
     height: 30px;
@@ -4579,7 +4577,7 @@ margin-top: 2em;
 .btn--twitter:before {
     content: '';
 
-    background-image: url(sprite-social-share.svg);
+    background-image: url(sprite-social-share.png);
     background-size: 120px 45px;
     background-position: -47px -8px;
 
@@ -4672,7 +4670,7 @@ padding: 7px 0 8px;
     display: inline-block;
 }
 .list--social__item {
-    background-image: url(sprite-social_1.svg);
+    background-image: url(sprite-social_1.png);
 
     display: block;
     width: 30px;
@@ -5801,7 +5799,7 @@ screen and (max-width:1024) and (orientation: landscape) {
 
     .rwd--menu {}
     .rwd--menu__item:before {
-        background-image: url(sprite-header-mobile.svg);
+        background-image: url(sprite-header-mobile.png);
         content: '';
         width: 45px;
         height: 40px;
