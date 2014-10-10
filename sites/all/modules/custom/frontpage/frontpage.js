@@ -22,11 +22,11 @@ if (Drupal.jsEnabled) {
       var right_news = $('.right_news');
       $('#left_news').remove();
       $('#right_news').remove();
-      for (var i = 0; i <= left_news.length; i++) {
-        $('#all_news').appendTo(news[i].html());
+      for (var i = 0; i < left_news.length; i++) {
+        $(left_news[i]).appendTo('#all_news');
       }
-      for (var j = 0; j <= right_news.length; j++) {
-        $('#all_news').appendTo(news[j].html());
+      for (var j = 0; j < right_news.length; j++) {
+        $(right_news[j]).appendTo('#all_news');
       }
     }
   }

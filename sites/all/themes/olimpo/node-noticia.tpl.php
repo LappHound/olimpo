@@ -55,12 +55,6 @@
     <header class="article-full-header">
       <h1><?= $title; ?></h1>
 
-      <? if (isset($drophead) && $drophead) : ?>
-        <p class="preface">
-          <?= strip_tags($drophead); ?>
-        </p>
-      <? endif; ?>
-
       <div class="metadata">
         <ul>
           <li><time datetime="<?= date('Y-m-d', $node->created); ?>"><?= strftime('%e de %B de %Y', $node->created); ?></time></li>

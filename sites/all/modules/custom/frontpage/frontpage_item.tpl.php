@@ -1,4 +1,4 @@
-<article class="item <?= $class ?> <?= $item->unpublish ? ' unpublished' : ''; ?>"  itemtype="http://schema.org/Article" itemscope>
+<article class="item <?= $class ?> <?= $item->unpublish ? ' unpublished' : ''; ?>" itemtype="http://schema.org/Article" itemscope>
 
   <?php if (isset($image_link)) : ?>
     <figure>
@@ -15,5 +15,5 @@
     </h2>
     <?= theme('frontpage_item_metadata', $item); ?>
   </header>
-  <p><?= $item->drophead; ?></p>
+  <?= $item->drophead; ?>
 </article>
