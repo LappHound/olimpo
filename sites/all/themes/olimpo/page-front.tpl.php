@@ -113,7 +113,6 @@
             <div class="gg-row">
               <ul class="frontpage-admin-menu">
                 <li><?= l(t('Add news'), 'node/add/announcement', array('attributes' => array('class' => 'icon icon--add-news'))); ?></li>
-                <li><?= l(t('Sort news'), 'admin/educapoker/educared', array('attributes' => array('class' => 'icon icon--order-news'))); ?></li>
               </ul>
             </div>
           <? endif; ?>

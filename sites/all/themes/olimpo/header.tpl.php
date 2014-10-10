@@ -24,7 +24,6 @@
         <ul class="loginbox">
           <? if (user_is_anonymous()) : ?>
             <li><?= l(t('Login'), 'user/login', array('attributes' => array('class' => 'loginbox__link loginbox__link--login'))); ?></li>
-            <li><?= l(t('Register'), 'user/register', array('attributes' => array('class' => 'loginbox__link'))); ?></li>
           <? else : ?>
             <li><?= l($user->name, "user/$user->uid", array('attributes' => array('class' => 'loginbox__link'))); ?></li>
             <li><?= l(t('Log out'), 'logout', array('attributes' => array('class' => 'loginbox__link loginbox__link--logout'))); ?></li>
