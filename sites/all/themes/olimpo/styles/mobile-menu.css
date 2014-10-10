@@ -100,8 +100,6 @@ overflow: hidden;
 .container {
 background: #fff;
 
-padding: 0 0 20px;
-
 -webkit-transition: all ease-in-out .5s;
 -webkit-transform: translateX(0);
    -moz-transition: all ease-in-out .5s;

@@ -26,12 +26,12 @@
     <div class="main-nav--02__area-menu">
       <div class="wrapper--980">
         <?= isset($main_menu) ? $main_menu : '' ?>
-        <ul class="list--social-channels--02">
+        <ul class="list__social-links">
             <li>
-              <?= l('Twitter','http://twitter.com/#!/deportivolimpo',array('attributes'=>array('class'=>'list--social__item list--social__item--twitter'),'query'=>array('utm_medium'=>'boton_footer','utm_campaing'=>'twitter','utm_source'=>'footer')))?>
+              <?= l('Twitter','http://twitter.com/#!/deportivolimpo',array('attributes'=>array('class'=>'social-link social-link--twitter'),'query'=>array('utm_medium'=>'boton_footer','utm_campaing'=>'twitter','utm_source'=>'footer')))?>
             </li>
             <li>
-              <?= l('Facebook','https://www.facebook.com/pages/Deportivo-olimpo-sedavi/286962194763653',array('attributes'=>array('class'=>'list--social__item list--social__item--facebook'),'query'=>array('utm_medium'=>'boton_footer','utm_campaing'=>'facebook','utm_source'=>'footer')))?>
+              <?= l('Facebook','https://www.facebook.com/pages/Deportivo-olimpo-sedavi/286962194763653',array('attributes'=>array('class'=>'social-link social-link--facebook'),'query'=>array('utm_medium'=>'boton_footer','utm_campaing'=>'facebook','utm_source'=>'footer')))?>
             </li>
         </ul>
       </div>

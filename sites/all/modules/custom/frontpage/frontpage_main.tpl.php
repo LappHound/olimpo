@@ -21,7 +21,7 @@
   </div>
 </div>
 
-<div class='gg-row'>
+<div class="gg-row last-front-section">
 
   <div class="gg-62pc gg-column">
     <a class="twitter-timeline"  href="https://twitter.com/deportivolimpo" data-widget-id="516262401356742656">Tweets por @deportivolimpo</a>
@@ -29,7 +29,7 @@
   </div>
 
   <div class="gg-38pc gg-column">
-    <div class="fb-like-box" data-href="https://www.facebook.com/pages/Deportivo-olimpo-sedavi/286962194763653" data-width="100%" data-height="600" data-colorscheme="light" data-show-faces="false" data-header="true" data-stream="true" data-show-border="false"></div>
+    <div class="fb-like-box" data-href="https://www.facebook.com/pages/Deportivo-olimpo-sedavi/286962194763653" data-width="392" data-height="600" data-colorscheme="light" data-show-faces="false" data-header="true" data-stream="true" data-show-border="false"></div>
     <div id="fb-root"></div>
     <script>(function(d, s, id) {
       var js, fjs = d.getElementsByTagName(s)[0];

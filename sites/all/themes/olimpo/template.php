@@ -63,7 +63,12 @@ function olimpo_get_header_menu() {
       'name' => 'Palmarés',
       'path' => 'record-book',
       'path_alias' => 'palmares'
-    )
+    ),
+    array(
+      'name' => 'Contacto',
+      'path' => 'contact',
+      'path_alias' => 'contacto'
+    ),
   );
 }
 

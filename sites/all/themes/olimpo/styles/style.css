@@ -6342,6 +6342,11 @@ width: 100%;
   top: 0;
   }
 
+  .main-header .list__social-links {
+  position: absolute;
+  right: 1em;
+  top: 14px;
+  }
 
     .mobile-takeover__show-share {
     position: absolute;
@@ -6596,6 +6601,10 @@ background: #f1f1f1;
 padding-top: 30px;
 }
 
+.last-front-section {
+padding-bottom: 20px;
+}
+
 .item {
 background: #fff;
 border: 1px solid #ccc;
@@ -6609,4 +6618,11 @@ padding: 20px;
 .item .metadata {
   margin-top: 15px;
   margin-bottom: 15px;
+}
+
+.fb-like-box {
+margin-bottom: 10px;
+background-color: #fff;
+border-radius: 5px;
+border: 1px solid #E8E8E8;
 }

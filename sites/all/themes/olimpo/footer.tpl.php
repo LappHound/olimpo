@@ -14,7 +14,7 @@
         <? else : ?>
           <li><?= l(t('Log out'), 'logout', array('attributes' => array('class' => 'loginbox__link loginbox__link--logout'))); ?></li>
         <? endif; ?>
-        <li><a href="/contact">Contacto</a></li>
+        <li><a href="/contacto">Contacto</a></li>
         <li>Club Deportivo Olimpo Sedavi &copy; <?= date('Y', time()) ?></li>
     </ul>
   </div><!-- .wrapper -->
