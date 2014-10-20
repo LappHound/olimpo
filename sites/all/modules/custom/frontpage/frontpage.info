@@ -1,0 +1,4 @@
+name = Frontpage
+description = Module to customize Drupal's frontpage
+package = Custom
+core = 6.x

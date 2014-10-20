@@ -1,0 +1,70 @@
+<?php
+// $Id
+define('VIDEOS_N', 10);
+
+/*  -------------- HOOK SECTION ------------------ */
+
+
+/**
+ * Implementation of hook_menu().
+ */
+function videos_menu() {
+  $items['videos'] = array(
+    'title' => t('Videos'),
+    'page callback' => 'theme',
+    'page arguments' => array('videos'),
+    'access arguments' => array('access content'),
+  );
+  return $items;
+}
+
+/**
+ * Implementation of hook_theme
+ */
+function videos_theme($existing, $type, $theme, $path) {
+  return array(
+               'videos' => array(
+                            'arguments' => array(),
+                            'template' => 'videos',
+                            'preprocess functions' => array('videos_preprocess_videos')
+                            ),
+              );
+}
+
+function videos_get_videos() {
+    $sql = "SELECT n.*, cv.* "
+    ."FROM {node} n LEFT JOIN {node_revisions} nr ON n.nid=nr.nid AND nr.vid = n.nid "
+    ."LEFT JOIN {content_type_video} cv ON n.nid = cv.nid AND n.vid = cv.vid "
+    ."WHERE n.type = 'video' AND n.status= 1 ORDER BY n.created DESC";
+    return $sql;
+}
+
+function videos_preprocess_videos(&$vars) {
+    $sql = videos_get_videos();
+    $result = pager_query($sql);
+    while($res = db_fetch_array($result)) {
+		$data = unserialize($res['field_enlace_data']);
+		$res['filepath'] = $data['emthumb']['filepath'];
+		$res['duracion'] = segundos_tiempo($res['field_enlace_duration']);
+        $vars['videos'][]=$res;
+    }
+	$vars['pager'] = theme('pager');
+}
+
+function segundos_tiempo($segundos){ 
+	$minutos=$segundos/60; 
+	$horas=floor($minutos/60); 
+	$minutos2=$minutos%60; 
+	$segundos_2=$segundos%60%60%60; 
+	if($minutos2<10)$minutos2='0'.$minutos2; 
+	if($segundos_2<10)$segundos_2='0'.$segundos_2; 
+
+	if($segundos<60){ /* segundos */ 
+		$resultado= round($segundos).' segundos'; 
+	}elseif($segundos>60 && $segundos<3600){/* minutos */ 
+		$resultado= $minutos2.':'.$segundos_2.' minutos'; 
+	}else{/* horas */ 
+		$resultado= $horas.':'.$minutos2.':'.$segundos_2.' horas'; 
+	} 
+	return $resultado; 
+} 

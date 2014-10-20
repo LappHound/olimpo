@@ -1,0 +1,73 @@
+<?php
+
+
+function frontpage_menu_alter(&$items) {
+  $items['node']['page callback'] = 'frontpage_main';
+}
+
+
+function frontpage_main() {
+  $feed_url = url('rss.xml', array('absolute' => TRUE));
+  $items = frontpage_get_frontpage_items();
+  $special = array_shift($items);
+
+  drupal_add_feed($feed_url, variable_get('site_name', 'Drupal') . ' ' . t('RSS'));
+  drupal_set_title('');
+
+  drupal_add_js(drupal_get_path('module', 'frontpage') . '/frontpage.js');
+
+  return theme('frontpage_main', $special, $items);
+}
+
+
+function frontpage_get_frontpage_items() {
+  $items = array();
+  $sql = "SELECT n.nid, n.title, nn.drophead, f.filepath, n.created
+    FROM {node} n
+    INNER JOIN {noticias} nn ON nn.nid = n.nid
+    LEFT JOIN {image_attach} im ON n.nid = im.nid
+    LEFT JOIN {image} i ON im.iid = i.nid AND i.image_size = '_original'
+    LEFT JOIN {files} f ON f.fid = i.fid
+    WHERE n.status = 1
+    ORDER BY n.created DESC";
+  $db_result = db_query_range($sql, 0, NOTICIAS_N + 1);
+  while ($item = db_fetch_object($db_result)) {
+    $items[] = $item;
+  }
+  return $items;
+}
+
+
+function frontpage_theme($path, $existing) {
+  $templates = array();
+  $templates['frontpage_main'] = array(
+    'template' => 'frontpage_main',
+    'arguments' => array('special' => NULL, 'items' => array()),
+  );
+  $templates['frontpage_item'] = array(
+    'template' => 'frontpage_item',
+    'arguments' => array('item' => NULL, 'class' => NULL),
+    'preprocess functions' => array('frontpage_preprocess_frontpage_item')
+  );
+  $templates['frontpage_item_metadata'] = array(
+    'template' => 'frontpage_item_metadata',
+    'arguments' => array('item' => NULL)
+  );
+  $templates['frontpage_columns'] = array(
+    'template' => 'frontpage_columns',
+    'arguments' => array('items' => array()),
+  );
+  return $templates;
+}
+
+
+function frontpage_preprocess_frontpage_item(&$variables) {
+  $item = $variables['item'];
+
+  $variables['title_link'] = l($item->title, 'node/' . $item->nid);
+  if (!is_null($item->filepath) && file_exists($item->filepath)) {
+      $image = theme('image', $item->filepath, $item->title, $item->title);
+      $default_image_class = 'article-media article-pic';
+      $variables['image_link'] = l($image, 'node/' . $item->nid, array('attributes' => array('class' => $default_image_class), 'html' => TRUE));
+  }
+}
