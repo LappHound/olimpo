@@ -109,10 +109,10 @@
 
         <div id="main" class="main" role="main">
 
-          <? if (user_access('administer news')) : ?>
+          <? if (user_access('create noticia content')) : ?>
             <div class="gg-row">
               <ul class="frontpage-admin-menu">
-                <li><?= l(t('Add news'), 'node/add/announcement', array('attributes' => array('class' => 'icon icon--add-news'))); ?></li>
+                <li><?= l(t('Add news'), 'node/add/noticia', array('attributes' => array('class' => 'icon icon--add-news'))); ?></li>
               </ul>
             </div>
           <? endif; ?>
