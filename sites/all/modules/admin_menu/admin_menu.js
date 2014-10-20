@@ -1,3 +1,4 @@
+/* $Id: admin_menu.js,v 1.7.2.9 2010/02/20 23:53:18 sun Exp $ */
 
 $(document).ready(function() {
   if (!$('#admin-menu').length) {
@@ -23,15 +24,6 @@ $(document).ready(function() {
     if (Drupal.settings.admin_menu.tweak_modules) {
       $('#system-modules fieldset:not(.collapsed), #system-modules-1 fieldset:not(.collapsed)').addClass('collapsed');
     }
-  }
-
-  // Hover emulation for IE 6.
-  if ($.browser.msie && parseInt(jQuery.browser.version) == 6) {
-    $('#admin-menu li').hover(function() {
-      $(this).addClass('iehover');
-    }, function() {
-      $(this).removeClass('iehover');
-    });
   }
 
   // Delayed mouseout.
