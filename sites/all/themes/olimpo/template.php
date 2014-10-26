@@ -55,14 +55,14 @@ function olimpo_get_header_menu() {
       'path_alias' => 'gimnasio'
     ),
     array(
-      'name' => 'Imágenes',
-      'path' => 'imagenes',
-      'path_alias' => 'imagenes'
-    ),
-    array(
       'name' => 'Palmarés',
       'path' => 'record-book',
       'path_alias' => 'palmares'
+    ),
+    array(
+      'name' => 'Descargas',
+      'path' => 'downloads',
+      'path_alias' => 'descargas'
     ),
     array(
       'name' => 'Contacto',
