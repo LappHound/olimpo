@@ -66,7 +66,43 @@ function downloads_add_download_form_submit($form, &$form_state) {
 
 
 function downloads_update_download_page($download_id) {
-  return drupal_get_form('downloads_update_download_form');
+  return drupal_get_form('downloads_update_download_form', $download_id);
+}
+
+
+function downloads_update_download_form(&$form_state, $download_id) {
+  $form = array(
+    '#attributes' => array('enctype' => 'multipart/form-data')
+  );
+
+  $query = "SELECT d.*, f.filepath FROM {downloads} d INNER JOIN {files} f ON f.fid = d.file_id WHERE d.id = %d";
+  $db_result = db_query($query, $download_id);
+  $download = db_fetch_array($db_result);
+
+  $form['title'] = array(
+    '#type' => 'textfield',
+    '#title' => t('Title'),
+    '#default_value' => $download['title'],
+    '#required' => TRUE
+  );
+  $form['description'] = array(
+    '#type' => 'textarea',
+    '#title' => t('Description'),
+    '#default_value' => $download['description'],
+    '#required' => TRUE
+  );
+  $form['file'] = array(
+    '#type' => 'markup',
+    '#value' => l($download['title'], $download['filepath'], array('attributes' => array('class' => 'download'))),
+    '#prefix' => '<div class="form-item"><label>' . t('Uploaded file') . '</label></div>',
+    '#suffix' => '</div>'
+  );
+  $form['submit'] = array(
+    '#type' => 'submit',
+    '#value' => t('Update download')
+  );
+
+  return $form;
 }
 
 

@@ -1,0 +1,103 @@
+# $Id$
+#
+# Spanish translation of Drupal (general)
+# Copyright YEAR NAME <EMAIL@ADDRESS>
+# Generated from files:
+#  downloads.tpl.php: n/a
+#  downloads.module: n/a
+#  downloads.info: n/a
+#  downloads.admin.inc: n/a
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PROJECT VERSION\n"
+"POT-Creation-Date: 2014-10-26 18:25+0100\n"
+"PO-Revision-Date: 2014-10-26 18:25+0100\n"
+"Last-Translator: NAME <EMAIL@ADDRESS>\n"
+"Language-Team: Spanish <EMAIL@ADDRESS>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n!=1);\n"
+
+#: downloads.tpl.php:4 downloads.module:14;22 downloads.info:0
+msgid "Downloads"
+msgstr "Descargas"
+
+#: downloads.tpl.php:5
+msgid "All the document you need about @site"
+msgstr "Todos los documentos que necesitas del @site"
+
+#: downloads.admin.inc:5;31;84
+msgid "Title"
+msgstr "Título"
+
+#: downloads.admin.inc:5
+msgid "File"
+msgstr "Archivo"
+
+#: downloads.admin.inc:5
+msgid "Created at"
+msgstr "Fecha de creación"
+
+#: downloads.admin.inc:36;90
+msgid "Description"
+msgstr "Descripción"
+
+#: downloads.admin.inc:41
+msgid "Upload file"
+msgstr "Subir archivo"
+
+#: downloads.admin.inc:45
+msgid "Create download"
+msgstr "Crear descarga"
+
+#: downloads.admin.inc:54
+msgid "You have to upload the file"
+msgstr ""
+
+#: downloads.admin.inc:97
+msgid "Uploaded file"
+msgstr "Archivo subido"
+
+#: downloads.admin.inc:102
+msgid "Update download"
+msgstr "Actualizar descarga"
+
+#: downloads.module:7
+msgid "view downloads"
+msgstr ""
+
+#: downloads.module:7
+msgid "admin downloads"
+msgstr ""
+
+#: downloads.module:15
+msgid "Shows a list of available downloads"
+msgstr ""
+
+#: downloads.module:23
+msgid "Administer downloads"
+msgstr ""
+
+#: downloads.module:33;34
+msgid "Add new download"
+msgstr ""
+
+#: downloads.module:42;43
+msgid "Update existing download"
+msgstr ""
+
+#: downloads.module:51;52
+msgid "Delete a download"
+msgstr ""
+
+#: downloads.info:0
+msgid "Module to add downloads to the site"
+msgstr ""
+
+#: downloads.info:0
+msgid "Custom"
+msgstr "Personalizado"
+

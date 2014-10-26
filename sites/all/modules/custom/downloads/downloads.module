@@ -1,5 +1,7 @@
 <?php
 
+define('DOWNLOADS_MAX_ITEMS_PER_PAGE', 10);
+
 
 function downloads_perm() {
   return array('view downloads', 'admin downloads');
@@ -74,26 +76,21 @@ function downloads_theme($existing, $type, $theme, $path) {
 
 function downloads_page() {
   $downloads = downloads_get_all_downloads();
-  $pager = "";
+  $pager = theme('pager');
   $site_name = variable_get('site_name', '');
   return theme('downloads', $downloads, $pager, $site_name);
 }
 
 
 function downloads_get_all_downloads() {
-  $downloads = array(
-    array(
-      'id' => 1,
-      'filepath' => 'sites/default/files/document.pdf',
-      'title' => 'Enrolment',
-      'description' => 'This is the document to sing-up into our gym'
-    ),
-    array(
-      'id' => 2,
-      'filepath' => 'sites/default/files/document_2.pdf',
-      'title' => 'Spain\'s Open',
-      'description' => 'This is the document to sing-up into the Spain\'s open'
-    )
-  );
+  $downloads = array();
+
+  $query = "SELECT d.*, f.filepath FROM {downloads} d INNER JOIN {files} f ON f.fid = d.file_id ORDER BY d.created_at DESC";
+  $db_result = db_query_range($query, 0, DOWNLOADS_MAX_ITEMS_PER_PAGE);
+
+  while ($download = db_fetch_array($db_result)) {
+    $downloads[] = $download;
+  }
+
   return $downloads;
 }

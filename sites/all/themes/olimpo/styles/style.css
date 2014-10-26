@@ -6605,6 +6605,7 @@ padding-bottom: 20px;
 
 .item,
 .news,
+.downloads,
 .article-full {
 background: #fff;
 border: 1px solid #ccc;
@@ -6629,4 +6630,10 @@ border: 1px solid #E8E8E8;
 
 .article-full {
   margin-bottom: 30px !important;
+}
+
+a.download {
+  background-image: url(../images/paperclip.png);
+  background-repeat: no-repeat;
+  padding: 5px 0 0 40px;
 }
