@@ -6,9 +6,16 @@
     </header>
 
     <div class="content">
-        <? foreach ($downloads as $download) : ?>
-            <?= theme('download', $download); ?>
-        <? endforeach; ?>
+        <? if (!empty($downloads)) : ?>
+            <? foreach ($downloads as $download) : ?>
+                <?= theme('download', $download); ?>
+            <? endforeach; ?>
+        <? else : ?>
+            <div class="empty-state">
+                <i>Empty</i>
+                <p>No hay archivos todavía.</p>
+            </div>
+        <? endif; ?>
     </div>
 
     <footer>
