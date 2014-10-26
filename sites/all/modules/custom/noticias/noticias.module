@@ -23,32 +23,32 @@ function noticias_menu() {
  * Implements hook_block
  */
 function noticias_block($op = 'list', $delta = 0, $edit = array()) {
-    switch ($op) {
-        case 'list':
-            $blocks = array();
-            $blocks[0] = array(
-                  'info' => t('Latest news'),
-                  'cache' => BLOCK_CACHE_GLOBAL,
-                  'weight' => 0,
-                  'status' => 1,
-                  'region' => 'right',
-                  'visibility' => 1,
-                  'pages' => '<front>\nnoticias\nnoticia/*'
-                );
-            return $blocks;
-        case 'configure':
-        case 'save':
-            return;
-        case 'view':
-            switch ($delta) {
-              case 0:
-                // Your module will need to define this function to render the block.
-                $block = array(
-                  'content' => noticias_block_latest_news(),
-                );
-                return $block;
-            }
+  switch ($op) {
+  case 'list':
+    $blocks = array();
+    $blocks[0] = array(
+      'info' => t('Latest news'),
+      'cache' => BLOCK_CACHE_GLOBAL,
+      'weight' => 0,
+      'status' => 1,
+      'region' => 'right',
+      'visibility' => 1,
+      'pages' => '<front>\nnoticias\nnoticia/*'
+    );
+    return $blocks;
+  case 'configure':
+  case 'save':
+    return;
+  case 'view':
+    switch ($delta) {
+    case 0:
+      // Your module will need to define this function to render the block.
+      $block = array(
+        'content' => noticias_block_latest_news(),
+      );
+      return $block;
     }
+  }
 }
 
 /**
@@ -56,20 +56,20 @@ function noticias_block($op = 'list', $delta = 0, $edit = array()) {
  */
 function noticias_theme($existing, $type, $theme, $path) {
   return array(
-      'noticias' => array(
-          'arguments' => array(),
-          'template' => 'noticias',
-          'preprocess functions' => array('noticias_preprocess_noticias')
-      ),
-      'latest_block' => array(
-          'arguments' => array('news' => NULL),
-          'template' => 'latest_block',
-      ),
-      'social_share_links' => array(
-          'template' => 'social-share-links',
-          'arguments' => array('path' => NULL, 'title' => NULL, 'summary' => NULL, 'text' => NULL, 'image' => NULL, 'medium' => NULL, 'campaign' => NULL),
-          'preprocess functions' => array('noticias_preprocess_social_share_links')
-      )
+    'noticias' => array(
+      'arguments' => array(),
+      'template' => 'noticias',
+      'preprocess functions' => array('noticias_preprocess_noticias')
+    ),
+    'latest_block' => array(
+      'arguments' => array('news' => NULL),
+      'template' => 'latest_block',
+    ),
+    'social_share_links' => array(
+      'template' => 'social-share-links',
+      'arguments' => array('path' => NULL, 'title' => NULL, 'summary' => NULL, 'text' => NULL, 'image' => NULL, 'medium' => NULL, 'campaign' => NULL),
+      'preprocess functions' => array('noticias_preprocess_social_share_links')
+    )
   );
 }
 
@@ -96,59 +96,59 @@ function noticias_preprocess_social_share_links($variables) {
 
 
 function noticias_block_latest_news() {
-    $db_result = noticias_get_latest_news();
-    $news = noticias_prepare_news($db_result);
-    return theme('latest_block', $news);
+  $db_result = noticias_get_latest_news();
+  $news = noticias_prepare_news($db_result);
+  return theme('latest_block', $news);
 }
 
 
 function noticias_get_latest_news() {
-    $sql = "SELECT n.nid, n.title, n.created
+  $sql = "SELECT n.nid, n.title, n.created
     FROM {node} n
     WHERE n.type = 'noticia' AND n.status = 1
     ORDER BY n.created DESC";
-    return db_query_range($sql, NOTICIAS_LATEST_NEWS);
+  return db_query_range($sql, NOTICIAS_LATEST_NEWS);
 }
 
 
 function noticias_prepare_news($db_result) {
-    $news = array();
-    while ($res = db_fetch_object($db_result)) {
-        $news[] = array(
-          'link' => l($res->title, "node/$res->nid"),
-          'date' => date('d/m/Y', $res->created)
-        );
-    }
-    return $news;
+  $news = array();
+  while ($res = db_fetch_object($db_result)) {
+    $news[] = array(
+      'link' => l($res->title, "node/$res->nid"),
+      'date' => date('d/m/Y', $res->created)
+    );
+  }
+  return $news;
 }
 
 
 function noticias_get_noticias() {
-    $sql = "SELECT n.nid, n.title, f.filepath, n.created, nn.drophead
-      FROM {node} n
-      INNER JOIN {noticias} nn ON nn.nid = n.nid
-      LEFT JOIN {image_attach} im ON n.nid = im.nid
-      LEFT JOIN {image} i ON im.iid = i.nid AND i.image_size = '_original'
-      LEFT JOIN {files} f ON f.fid = i.fid
-      WHERE n.type = 'noticia' AND n.status = 1
-      ORDER BY n.created DESC";
-    return $sql;
+  $sql = "SELECT n.nid, n.title, f.filepath, n.created, nn.drophead
+    FROM {node} n
+    INNER JOIN {noticias} nn ON nn.nid = n.nid
+    LEFT JOIN {image_attach} im ON n.nid = im.nid
+    LEFT JOIN {image} i ON im.iid = i.nid AND i.image_size = '_original'
+    LEFT JOIN {files} f ON f.fid = i.fid
+    WHERE n.type = 'noticia' AND n.status = 1
+    ORDER BY n.created DESC";
+  return $sql;
 }
 
 
 function noticias_preprocess_noticias(&$vars) {
-    $sql = noticias_get_noticias();
-    $result = pager_query($sql);
-    while($res = db_fetch_array($result)) {
-        $vars['noticias'][]=$res;
-    }
-	$vars['pager'] = theme('pager');
+  $sql = noticias_get_noticias();
+  $result = pager_query($sql);
+  while($res = db_fetch_array($result)) {
+    $vars['noticias'][]=$res;
+  }
+  $vars['pager'] = theme('pager');
 }
 
 
 function noticias_preprocess_node(&$variables) {
-    if (isset($variables['image_attach']) && !empty($variables['image_attach'])) {
-        $image = current($variables['image_attach']);
-        $variables['picture'] = theme('image', $image->images['_original'], $image->title, $image->title);
-    }
+  if (isset($variables['image_attach']) && !empty($variables['image_attach'])) {
+    $image = current($variables['image_attach']);
+    $variables['picture'] = theme('image', $image->images['_original'], $image->title, $image->title);
+  }
 }
