@@ -6606,14 +6606,16 @@ padding-bottom: 20px;
 .item,
 .news,
 .downloads,
-.article-full {
+.article-full,
+.node-page {
 background: #fff;
 border: 1px solid #ccc;
 padding: 20px;
 }
 
 .news,
-.downloads {
+.downloads,
+.node-page {
 margin-bottom: 30px !important;
 }
 
