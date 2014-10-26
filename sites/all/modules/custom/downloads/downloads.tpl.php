@@ -12,7 +12,6 @@
             <? endforeach; ?>
         <? else : ?>
             <div class="empty-state">
-                <i>Empty</i>
                 <p>No hay archivos todavía.</p>
             </div>
         <? endif; ?>
