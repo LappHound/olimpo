@@ -1,0 +1,49 @@
+<?php
+
+
+function downloads_schema() {
+  $schema = array();
+  $schema['downloads'] = array(
+    'fields' => array(
+      'id' => array(
+        'type' => 'serial',
+        'unsigned' => TRUE,
+        'not null' => TRUE
+      ),
+      'title' => array(
+        'type' => 'varchar',
+        'length' => 255,
+        'not null' => TRUE
+      ),
+      'description' => array(
+        'type' => 'text',
+        'size' => 'normal',
+        'not null' => TRUE
+      ),
+      'file_id' => array(
+        'type' => 'int',
+        'unsigned' => TRUE,
+        'not null' => TRUE
+      ),
+      'created_at' => array(
+        'type' => 'int',
+        'unsigned' => TRUE,
+        'not null' => TRUE
+      )
+    ),
+    'primary key' => array('id'),
+    'mysql_suffix' => ' DEFAULT CHARACTER SET UTF8 ENGINE = INNODB '
+  );
+  return $schema;
+}
+
+
+function downloads_install() {
+  drupal_install_schema('downloads');
+  mkdir(file_directory_path() . '/downloads');
+}
+
+
+function downloads_uninstall() {
+  drupal_uninstall_schema('downloads');
+}

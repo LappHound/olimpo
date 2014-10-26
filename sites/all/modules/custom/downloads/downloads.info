@@ -1,0 +1,4 @@
+name = Downloads
+description = Module to add downloads to the site
+package = Custom
+core = 6.x

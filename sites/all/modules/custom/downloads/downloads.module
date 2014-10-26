@@ -1,0 +1,99 @@
+<?php
+
+
+function downloads_perm() {
+  return array('view downloads', 'admin downloads');
+}
+
+
+function downloads_menu() {
+  $items = array();
+  $items['downloads'] = array(
+    'title' => 'Downloads',
+    'description' => 'Shows a list of available downloads',
+    'page callback' => 'downloads_page',
+    'page arguments' => array(),
+    'access arguments' => array('view downloads'),
+    'type' => MENU_NORMAL_ITEM,
+  );
+  $items['admin/downloads'] = array(
+    'title' => 'Downloads',
+    'description' => 'Administer downloads',
+    'page callback' => 'downloads_list_downloads_page',
+    'page arguments' => array(),
+    'access arguments' => array('admin downloads'),
+    'file' => 'downloads.admin.inc',
+    'type' => MENU_DEFAULT_LOCAL_TASK
+  );
+  $items['admin/downloads/list'] = $items['admin/downloads'];
+  $items['admin/downloads/list']['title'] = 'List downloads';
+  $items['admin/downloads/add'] = array(
+    'title' => 'Add new download',
+    'description' => 'Add new download',
+    'page callback' => 'downloads_add_download_page',
+    'page arguments' => array(),
+    'access arguments' => array('admin downloads'),
+    'file' => 'downloads.admin.inc',
+    'type' => MENU_LOCAL_TASK
+  );
+  $items['admin/downloads/%'] = array(
+    'title' => 'Update existing download',
+    'description' => 'Update existing download',
+    'page callback' => 'downloads_update_download_page',
+    'page arguments' => array(2),
+    'access arguments' => array('admin downloads'),
+    'file' => 'downloads.admin.inc',
+    'type' => MENU_CALLBACK
+  );
+  $items['admin/downloads/delete'] = array(
+    'title' => 'Delete a download',
+    'description' => 'Delete a download',
+    'page callback' => 'downloads_remove_download_page',
+    'page arguments' => array(),
+    'access arguments' => array('admin downloads'),
+    'file' => 'downloads.admin.inc',
+    'type' => MENU_CALLBACK
+  );
+  return $items;
+}
+
+
+function downloads_theme($existing, $type, $theme, $path) {
+  $items = array();
+  $items['downloads'] = array(
+    'template' => 'downloads',
+    'arguments' => array('downloads' => array(), 'pager' => NULL, 'site' => ''),
+  );
+  $items['download'] = array(
+    'template' => 'download',
+    'arguments' => array('download' => NULL),
+  );
+  return $items;
+}
+
+
+function downloads_page() {
+  $downloads = downloads_get_all_downloads();
+  $pager = "";
+  $site_name = variable_get('site_name', '');
+  return theme('downloads', $downloads, $pager, $site_name);
+}
+
+
+function downloads_get_all_downloads() {
+  $downloads = array(
+    array(
+      'id' => 1,
+      'filepath' => 'sites/default/files/document.pdf',
+      'title' => 'Enrolment',
+      'description' => 'This is the document to sing-up into our gym'
+    ),
+    array(
+      'id' => 2,
+      'filepath' => 'sites/default/files/document_2.pdf',
+      'title' => 'Spain\'s Open',
+      'description' => 'This is the document to sing-up into the Spain\'s open'
+    )
+  );
+  return $downloads;
+}
