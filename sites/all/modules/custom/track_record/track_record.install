@@ -1,0 +1,126 @@
+<?php
+
+
+function track_record_schema() {
+  $schema = array();
+  $schema['track_record_clubs'] = array(
+    'fields' => array(
+      'id' => array(
+        'type' => 'serial',
+        'unsigned' => TRUE,
+        'not null' => TRUE
+      ),
+      'name' => array(
+        'type' => 'varchar',
+        'length' => 255,
+        'not null' => TRUE
+      ),
+      'description' => array(
+        'type' => 'text',
+        'size' => 'big',
+        'not null' => TRUE,
+      ),
+      'establishment_date' => array(
+        'type' => 'int',
+        'not null' => FALSE,
+      ),
+      'photo_id' => array(
+        'type' => 'int',
+        'unsigned' => TRUE,
+        'not null' => FALSE
+      ),
+    ),
+    'primary key' => array('id'),
+    'mysql_suffix' => ' DEFAULT CHARACTER SET UTF8 ENGINE = INNODB '
+  );
+  $schema['track_record_club_records'] = array(
+    'fields' => array(
+      'id' => array(
+        'type' => 'serial',
+        'unsigned' => TRUE,
+        'not null' => TRUE
+      ),
+      'title' => array(
+        'type' => 'varchar',
+        'length' => 255,
+        'not null' => TRUE
+      ),
+      'medal' => array(
+        'type' => 'int',
+        'length' => 2,
+        'not null' => TRUE,
+      ),
+      'club_id' => array(
+        'type' => 'int',
+        'unsigned' => TRUE,
+        'not null' => TRUE
+      ),
+    ),
+    'primary key' => array('id'),
+    'mysql_suffix' => ' DEFAULT CHARACTER SET UTF8 ENGINE = INNODB '
+  );
+  $schema['track_record_athletes'] = array(
+    'fields' => array(
+      'id' => array(
+        'type' => 'serial',
+        'unsigned' => TRUE,
+        'not null' => TRUE
+      ),
+      'name' => array(
+        'type' => 'varchar',
+        'length' => 255,
+        'not null' => TRUE
+      ),
+      'birthday' => array(
+        'type' => 'int',
+        'not null' => FALSE,
+      ),
+      'photo_id' => array(
+        'type' => 'int',
+        'unsigned' => TRUE,
+        'not null' => FALSE
+      ),
+    ),
+    'primary key' => array('id'),
+    'mysql_suffix' => ' DEFAULT CHARACTER SET UTF8 ENGINE = INNODB '
+  );
+  $schema['track_record_athlete_records'] = array(
+    'fields' => array(
+      'id' => array(
+        'type' => 'serial',
+        'unsigned' => TRUE,
+        'not null' => TRUE
+      ),
+      'title' => array(
+        'type' => 'varchar',
+        'length' => 255,
+        'not null' => TRUE
+      ),
+      'medal' => array(
+        'type' => 'int',
+        'length' => 2,
+        'not null' => TRUE,
+      ),
+      'athlete_id' => array(
+        'type' => 'int',
+        'unsigned' => TRUE,
+        'not null' => TRUE
+      ),
+    ),
+    'primary key' => array('id'),
+    'mysql_suffix' => ' DEFAULT CHARACTER SET UTF8 ENGINE = INNODB '
+  );
+  return $schema;
+}
+
+
+function track_record_install() {
+  drupal_install_schema('track_record');
+  mkdir(file_directory_path() . '/track_record_images');
+  db_query("INSERT INTO {track_record_clubs} (name, establishment_date) VALUES ('%s', %d)", 'Club Deportivo Olimpo Sedavi', 1283292000);
+}
+
+
+function track_record_uninstall() {
+  drupal_uninstall_schema('track_record');
+}

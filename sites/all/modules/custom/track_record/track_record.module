@@ -1,0 +1,231 @@
+<?php
+
+define('TRACK_RECORD_GOLD_MEDAL', 0);
+define('TRACK_RECORD_SILVER_MEDAL', 1);
+define('TRACK_RECORD_BRONZE_MEDAL', 2);
+
+
+function track_record_perms() {
+  return array('view track record', 'admin track record');
+}
+
+function track_record_menu() {
+  $items = array();
+  $items['track_record'] = array(
+    'title' => 'Track record',
+    'description' => 'Shows all the track records of clubs and athletes',
+    'page callback' => 'track_record_select_page',
+    'page arguments' => array(),
+    'access arguments' => array('view track record'),
+    'type' => MENU_NORMAL_ITEM,
+  );
+  $items['track_record/club'] = array(
+    'title' => 'Club track record',
+    'description' => 'The club track record',
+    'page callback' => 'track_record_club_page',
+    'page arguments' => array(),
+    'access arguments' => array('view track record'),
+    'type' => MENU_NORMAL_ITEM,
+  );
+  $items['track_record/athletes'] = array(
+    'title' => 'Athletes track record',
+    'description' => 'All the athletes track record',
+    'page callback' => 'track_record_athletes_page',
+    'page arguments' => array(),
+    'access arguments' => array('view track record'),
+    'type' => MENU_NORMAL_ITEM,
+  );
+  $items['admin/track_record'] = array(
+    'title' => 'Track record',
+    'page callback' => 'track_record_admin_page',
+    'page arguments' => array(),
+    'access arguments' => array('admin track record'),
+    'file' => 'track_record.admin.inc',
+    'type' => MENU_DEFAULT_LOCAL_TASK
+  );
+  $items['admin/track_record/club'] = array(
+    'title' => 'Track record',
+    'page callback' => 'track_record_club_admin_page',
+    'page arguments' => array(),
+    'access arguments' => array('admin track record'),
+    'file' => 'track_record.admin.inc',
+    'type' => MENU_DEFAULT_LOCAL_TASK
+  );
+  $items['admin/track_record/club/records'] = array(
+    'title' => 'Track record',
+    'page callback' => 'track_record_club_records_admin_page',
+    'page arguments' => array(),
+    'access arguments' => array('admin track record'),
+    'file' => 'track_record.admin.inc',
+    'type' => MENU_DEFAULT_LOCAL_TASK
+  );
+  $items['admin/track_record/athletes'] = array(
+    'title' => 'Track record',
+    'page callback' => 'track_record_athletes_admin_page',
+    'page arguments' => array(),
+    'access arguments' => array('admin track record'),
+    'file' => 'track_record.admin.inc',
+    'type' => MENU_DEFAULT_LOCAL_TASK
+  );
+  $items['admin/track_record/athletes/%'] = array(
+    'title' => 'Track record',
+    'page callback' => 'track_record_athlete_admin_page',
+    'page arguments' => array(3),
+    'access arguments' => array('admin track record'),
+    'file' => 'track_record.admin.inc',
+    'type' => MENU_DEFAULT_LOCAL_TASK
+  );
+  $items['admin/track_record/athletes/%/records'] = array(
+    'title' => 'Track record',
+    'page callback' => 'track_record_athlete_records_admin_page',
+    'page arguments' => array(3),
+    'access arguments' => array('admin track record'),
+    'file' => 'track_record.admin.inc',
+    'type' => MENU_DEFAULT_LOCAL_TASK
+  );
+
+  return $items;
+}
+
+
+function track_record_select_page() {
+  return "<h1>Select please</h1><ul><li><a href='/palmares/equipo'>Equipo</a></li><li><a href='/palmares/deportistas'>Deportistas</a></li></ul>";
+}
+
+
+function track_record_club_page() {
+  $club = track_record_get_club_information();
+  $records = track_record_get_club_records($club);
+
+  return theme('track_record_club', $club, $records);
+}
+
+
+function track_record_athletes_page() {
+  $club = track_record_get_club_information();
+  $athletes = track_record_get_athletes_information();
+
+  return theme('track_record_athletes', $club, $athletes);
+}
+
+
+function track_record_theme($existing, $type, $theme, $path) {
+  $items = array();
+  $items['track_record_club'] = array(
+    'template' => 'track_record_club',
+    'arguments' => array('club' => NULL, 'records' => array())
+  );
+  $items['track_record_athletes'] = array(
+    'template' => 'track_record_athletes',
+    'arguments' => array('club' => NULL, 'athletes' => array())
+  );
+  $items['track_record_athlete'] = array(
+    'template' => 'track_record_athlete',
+    'arguments' => array('athlete' => NULL, 'records' => array())
+  );
+  $items['track_record_single_record'] = array(
+    'template' => 'track_record_single_record',
+    'arguments' => array('record' => array())
+  );
+  $items['track_record_athlete_photo'] = array(
+    'arguments' => array('athlete' => NULL),
+    'function' => 'track_record_theme_athlete_photo'
+  );
+
+  return $items;
+}
+
+
+function track_record_get_ages($timestamp) {
+  return '12';
+}
+
+
+function track_record_preprocess_track_record_club(&$variables) {
+}
+
+
+function track_record_preprocess_track_record_single_record(&$variables) {
+  if (isset($variables['record']['medal'])) {
+    $variables['medal'] = track_record_get_medal($variables['record']['medal']);
+  }
+}
+
+
+function track_record_theme_athlete_photo(array $athlete) {
+  $photo = $athlete['photo'];
+  if (!is_null($photo)) {
+    $attributes = array('width' => 'auto', 'height' => 200);
+    return theme('image', $photo, $athlete['name'], $athlete['name'], $attributes, FALSE);
+  }
+
+  return '';
+}
+
+
+function track_record_get_medals() {
+  $medals = array(
+    TRACK_RECORD_GOLD_MEDAL => 'gold',
+    TRACK_RECORD_SILVER_MEDAL => 'silver',
+    TRACK_RECORD_BRONZE_MEDAL => 'bronze',
+  );
+
+  return $medals;
+}
+
+
+function track_record_get_medal($medal) {
+  static $medals;
+
+  if (empty($medals)) {
+    $medals = track_record_get_medals();
+  }
+
+  return $medals[$medal];
+}
+
+
+function track_record_get_club_information() {
+  return db_fetch_array(db_query("SELECT * FROM {track_record_clubs} WHERE id = 1"));
+}
+
+
+function track_record_get_club_records(array $club) {
+  $records = array();
+  $results = db_query("SELECT * FROM {track_record_club_records} WHERE club_id = %d", $club['id']);
+  while ($record = db_fetch_array($results)) {
+    $records[] = $record;
+  }
+
+  return $records;
+}
+
+function track_record_get_athletes_information() {
+  $athletes = array();
+  $results = db_query("SELECT a.*, f.filepath as photo FROM {track_record_athletes} a LEFT JOIN {files} f ON f.fid = a.photo_id");
+  while ($athlete = db_fetch_array($results)) {
+    $athlete['records'] = track_record_get_athlete_records($athlete);
+    $athletes[] = $athlete;
+  }
+
+  return $athletes;
+}
+
+
+function track_record_get_athlete_information($id) {
+  $athlete = db_fetch_array(db_query("SELECT a.*, f.filepath as photo FROM {track_record_athletes} a LEFT JOIN {files} f ON f.fid = a.photo_id WHERE id = %d", $id));
+  $athlete['records'] = track_record_get_athlete_records($athlete);
+
+  return $athlete;
+}
+
+
+function track_record_get_athlete_records(array $athlete) {
+  $records = array();
+  $results = db_query("SELECT * FROM {track_record_athlete_records} WHERE athlete_id = %d", $athlete['id']);
+  while ($record = db_fetch_array($results)) {
+    $records[] = $record;
+  }
+
+  return $records;
+}

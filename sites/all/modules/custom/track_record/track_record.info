@@ -1,0 +1,4 @@
+name = Track record
+description = Module to mantain the club track record and the athletes track record
+package = Custom
+core = 6.x

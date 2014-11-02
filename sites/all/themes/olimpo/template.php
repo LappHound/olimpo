@@ -56,7 +56,7 @@ function olimpo_get_header_menu() {
     ),
     array(
       'name' => 'Palmarés',
-      'path' => 'record-book',
+      'path' => 'track_record',
       'path_alias' => 'palmares'
     ),
     array(
