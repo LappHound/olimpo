@@ -6606,6 +6606,7 @@ padding-bottom: 20px;
 .item,
 .news,
 .downloads,
+.track_record--athletes,
 .article-full,
 .node-page {
 background: #fff;
@@ -6669,4 +6670,75 @@ a.download {
 
 .empty-state p {
   color: #89949b;
+}
+
+.athletes .athlete {
+  width: 48%;
+  height: 333px;
+  display: inline-block;
+  border: 1px solid #ccc;
+  padding: 20px;
+  margin: 7px;
+  overflow: hidden;
+  -webkit-box-shadow: 3px 3px 15px 0px rgba(50, 50, 50, 0.75);
+  -moz-box-shadow:    3px 3px 15px 0px rgba(50, 50, 50, 0.75);
+  box-shadow:         3px 3px 15px 0px rgba(50, 50, 50, 0.75);
+}
+
+.athletes .athlete header {
+  font-size: 1.4em;
+  text-align: center;
+  border-bottom: 1px solid #ddd;
+}
+
+.athletes .athlete .profile {
+  float: left;
+  width: 40%;
+  padding-right: 20px;
+}
+
+.athletes .athlete .profile img {
+  margin-top: 35px;
+  width: 130px;
+  height: 130px;
+  border: 1px solid #ddd;
+  border-radius: 10em;
+}
+
+.athletes .athlete .profile p {
+  color: grey;
+  text-align: center;
+}
+
+ul.track_records--records {
+  list-style: none;
+  margin-top: 15px;
+  font-size: 1.1rem;
+}
+
+ul.track_records--records li {
+  margin-bottom: 5px;
+  text-align: center;
+}
+
+/** MEDALS */
+.medal {
+  margin: auto;
+  background-image: url(../images/medals.png);
+  background-repeat: no-repeat;
+  height: 40px;
+
+  display: block;
+  width: 29px;
+  text-indent: -999em;
+  overflow: hidden;
+}
+.medal--gold {
+  background-position: 0 -6px;
+}
+.medal--silver {
+  background-position: -31px -6px;
+}
+.medal--bronze {
+  background-position: -62px -6px;
 }

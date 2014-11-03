@@ -8,11 +8,13 @@
         <? foreach ($athletes as $athlete) : ?>
             <article class="athlete">
                 <header>
-                    <?= theme('track_record_athlete_photo', $athlete); ?>
-                    <h3><?= $athlete['name']; ?></h3>
-                    <h4><?= t('@years years old', array('@years' => track_record_get_ages($athlete['birthday']))); ?></h4>
+                    <span class="name"><?= $athlete['name']; ?></span>
                 </header>
 
+                <div class="profile">
+                    <?= theme('track_record_athlete_photo', $athlete); ?>
+                    <p><?= t('@years years old', array('@years' => track_record_get_ages($athlete['birthday']))); ?></p>
+                </div>
                 <ul class="track_records--records">
                     <? foreach ($athlete['records'] as $record) : ?>
                         <li class="track_records--record"><?= theme('track_record_single_record', $record); ?></li>

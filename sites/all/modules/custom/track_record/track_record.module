@@ -44,7 +44,7 @@ function track_record_menu() {
     'type' => MENU_DEFAULT_LOCAL_TASK
   );
   $items['admin/track_record/club'] = array(
-    'title' => 'Track record',
+    'title' => 'Edit club information',
     'page callback' => 'track_record_club_admin_page',
     'page arguments' => array(),
     'access arguments' => array('admin track record'),
@@ -52,31 +52,31 @@ function track_record_menu() {
     'type' => MENU_DEFAULT_LOCAL_TASK
   );
   $items['admin/track_record/club/records'] = array(
-    'title' => 'Track record',
+    'title' => 'Edit club track record',
     'page callback' => 'track_record_club_records_admin_page',
     'page arguments' => array(),
     'access arguments' => array('admin track record'),
     'file' => 'track_record.admin.inc',
-    'type' => MENU_DEFAULT_LOCAL_TASK
+    'type' => MENU_LOCAL_TASK
   );
   $items['admin/track_record/athletes'] = array(
-    'title' => 'Track record',
+    'title' => 'Add and list athletes',
     'page callback' => 'track_record_athletes_admin_page',
     'page arguments' => array(),
     'access arguments' => array('admin track record'),
     'file' => 'track_record.admin.inc',
-    'type' => MENU_DEFAULT_LOCAL_TASK
+    'type' => MENU_LOCAL_TASK
   );
   $items['admin/track_record/athletes/%'] = array(
-    'title' => 'Track record',
+    'title' => 'Edit athlete information',
     'page callback' => 'track_record_athlete_admin_page',
     'page arguments' => array(3),
     'access arguments' => array('admin track record'),
     'file' => 'track_record.admin.inc',
-    'type' => MENU_DEFAULT_LOCAL_TASK
+    'type' => MENU_CALLBACK
   );
   $items['admin/track_record/athletes/%/records'] = array(
-    'title' => 'Track record',
+    'title' => 'Edit athlete track record',
     'page callback' => 'track_record_athlete_records_admin_page',
     'page arguments' => array(3),
     'access arguments' => array('admin track record'),

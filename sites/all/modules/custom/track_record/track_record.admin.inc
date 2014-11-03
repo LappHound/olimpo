@@ -117,8 +117,7 @@ function track_record_add_athlete_form_submit($form, &$form_state) {
 function track_record_athlete_admin_page($athlete_id) {
   $athlete = track_record_get_athlete_information($athlete_id);
 
-  $content = '<h1>' . t('Edit athlete information') . '</h1>';
-  $content .= drupal_get_form('track_record_update_athlete_form', $athlete);
+  $content = drupal_get_form('track_record_update_athlete_form', $athlete);
 
   return $content;
 }
@@ -161,6 +160,22 @@ function track_record_update_athlete_form($form_state, array $athlete) {
     '#value' => t('Update athlete')
   );
 
+  $rows = array();
+  $medal_options = track_record_get_medals_for_select();
+  foreach ($athlete['records'] as $record) {
+    $rows[] = array($record['title'], $medal_options[$record['medal']]);
+  }
+
+  $form['track_record'] = array(
+    '#type' => 'markup',
+    '#value' => theme('table', array(t('Title'), t('Medal')), $rows)
+  );
+
+  $form['add_track_record'] = array(
+    '#type' => 'markup',
+    '#value' => l(t('Add to track record'), "admin/track_record/athletes/{$athlete['id']}/records")
+  );
+
   return $form;
 }
 
@@ -180,7 +195,12 @@ function track_record_update_athlete_form_submit($form, &$form_state) {
 }
 
 function track_record_athlete_records_admin_page($athlete_id) {
-  return drupal_get_form('track_record_add_athlete_record_form', track_record_get_athlete_information($athlete_id));
+  $athlete = track_record_get_athlete_information($athlete_id);
+  $content .= drupal_get_form('track_record_add_athlete_record_form', $athlete);
+
+  drupal_set_title(t('Add entry to @name track record', array('@name' => $athlete['name'])));
+
+  return $content;
 }
 
 
@@ -202,7 +222,8 @@ function track_record_add_athlete_record_form($form_state, $athlete) {
   );
   $form['submit'] = array(
     '#type' => 'submit',
-    '#value' => t('Save')
+    '#value' => t('Save'),
+    '#suffix' => t('or !cancel', array('!cancel' => l(t('Cancel'), 'admin/track_record/athletes/' . $athlete['id'])))
   );
 
   return $form;
@@ -217,4 +238,5 @@ function track_record_add_athlete_record_form_submit($form, &$form_state) {
   else {
     db_query("INSERT INTO {track_record_athlete_records} (title, athlete_id) VALUES ('%s', %d)", $values['title'], $values['athlete']);
   }
+  $form_state['redirect'] = 'admin/track_record/athletes/' . $athlete['id'];
 }
