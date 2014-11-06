@@ -6675,7 +6675,7 @@ a.download {
 
 .athletes .athlete {
   width: 48%;
-  height: 333px;
+  height: 296px;
   display: inline-block;
   border: 1px solid #ccc;
   padding: 20px;
@@ -6690,6 +6690,7 @@ a.download {
   font-size: 1.4em;
   text-align: center;
   border-bottom: 1px solid #ddd;
+  margin-bottom: 15px;
 }
 
 .athletes .athlete .profile {
@@ -6699,7 +6700,6 @@ a.download {
 }
 
 .athletes .athlete .profile img {
-  margin-top: 35px;
   width: 130px;
   height: 130px;
   border: 1px solid #ddd;
@@ -6713,26 +6713,25 @@ a.download {
 
 ul.track_records--records {
   list-style: none;
-  margin-top: 15px;
-  font-size: 1.1rem;
+  margin: 35px;
+  padding-left: 150px;
 }
 
 ul.track_records--records li {
   margin-bottom: 5px;
-  text-align: center;
 }
 
 /** MEDALS */
 .medal {
-  margin: auto;
   background-image: url(../images/medals.png);
   background-repeat: no-repeat;
   height: 40px;
 
-  display: block;
+  display: inline-block;
   width: 29px;
   text-indent: -999em;
-  overflow: hidden;
+  padding-top: 5px;
+  margin-right: 5px;
 }
 .medal--gold {
   background-position: 0 -6px;

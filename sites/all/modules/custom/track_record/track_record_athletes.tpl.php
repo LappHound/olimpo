@@ -16,8 +16,10 @@
                     <p><?= t('@years years old', array('@years' => track_record_get_ages($athlete['birthday']))); ?></p>
                 </div>
                 <ul class="track_records--records">
-                    <? foreach ($athlete['records'] as $record) : ?>
-                        <li class="track_records--record"><?= theme('track_record_single_record', $record); ?></li>
+                    <? foreach ($medals as $medal_id => $medal_name) : ?>
+                        <li class="track_records--record">
+                            <?= theme('track_record_single_record', $medal_name, format_plural($athlete['track_record_summary'][$medal_id], '1 medal', '@count medals')); ?>
+                        </li>
                     <? endforeach; ?>
                 </ul>
             </article>

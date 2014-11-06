@@ -125,7 +125,7 @@ function track_record_theme($existing, $type, $theme, $path) {
   );
   $items['track_record_single_record'] = array(
     'template' => 'track_record_single_record',
-    'arguments' => array('record' => array())
+    'arguments' => array('medal' => NULL, 'title' => NULL)
   );
   $items['track_record_athlete_photo'] = array(
     'arguments' => array('athlete' => NULL),
@@ -145,10 +145,8 @@ function track_record_preprocess_track_record_club(&$variables) {
 }
 
 
-function track_record_preprocess_track_record_single_record(&$variables) {
-  if (isset($variables['record']['medal'])) {
-    $variables['medal'] = track_record_get_medal($variables['record']['medal']);
-  }
+function track_record_preprocess_track_record_athletes(&$variables) {
+  $variables['medals'] = track_record_get_medals();
 }
 
 
@@ -205,6 +203,7 @@ function track_record_get_athletes_information() {
   $results = db_query("SELECT a.*, f.filepath as photo FROM {track_record_athletes} a LEFT JOIN {files} f ON f.fid = a.photo_id");
   while ($athlete = db_fetch_array($results)) {
     $athlete['records'] = track_record_get_athlete_records($athlete);
+    $athlete['track_record_summary'] = track_record_get_athlete_track_record_summary($athlete['records']);
     $athletes[] = $athlete;
   }
 
@@ -228,4 +227,18 @@ function track_record_get_athlete_records(array $athlete) {
   }
 
   return $records;
+}
+
+
+function track_record_get_athlete_track_record_summary(array $records) {
+  $summary = array(
+    TRACK_RECORD_GOLD_MEDAL => 0,
+    TRACK_RECORD_SILVER_MEDAL => 0,
+    TRACK_RECORD_BRONZE_MEDAL => 0
+  );
+  foreach ($records as $record) {
+    $summary[$record['medal']] += 1;
+  }
+
+  return $summary;
 }
