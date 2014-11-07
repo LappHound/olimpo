@@ -10,7 +10,7 @@ function track_record_get_medals_for_select() {
   $medals = array(
     '' => t('Nothing'),
     TRACK_RECORD_GOLD_MEDAL => t('Gold'),
-    TRACK_RECORD_SILVER_MEDAL => t('Plate'),
+    TRACK_RECORD_SILVER_MEDAL => t('Silver'),
     TRACK_RECORD_BRONZE_MEDAL => t('Bronze'),
   );
 
@@ -163,7 +163,10 @@ function track_record_update_athlete_form($form_state, array $athlete) {
   $rows = array();
   $medal_options = track_record_get_medals_for_select();
   foreach ($athlete['records'] as $record) {
-    $rows[] = array($record['title'], $medal_options[$record['medal']]);
+    $rows[] = array(
+      l($record['title'], "admin/track_record/athletes/{$athlete['id']}/records/{$record['id']}"),
+      $medal_options[$record['medal']]
+    );
   }
 
   $form['track_record'] = array(
@@ -193,6 +196,7 @@ function track_record_update_athlete_form_submit($form, &$form_state) {
     db_query("UPDATE {track_record_athletes} SET name = '%s', birthday = %d WHERE id = %d", $form_state['values']['name'], $birthday, $form_state['values']['athlete_id']);
   }
 }
+
 
 function track_record_athlete_records_admin_page($athlete_id) {
   $athlete = track_record_get_athlete_information($athlete_id);
@@ -239,4 +243,66 @@ function track_record_add_athlete_record_form_submit($form, &$form_state) {
     db_query("INSERT INTO {track_record_athlete_records} (title, athlete_id) VALUES ('%s', %d)", $values['title'], $values['athlete']);
   }
   $form_state['redirect'] = 'admin/track_record/athletes/' . $athlete['id'];
+}
+
+
+function track_record_athlete_update_record_admin_page($record_id) {
+  $record = track_record_get_athlete_record_information($record_id);
+  $content .= drupal_get_form('track_record_update_athlete_record_form', $record);
+
+  return $content;
+}
+
+
+function track_record_update_athlete_record_form($form_state, $record) {
+  $form = array();
+
+  $form['record'] = array(
+    '#type' => 'hidden',
+    '#value' => $record['id']
+  );
+  $form['athlete_id'] = array(
+    '#type' => 'hidden',
+    '#value' => $record['athlete_id']
+  );
+  $form['title'] = array(
+    '#type' => 'textfield',
+    '#title' => t('Title'),
+    '#default_value' => $record['title']
+  );
+  $form['medal'] = array(
+    '#type' => 'select',
+    '#title' => t('Medal'),
+    '#options' => track_record_get_medals_for_select(),
+    '#default_value' => $record['medal']
+  );
+  $form['submit'] = array(
+    '#type' => 'submit',
+    '#value' => t('Update'),
+  );
+  $form['delete'] = array(
+    '#type' => 'submit',
+    '#value' => t('Delete'),
+    '#attributes' => array('style' => 'background-color: #d24146;'),
+    '#suffix' => t('or !cancel', array('!cancel' => l(t('Cancel'), 'admin/track_record/athletes/' . $record['athlete_id'])))
+  );
+
+  return $form;
+}
+
+
+function track_record_update_athlete_record_form_submit($form, &$form_state) {
+  $values = $form_state['values'];
+  if ($values['op'] == t('Update')) {
+    if ($values['medal'] != '') {
+      db_query("UPDATE {track_record_athlete_records} SET title = '%s', medal = %d WHERE id = %d", $values['title'], $values['medal'], $values['record']);
+    }
+    else {
+      db_query("UPDATE {track_record_athlete_records} SET title = '%s' WHERE id = %d", $values['title'], $values['record']);
+    }
+  }
+  else {
+    db_query("DELETE FROM {track_record_athlete_records} WHERE id = %d", $values['record']);
+  }
+  $form_state['redirect'] = 'admin/track_record/athletes/' . $values['athlete_id'];
 }

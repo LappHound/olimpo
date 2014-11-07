@@ -2,7 +2,7 @@
     <header>
         <?= theme('image', $club_image, $club['name'], $club['name']); ?>
         <h1><?= $club['name']; ?></h1>
-        <h2 class="preface"><?= t('From @date', array('@date' => date('F Y', $club['establishment_date']))); ?></h2>
+        <h2 class="preface"><?= t('From @date', array('@date' => strftime('%B %Y', $club['establishment_date']))); ?></h2>
     </header>
 
     <div class="track_records">

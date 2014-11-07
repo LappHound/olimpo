@@ -5,7 +5,7 @@ define('TRACK_RECORD_SILVER_MEDAL', 1);
 define('TRACK_RECORD_BRONZE_MEDAL', 2);
 
 
-function track_record_perms() {
+function track_record_perm() {
   return array('view track record', 'admin track record');
 }
 
@@ -35,6 +35,7 @@ function track_record_menu() {
     'access arguments' => array('view track record'),
     'type' => MENU_NORMAL_ITEM,
   );
+  $items['track_record'] = $items['track_record/athletes'];
   $items['admin/track_record'] = array(
     'title' => 'Track record',
     'page callback' => 'track_record_admin_page',
@@ -43,7 +44,7 @@ function track_record_menu() {
     'file' => 'track_record.admin.inc',
     'type' => MENU_DEFAULT_LOCAL_TASK
   );
-  $items['admin/track_record/club'] = array(
+  /*$items['admin/track_record/club'] = array(
     'title' => 'Edit club information',
     'page callback' => 'track_record_club_admin_page',
     'page arguments' => array(),
@@ -58,7 +59,7 @@ function track_record_menu() {
     'access arguments' => array('admin track record'),
     'file' => 'track_record.admin.inc',
     'type' => MENU_LOCAL_TASK
-  );
+);*/
   $items['admin/track_record/athletes'] = array(
     'title' => 'Add and list athletes',
     'page callback' => 'track_record_athletes_admin_page',
@@ -67,6 +68,7 @@ function track_record_menu() {
     'file' => 'track_record.admin.inc',
     'type' => MENU_LOCAL_TASK
   );
+  $items['admin/track_record'] = $items['admin/track_record/athletes'];
   $items['admin/track_record/athletes/%'] = array(
     'title' => 'Edit athlete information',
     'page callback' => 'track_record_athlete_admin_page',
@@ -79,6 +81,14 @@ function track_record_menu() {
     'title' => 'Edit athlete track record',
     'page callback' => 'track_record_athlete_records_admin_page',
     'page arguments' => array(3),
+    'access arguments' => array('admin track record'),
+    'file' => 'track_record.admin.inc',
+    'type' => MENU_DEFAULT_LOCAL_TASK
+  );
+  $items['admin/track_record/athletes/%/records/%'] = array(
+    'title' => 'Edit athlete track record',
+    'page callback' => 'track_record_athlete_update_record_admin_page',
+    'page arguments' => array(5),
     'access arguments' => array('admin track record'),
     'file' => 'track_record.admin.inc',
     'type' => MENU_DEFAULT_LOCAL_TASK
@@ -137,7 +147,7 @@ function track_record_theme($existing, $type, $theme, $path) {
 
 
 function track_record_get_ages($timestamp) {
-  return '12';
+  return floor((time() - $timestamp)/31556926);
 }
 
 
@@ -227,6 +237,11 @@ function track_record_get_athlete_records(array $athlete) {
   }
 
   return $records;
+}
+
+
+function track_record_get_athlete_record_information($record_id) {
+  return db_fetch_array(db_query("SELECT * FROM {track_record_athlete_records} WHERE id = %d", $record_id));
 }
 
 
