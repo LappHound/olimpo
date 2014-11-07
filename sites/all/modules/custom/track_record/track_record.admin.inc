@@ -51,6 +51,7 @@ function track_record_add_club_record_form_submit($form, &$form_state) {
   else {
     db_query("INSERT INTO {track_record_club_records} (title, club_id) VALUES ('%s', %d)", $values['title'], $values['club']);
   }
+  cache_clear_all();
 }
 
 
@@ -111,6 +112,7 @@ function track_record_add_athlete_form_submit($form, &$form_state) {
   $birthday = strtotime("{$form_state['values']['birthday']['year']}-{$form_state['values']['birthday']['month']}-{$form_state['values']['birthday']['day']}");
   db_query("UPDATE {files} SET status=%d WHERE fid=%d", FILE_STATUS_PERMANENT, $file->fid);
   db_query("INSERT INTO {track_record_athletes} (name, birthday, photo_id) VALUES ('%s', %d, %d)", $form_state['values']['name'], $birthday, $file->fid);
+  cache_clear_all();
 }
 
 
@@ -195,6 +197,7 @@ function track_record_update_athlete_form_submit($form, &$form_state) {
   else {
     db_query("UPDATE {track_record_athletes} SET name = '%s', birthday = %d WHERE id = %d", $form_state['values']['name'], $birthday, $form_state['values']['athlete_id']);
   }
+  cache_clear_all();
 }
 
 
@@ -243,6 +246,7 @@ function track_record_add_athlete_record_form_submit($form, &$form_state) {
     db_query("INSERT INTO {track_record_athlete_records} (title, athlete_id) VALUES ('%s', %d)", $values['title'], $values['athlete']);
   }
   $form_state['redirect'] = 'admin/track_record/athletes/' . $athlete['id'];
+  cache_clear_all();
 }
 
 
@@ -305,4 +309,5 @@ function track_record_update_athlete_record_form_submit($form, &$form_state) {
     db_query("DELETE FROM {track_record_athlete_records} WHERE id = %d", $values['record']);
   }
   $form_state['redirect'] = 'admin/track_record/athletes/' . $values['athlete_id'];
+  cache_clear_all();
 }
