@@ -6,12 +6,16 @@ core = 6.x
 engine = phptemplate
 
 stylesheets[all][] = styles/style.css
+stylesheets[all][] = js/owl-carousel/owl.theme.css
+stylesheets[all][] = js/owl-carousel/owl.transitions.css
+stylesheets[all][] = js/owl-carousel/owl.carousel.css
 stylesheets[screen][] = styles/mobile-menu.css
 
+scripts[] = js/scripts.js
 scripts[] = js/mobile-menu.js
+scripts[] = js/owl-carousel/owl.carousel.min.js
 
 ; Information added by drupal.org packaging script on 2010-08-11
-version = "6.19"
+version = "6.33"
 project = "drupal"
 datestamp = "1281559292"
-

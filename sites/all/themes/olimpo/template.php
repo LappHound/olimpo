@@ -65,6 +65,11 @@ function olimpo_get_header_menu() {
       'path_alias' => 'descargas'
     ),
     array(
+      'name' => 'Sobre nosotros',
+      'path' => 'node/1839',
+      'path_alias' => 'sobre-nosotros'
+    ),
+    array(
       'name' => 'Contacto',
       'path' => 'contact',
       'path_alias' => 'contacto'
@@ -118,4 +123,33 @@ function theme_twitter_share($url, $text, $link_text = 'Tweet', $class = 'btn bt
 function theme_google_plus_share($url, $class = 'btn btn--share btn--share-googleplus') {
   $url = urlencode($url);
   return "<a class='$class' onClick=\"window.open('http://plus.google.com/share?url=$url','sharer','toolbar=0,status=0,width=548,height=325');\" href=\"javascript: void(0)\"></a>";
+}
+
+
+function olimpo_image_attach_attached_images($nid, $image_nodes = array(), $options = array()) {
+  // Merge in defaults.
+  $options += array(
+    'size' => IMAGE_THUMBNAIL,
+    'link' => 'image',
+    'attributes' => array(),
+  );
+
+  $img_size = $options['size'];
+  $link_destination = $options['link'];
+
+  // Link images to the attaching node.
+  if ($link_destination == 'node') {
+    $link_path = "node/$nid";
+  }
+
+  $output = '';
+  foreach ($image_nodes as $image) {
+    if (!node_access('view', $image)) {
+      // If the image is restricted, don't show it as an attachment.
+      continue;
+    }
+    $output .= '<div class="attached-image-item">' . image_display($image, $img_size) . '</div>';
+  }
+
+  return $output;
 }

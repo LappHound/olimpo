@@ -6746,3 +6746,17 @@ ul.track_records--records li {
 .medal--bronze {
   background-position: -62px -6px;
 }
+
+.all-attached-images .attached-image-item {
+  margin: 3px;
+}
+
+.all-attached-images .attached-image-item img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.all-attached-images div {
+  margin: 0;
+}
