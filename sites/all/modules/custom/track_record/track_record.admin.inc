@@ -302,7 +302,7 @@ function track_record_update_athlete_record_form_submit($form, &$form_state) {
       db_query("UPDATE {track_record_athlete_records} SET title = '%s', medal = %d WHERE id = %d", $values['title'], $values['medal'], $values['record']);
     }
     else {
-      db_query("UPDATE {track_record_athlete_records} SET title = '%s' WHERE id = %d", $values['title'], $values['record']);
+      db_query("UPDATE {track_record_athlete_records} SET title = '%s', medal = NULL WHERE id = %d", $values['title'], $values['record']);
     }
   }
   else {
