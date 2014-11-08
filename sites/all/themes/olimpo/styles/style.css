@@ -6760,3 +6760,36 @@ ul.track_records--records li {
 .all-attached-images div {
   margin: 0;
 }
+
+.gmap {
+  margin-top: 30px;
+}
+
+.vcard {
+  padding: 20px;
+}
+
+.vcard p.fn {
+  font-size: 1.1em;
+  font-weight: bold;
+  text-align: center;
+}
+
+.vcard img {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.vcard .address {
+  margin-top: 100px;
+}
+
+.vcard p.tel {
+  margin-bottom: 0;
+}
+
+.vcard p.tel span {
+  color: #666;
+}
+
