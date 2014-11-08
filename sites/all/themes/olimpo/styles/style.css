@@ -6692,11 +6692,11 @@ a.download {
   font-size: 1.4em;
   text-align: center;
   border-bottom: 1px solid #ddd;
-  margin-bottom: 30px;
+  margin-bottom: 15px;
 }
 
 .athletes .athlete .profile {
-  margin-bottom: 30px;
+  margin-bottom: 15px;
 }
 
 .athletes .athlete .profile img {
@@ -6710,11 +6710,13 @@ a.download {
 }
 
 .athletes .athlete .profile p {
+  margin-top: 15px;
   color: grey;
   text-align: center;
 }
 
 ul.track_records--records {
+  margin-top: 15px;
   list-style: none;
   text-align: center;
 }
