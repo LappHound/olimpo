@@ -188,7 +188,7 @@ function track_record_theme_athlete_photo(array $athlete) {
     return theme('imagecache', 'track_record_summary', $photo, $athlete['name'], $athlete['name']);
   }
 
-  return '';
+  return theme('image', drupal_get_path('module', 'track_record') . '/default.jpg', $athlete['name'], $athlete['name']);
 }
 
 
