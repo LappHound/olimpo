@@ -48,7 +48,7 @@ function track_record_schema() {
       'medal' => array(
         'type' => 'int',
         'length' => 2,
-        'not null' => TRUE,
+        'not null' => FALSE,
       ),
       'club_id' => array(
         'type' => 'int',
@@ -99,7 +99,7 @@ function track_record_schema() {
       'medal' => array(
         'type' => 'int',
         'length' => 2,
-        'not null' => TRUE,
+        'not null' => FALSE,
       ),
       'athlete_id' => array(
         'type' => 'int',
