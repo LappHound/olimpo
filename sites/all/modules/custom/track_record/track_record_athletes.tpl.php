@@ -12,9 +12,11 @@
                 </header>
 
                 <div class="gg-row">
-                    <div class="gg-49pc gg-column profile">
-                        <?= theme('track_record_athlete_photo', $athlete); ?>
-                        <p><?= t('@years years old', array('@years' => track_record_get_ages($athlete['birthday']))); ?></p>
+                    <div class="gg-49pc gg-column">
+                        <div class="profile">
+                            <?= theme('track_record_athlete_photo', $athlete); ?>
+                            <p><?= t('@years years old', array('@years' => track_record_get_ages($athlete['birthday']))); ?></p>
+                        </div>
                     </div>
                     <div class="gg-49pc gg-column">
                         <ul class="track_records--records">
