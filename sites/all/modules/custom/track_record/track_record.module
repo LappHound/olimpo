@@ -146,6 +146,28 @@ function track_record_theme($existing, $type, $theme, $path) {
 }
 
 
+function track_record_imagecache_default_presets() {
+  $items = array();
+  $items['track_record_summary'] = array(
+    'presetname' => 'track_record_summary',
+    'actions' => array(
+      array(
+        'weight' => 0,
+        'module' => 'track_record',
+        'action' => 'imagecache_scale',
+        'data' => array(
+          'width' => '130',
+          'height' => '130',
+          'upscale' => 0,
+        )
+      )
+    )
+  );
+
+  return $items;
+}
+
+
 function track_record_get_ages($timestamp) {
   return floor((time() - $timestamp)/31556926);
 }
@@ -163,8 +185,7 @@ function track_record_preprocess_track_record_athletes(&$variables) {
 function track_record_theme_athlete_photo(array $athlete) {
   $photo = $athlete['photo'];
   if (!is_null($photo)) {
-    $attributes = array('width' => 'auto', 'height' => 200);
-    return theme('image', $photo, $athlete['name'], $athlete['name'], $attributes, FALSE);
+    return theme('imagecache', 'track_record_summary', $photo, $athlete['name'], $athlete['name']);
   }
 
   return '';
