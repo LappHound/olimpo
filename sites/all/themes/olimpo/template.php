@@ -70,9 +70,9 @@ function olimpo_get_header_menu() {
       'path_alias' => 'sobre-nosotros'
     ),
     array(
-      'name' => 'Contacto',
-      'path' => 'contact',
-      'path_alias' => 'contacto'
+      'name' => '¿Dónde estamos?',
+      'path' => 'node/16',
+      'path_alias' => 'donde-estamos'
     ),
   );
 }
