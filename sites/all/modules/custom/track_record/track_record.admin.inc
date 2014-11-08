@@ -81,7 +81,8 @@ function track_record_add_athlete_form() {
   );
   $form['name'] = array(
     '#type' => 'textfield',
-    '#title' => t('Name')
+    '#title' => t('Name'),
+    '#required' => TRUE
   );
   $form['birthday'] = array(
     '#type' => 'date',
@@ -136,7 +137,8 @@ function track_record_update_athlete_form($form_state, array $athlete) {
   $form['name'] = array(
     '#type' => 'textfield',
     '#title' => t('Name'),
-    '#default_value' => $athlete['name']
+    '#default_value' => $athlete['name'],
+    '#required' => TRUE
   );
   $form['birthday'] = array(
     '#type' => 'date',
@@ -220,7 +222,8 @@ function track_record_add_athlete_record_form($form_state, $athlete) {
   );
   $form['title'] = array(
     '#type' => 'textfield',
-    '#title' => t('Title')
+    '#title' => t('Title'),
+    '#required' => TRUE
   );
   $form['medal'] = array(
     '#type' => 'select',
@@ -272,7 +275,8 @@ function track_record_update_athlete_record_form($form_state, $record) {
   $form['title'] = array(
     '#type' => 'textfield',
     '#title' => t('Title'),
-    '#default_value' => $record['title']
+    '#default_value' => $record['title'],
+    '#required' => TRUE
   );
   $form['medal'] = array(
     '#type' => 'select',
