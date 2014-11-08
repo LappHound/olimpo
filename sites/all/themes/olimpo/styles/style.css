@@ -6678,7 +6678,6 @@ a.download {
 }
 
 .athletes .athlete {
-  height: 296px;
   display: inline-block;
   border: 1px solid #ccc;
   padding: 20px;
@@ -6693,13 +6692,11 @@ a.download {
   font-size: 1.4em;
   text-align: center;
   border-bottom: 1px solid #ddd;
-  margin-bottom: 15px;
+  margin-bottom: 30px;
 }
 
 .athletes .athlete .profile {
-  float: left;
-  width: 40%;
-  padding-right: 20px;
+  margin-bottom: 30px;
 }
 
 .athletes .athlete .profile img {
@@ -6707,6 +6704,9 @@ a.download {
   height: 130px;
   border: 1px solid #ddd;
   border-radius: 10em;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 .athletes .athlete .profile p {
@@ -6716,8 +6716,7 @@ a.download {
 
 ul.track_records--records {
   list-style: none;
-  margin: 35px;
-  padding-left: 150px;
+  text-align: center;
 }
 
 ul.track_records--records li {

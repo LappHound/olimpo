@@ -11,17 +11,21 @@
                     <span class="name"><?= $athlete['name']; ?></span>
                 </header>
 
-                <div class="profile">
-                    <?= theme('track_record_athlete_photo', $athlete); ?>
-                    <p><?= t('@years years old', array('@years' => track_record_get_ages($athlete['birthday']))); ?></p>
+                <div class="gg-row">
+                    <div class="gg-49pc gg-column profile">
+                        <?= theme('track_record_athlete_photo', $athlete); ?>
+                        <p><?= t('@years years old', array('@years' => track_record_get_ages($athlete['birthday']))); ?></p>
+                    </div>
+                    <div class="gg-49pc gg-column">
+                        <ul class="track_records--records">
+                            <? foreach ($medals as $medal_id => $medal_name) : ?>
+                                <li class="track_records--record">
+                                    <?= theme('track_record_single_record', $medal_name, format_plural($athlete['track_record_summary'][$medal_id], '1 medal', '@count medals')); ?>
+                                </li>
+                            <? endforeach; ?>
+                        </ul>
+                    </div>
                 </div>
-                <ul class="track_records--records">
-                    <? foreach ($medals as $medal_id => $medal_name) : ?>
-                        <li class="track_records--record">
-                            <?= theme('track_record_single_record', $medal_name, format_plural($athlete['track_record_summary'][$medal_id], '1 medal', '@count medals')); ?>
-                        </li>
-                    <? endforeach; ?>
-                </ul>
             </article>
         <? endforeach; ?>
     </div>
