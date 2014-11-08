@@ -6673,17 +6673,20 @@ a.download {
   color: #89949b;
 }
 
+.track_record--athletes {
+  padding: 20px !important;
+}
+
 .athletes .athlete {
-  width: 48%;
   height: 296px;
   display: inline-block;
   border: 1px solid #ccc;
   padding: 20px;
-  margin: 7px;
+  margin-bottom: 20px;
   overflow: hidden;
-  -webkit-box-shadow: 3px 3px 15px 0px rgba(50, 50, 50, 0.75);
-  -moz-box-shadow:    3px 3px 15px 0px rgba(50, 50, 50, 0.75);
-  box-shadow:         3px 3px 15px 0px rgba(50, 50, 50, 0.75);
+  -webkit-box-shadow: 1px 1px 1px 0px rgba(50, 50, 50, 0.75);
+  -moz-box-shadow:    1px 1px 1px 0px rgba(50, 50, 50, 0.75);
+  box-shadow:         1px 1px 1px 0px rgba(50, 50, 50, 0.75);
 }
 
 .athletes .athlete header {
