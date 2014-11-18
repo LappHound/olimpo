@@ -6688,18 +6688,24 @@ a.download {
   box-shadow:         1px 1px 1px 0px rgba(50, 50, 50, 0.75);
 }
 
+.athletes .athlete header,
+.track_record--athletes-athlete header {
+  text-align: center;
+}
+
 .athletes .athlete header {
   font-size: 1.4em;
-  text-align: center;
   border-bottom: 1px solid #ddd;
   margin-bottom: 15px;
 }
 
-.athletes .athlete .profile {
+.athletes .athlete .profile,
+.track_record--athletes-athlete .profile {
   margin-bottom: 15px;
 }
 
-.athletes .athlete .profile img {
+.athletes .athlete .profile img,
+.track_record--athletes-athlete .profile img {
   width: 130px;
   height: 130px;
   border: 1px solid #ddd;
@@ -6709,7 +6715,8 @@ a.download {
   margin-right: auto;
 }
 
-.athletes .athlete .profile p {
+.athletes .athlete .profile p,
+.track_record--athletes-athlete .profile p {
   margin-top: 15px;
   color: grey;
   text-align: center;

@@ -1,13 +1,12 @@
-<section class="track_record--athletes gg-row">
+<section class="track_record--athletes track_record--athletes-athlete gg-row">
     <header>
         <h1><?= $athlete['name']; ?></h1>
-        <h2 class="preface"><?= t('@years years old', array('@years' => track_record_get_ages($athlete['birthday']))); ?></h2>
     </header>
     <div class="gg-row">
         <div class="gg-49pc gg-column">
             <div class="profile">
                 <?= theme('track_record_athlete_photo', $athlete); ?>
-                <p></p>
+                <p><?= t('@years years old', array('@years' => track_record_get_ages($athlete['birthday']))); ?></p>
             </div>
         </div>
         <div class="gg-49pc gg-column">
