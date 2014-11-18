@@ -107,7 +107,7 @@ function noticias_get_latest_news() {
     FROM {node} n
     WHERE n.type = 'noticia' AND n.status = 1
     ORDER BY n.created DESC";
-  return db_query_range($sql, NOTICIAS_LATEST_NEWS);
+return db_query_range($sql, NOTICIAS_LATEST_NEWS);
 }
 
 
@@ -132,7 +132,7 @@ function noticias_get_noticias() {
     LEFT JOIN {files} f ON f.fid = i.fid
     WHERE n.type = 'noticia' AND n.status = 1
     ORDER BY n.created DESC";
-  return $sql;
+return $sql;
 }
 
 
@@ -150,5 +150,31 @@ function noticias_preprocess_node(&$variables) {
   if (isset($variables['image_attach']) && !empty($variables['image_attach'])) {
     $image = current($variables['image_attach']);
     $variables['picture'] = theme('image', $image->images['_original'], $image->title, $image->title);
+  }
+}
+
+
+function noticias_form_alter(&$form, &$form_state, $form_id) {
+  if ($form_id == 'noticia_node_form') {
+    $form['drophead'] = array(
+      '#type' => 'textarea',
+      '#title' => t('Summary to frontpage'),
+      '#weight' => $form['title']['#weight'] + 1,
+      '#default_value' => isset($form['#node']) ? $form['#node']->drophead : ''
+    );
+  }
+}
+
+
+function noticias_nodeapi($node, $op) {
+  if ($node->type == 'noticia') {
+    if ($op == 'insert' || $op == 'update') {
+      db_query("INSERT INTO {noticias} (nid, drophead) VALUES (%d, '%s') ON DUPLICATE KEY UPDATE drophead = '%s'", $node->nid, $node->drophead, $node->drophead);
+    }
+    if ($op == 'load') {
+      $additions = db_fetch_array(db_query("SELECT drophead FROM {noticias} WHERE nid = %d", $node->nid));
+
+      return $additions;
+    }
   }
 }
