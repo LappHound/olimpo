@@ -28,6 +28,10 @@
                         </ul>
                     </div>
                 </div>
+
+                <footer>
+                    <?= l('+ info', "track_record/athletes/{$athlete['id']}"); ?>
+                </footer>
             </article>
         <? endforeach; ?>
     </div>

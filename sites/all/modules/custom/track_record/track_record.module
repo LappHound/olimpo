@@ -4,6 +4,9 @@ define('TRACK_RECORD_GOLD_MEDAL', 0);
 define('TRACK_RECORD_SILVER_MEDAL', 1);
 define('TRACK_RECORD_BRONZE_MEDAL', 2);
 
+function debug($message) {
+  return drupal_set_message('<pre>' . print_r($message, TRUE) . '</pre>');
+}
 
 function track_record_perm() {
   return array('view track record', 'admin track record');
@@ -32,6 +35,14 @@ function track_record_menu() {
     'description' => 'All the athletes track record',
     'page callback' => 'track_record_athletes_page',
     'page arguments' => array(),
+    'access arguments' => array('view track record'),
+    'type' => MENU_NORMAL_ITEM,
+  );
+  $items['track_record/athletes/%'] = array(
+    'title' => 'Athlete track record',
+    'description' => 'The athletes track record',
+    'page callback' => 'track_record_athlete_page',
+    'page arguments' => array(2),
     'access arguments' => array('view track record'),
     'type' => MENU_NORMAL_ITEM,
   );
@@ -119,6 +130,13 @@ function track_record_athletes_page() {
 }
 
 
+function track_record_athlete_page($athlete_id) {
+  $athlete = track_record_get_athlete_information($athlete_id);
+
+  return theme('track_record_athlete', $athlete, $athlete['records']);
+}
+
+
 function track_record_theme($existing, $type, $theme, $path) {
   $items = array();
   $items['track_record_club'] = array(
@@ -178,6 +196,11 @@ function track_record_preprocess_track_record_club(&$variables) {
 
 
 function track_record_preprocess_track_record_athletes(&$variables) {
+  $variables['medals'] = track_record_get_medals();
+}
+
+
+function track_record_preprocess_track_record_athlete(&$variables) {
   $variables['medals'] = track_record_get_medals();
 }
 
@@ -245,6 +268,7 @@ function track_record_get_athletes_information() {
 function track_record_get_athlete_information($id) {
   $athlete = db_fetch_array(db_query("SELECT a.*, f.filepath as photo FROM {track_record_athletes} a LEFT JOIN {files} f ON f.fid = a.photo_id WHERE id = %d", $id));
   $athlete['records'] = track_record_get_athlete_records($athlete);
+  $athlete['track_record_summary'] = track_record_get_athlete_track_record_summary($athlete['records']);
 
   return $athlete;
 }
