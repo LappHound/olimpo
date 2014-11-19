@@ -57,11 +57,13 @@ function downloads_add_download_form_validate(&$form_state) {
 
 
 function downloads_add_download_form_submit($form, &$form_state) {
-  $file = file_save_upload('file', array(), file_directory_path() . '/downloads');
-  db_query("UPDATE {files} SET status=%d WHERE fid=%d", FILE_STATUS_PERMANENT, $file->fid);
-  db_query("INSERT INTO {downloads} (title, description, file_id, created_at) VALUES ('%s', '%s', %d, %d)", $form_state['values']['title'], $form_state['values']['description'], $file->fid, time());
-  $id = db_last_insert_id('downloads', 'id');
-  $form_state['redirect'] = "admin/downloads/$id";
+  if ($file = file_save_upload('file', array(), file_directory_path() . '/downloads')) {
+    db_query("UPDATE {files} SET status=%d WHERE fid=%d", FILE_STATUS_PERMANENT, $file->fid);
+    db_query("INSERT INTO {downloads} (title, description, file_id, created_at) VALUES ('%s', '%s', %d, %d)", $form_state['values']['title'], $form_state['values']['description'], $file->fid, time());
+
+    drupal_set_message(t('Download created'));
+    $form_state['redirect'] = 'admin/downloads';
+  }
 }
 
 
