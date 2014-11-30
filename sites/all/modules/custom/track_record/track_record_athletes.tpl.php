@@ -1,12 +1,11 @@
-<section class="track_record--athletes gg-row">
+<section class="track_record--athletes">
     <header>
-        <h1><?= t('@club athletes', array('@club' => $club['name'])); ?></h1>
-        <h2 class="preface"><?= t('From @date', array('@date' => strftime('%B %Y', $club['establishment_date']))); ?></h2>
+        <h2><?= t('Athletes'); ?></h2>
     </header>
 
-    <div class="athletes">
+    <div class="gg-row">
         <? foreach ($athletes as $athlete) : ?>
-            <article class="athlete gg-49pc gg-column">
+            <article class="track_record--athlete gg-49pc gg-column">
                 <header>
                     <span class="name"><?= $athlete['name']; ?></span>
                 </header>
@@ -30,7 +29,7 @@
                 </div>
 
                 <footer>
-                    <?= l('+ info', "track_record/athletes/{$athlete['id']}"); ?>
+                    <?= l('+ info', "track_record/{$athlete['id']}"); ?>
                 </footer>
             </article>
         <? endforeach; ?>

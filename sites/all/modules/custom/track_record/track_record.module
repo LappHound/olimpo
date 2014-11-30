@@ -17,7 +17,7 @@ function track_record_menu() {
   $items['track_record'] = array(
     'title' => 'Track record',
     'description' => 'Shows all the track records of clubs and athletes',
-    'page callback' => 'track_record_select_page',
+    'page callback' => 'track_record_page',
     'page arguments' => array(),
     'access arguments' => array('view track record'),
     'type' => MENU_NORMAL_ITEM,
@@ -30,23 +30,14 @@ function track_record_menu() {
     'access arguments' => array('view track record'),
     'type' => MENU_NORMAL_ITEM,
   );
-  $items['track_record/athletes'] = array(
-    'title' => 'Athletes track record',
-    'description' => 'All the athletes track record',
-    'page callback' => 'track_record_athletes_page',
-    'page arguments' => array(),
-    'access arguments' => array('view track record'),
-    'type' => MENU_NORMAL_ITEM,
-  );
-  $items['track_record/athletes/%'] = array(
+  $items['track_record/%'] = array(
     'title' => 'Athlete track record',
     'description' => 'The athletes track record',
     'page callback' => 'track_record_athlete_page',
-    'page arguments' => array(2),
+    'page arguments' => array(1),
     'access arguments' => array('view track record'),
     'type' => MENU_NORMAL_ITEM,
   );
-  $items['track_record'] = $items['track_record/athletes'];
   $items['admin/track_record'] = array(
     'title' => 'Track record',
     'page callback' => 'track_record_admin_page',
@@ -55,7 +46,7 @@ function track_record_menu() {
     'file' => 'track_record.admin.inc',
     'type' => MENU_DEFAULT_LOCAL_TASK
   );
-  /*$items['admin/track_record/club'] = array(
+  $items['admin/track_record/club'] = array(
     'title' => 'Edit club information',
     'page callback' => 'track_record_club_admin_page',
     'page arguments' => array(),
@@ -70,7 +61,7 @@ function track_record_menu() {
     'access arguments' => array('admin track record'),
     'file' => 'track_record.admin.inc',
     'type' => MENU_LOCAL_TASK
-);*/
+  );
   $items['admin/track_record/athletes'] = array(
     'title' => 'Add and list athletes',
     'page callback' => 'track_record_athletes_admin_page',
@@ -79,7 +70,6 @@ function track_record_menu() {
     'file' => 'track_record.admin.inc',
     'type' => MENU_LOCAL_TASK
   );
-  $items['admin/track_record'] = $items['admin/track_record/athletes'];
   $items['admin/track_record/athletes/%'] = array(
     'title' => 'Edit athlete information',
     'page callback' => 'track_record_athlete_admin_page',
@@ -109,8 +99,11 @@ function track_record_menu() {
 }
 
 
-function track_record_select_page() {
-  return "<h1>Select please</h1><ul><li><a href='/palmares/equipo'>Equipo</a></li><li><a href='/palmares/deportistas'>Deportistas</a></li></ul>";
+function track_record_page() {
+  $club = track_record_get_club_information();
+  $athletes = track_record_get_athletes_information();
+
+  return theme('track_record_main', $club, $athletes);
 }
 
 
@@ -119,14 +112,6 @@ function track_record_club_page() {
   $records = track_record_get_club_records($club);
 
   return theme('track_record_club', $club, $records);
-}
-
-
-function track_record_athletes_page() {
-  $club = track_record_get_club_information();
-  $athletes = track_record_get_athletes_information();
-
-  return theme('track_record_athletes', $club, $athletes);
 }
 
 
@@ -139,13 +124,21 @@ function track_record_athlete_page($athlete_id) {
 
 function track_record_theme($existing, $type, $theme, $path) {
   $items = array();
+  $items['track_record_main'] = array(
+    'template' => 'track_record_main',
+    'arguments' => array('club' => NULL, 'athletes' => array())
+  );
   $items['track_record_club'] = array(
     'template' => 'track_record_club',
     'arguments' => array('club' => NULL, 'records' => array())
   );
+  $items['track_record_club_summary'] = array(
+    'template' => 'track_record_club_summary',
+    'arguments' => array('club' => NULL)
+  );
   $items['track_record_athletes'] = array(
     'template' => 'track_record_athletes',
-    'arguments' => array('club' => NULL, 'athletes' => array())
+    'arguments' => array('athletes' => array())
   );
   $items['track_record_athlete'] = array(
     'template' => 'track_record_athlete',
@@ -159,8 +152,25 @@ function track_record_theme($existing, $type, $theme, $path) {
     'arguments' => array('athlete' => NULL),
     'function' => 'track_record_theme_athlete_photo'
   );
+  $items['track_record_club_photo'] = array(
+    'arguments' => array('club' => NULL),
+    'function' => 'track_record_theme_club_photo'
+  );
+  $items['track_record_header'] = array(
+    'arguments' => array('club' => NULL),
+    'template' => 'track_record_header'
+  );
 
   return $items;
+}
+
+
+function track_record_preprocess_page(&$variables) {
+  if (in_array('page-track_record', $variables['template_files'])) {
+    $club = track_record_get_club_information();
+    $variables['content_top'] = theme('track_record_header', $club);
+    $variables['extra_class'] = 'track_record';
+  }
 }
 
 
@@ -181,6 +191,20 @@ function track_record_imagecache_default_presets() {
       )
     )
   );
+  $items['track_record_club'] = array(
+    'presetname' => 'track_record_club',
+    'actions' => array(
+      array(
+        'weight' => 0,
+        'module' => 'track_record',
+        'action' => 'imagecache_scale',
+        'data' => array(
+          'width' => '938',
+          'upscale' => 0,
+        )
+      )
+    )
+  );
 
   return $items;
 }
@@ -192,6 +216,12 @@ function track_record_get_ages($timestamp) {
 
 
 function track_record_preprocess_track_record_club(&$variables) {
+  $variables['medals'] = track_record_get_medals();
+}
+
+
+function track_record_preprocess_track_record_club_summary(&$variables) {
+  $variables['medals'] = track_record_get_medals();
 }
 
 
@@ -211,7 +241,17 @@ function track_record_theme_athlete_photo(array $athlete) {
     return theme('imagecache', 'track_record_summary', $photo, $athlete['name'], $athlete['name']);
   }
 
-  return theme('image', drupal_get_path('module', 'track_record') . '/default.jpg', $athlete['name'], $athlete['name']);
+  return theme('image', drupal_get_path('module', 'track_record') . '/images/default.jpg', $athlete['name'], $athlete['name']);
+}
+
+
+function track_record_theme_club_photo(array $club) {
+  $photo = $club['photo'];
+  if (!is_null($photo)) {
+    return theme('imagecache', 'track_record_club', $photo, $club['name'], $club['name']);
+  }
+
+  return theme('image', drupal_get_path('theme', 'olimpo') . '/images/original_logo.png', $club['name'], $club['name']);
 }
 
 
@@ -238,7 +278,15 @@ function track_record_get_medal($medal) {
 
 
 function track_record_get_club_information() {
-  return db_fetch_array(db_query("SELECT * FROM {track_record_clubs} WHERE id = 1"));
+  static $club = array();
+
+  if (empty($club)) {
+    $club = db_fetch_array(db_query("SELECT * FROM {track_record_clubs} WHERE id = 1"));
+    $club['records'] = track_record_get_club_records($club);
+    $club['track_record_summary'] = track_record_get_record_summary($club['records']);
+  }
+
+  return $club;
 }
 
 
@@ -257,7 +305,7 @@ function track_record_get_athletes_information() {
   $results = db_query("SELECT a.*, f.filepath as photo FROM {track_record_athletes} a LEFT JOIN {files} f ON f.fid = a.photo_id");
   while ($athlete = db_fetch_array($results)) {
     $athlete['records'] = track_record_get_athlete_records($athlete);
-    $athlete['track_record_summary'] = track_record_get_athlete_track_record_summary($athlete['records']);
+    $athlete['track_record_summary'] = track_record_get_record_summary($athlete['records']);
     $athletes[] = $athlete;
   }
 
@@ -268,7 +316,7 @@ function track_record_get_athletes_information() {
 function track_record_get_athlete_information($id) {
   $athlete = db_fetch_array(db_query("SELECT a.*, f.filepath as photo FROM {track_record_athletes} a LEFT JOIN {files} f ON f.fid = a.photo_id WHERE id = %d", $id));
   $athlete['records'] = track_record_get_athlete_records($athlete);
-  $athlete['track_record_summary'] = track_record_get_athlete_track_record_summary($athlete['records']);
+  $athlete['track_record_summary'] = track_record_get_record_summary($athlete['records']);
 
   return $athlete;
 }
@@ -290,7 +338,7 @@ function track_record_get_athlete_record_information($record_id) {
 }
 
 
-function track_record_get_athlete_track_record_summary(array $records) {
+function track_record_get_record_summary(array $records) {
   $summary = array(
     TRACK_RECORD_GOLD_MEDAL => 0,
     TRACK_RECORD_SILVER_MEDAL => 0,

@@ -336,11 +336,11 @@ h4 {
     padding-bottom: 15px;
 }
 
-h1 { font-size: /*48px*/ 2.4em; /*font-size: 3rem;    */ line-height: 1.25;  }
-h2 { font-size: /*30px*/ 1.5em; /*font-size: 1.875rem;*/ line-height: 1;     }
-h3 { font-size: /*24px*/ 1.2em; /*font-size: 1.5rem;  */ line-height: 1.25;  }
-h4 { font-size: /*20px*/   1em; /*font-size: 1.25rem; */ line-height: 1.5;   }
-h5 { font-size: /*16px*/  .8em; /*font-size:  1rem;   */ line-height: 1.875; }
+h1 { font-size: 2.4em; line-height: 1.25;  }
+h2 { font-size: 1.5em; line-height: 1;     }
+h3 { font-size: 1.2em; line-height: 1.25;  }
+h4 { font-size:   1em; line-height: 1.5;   }
+h5 { font-size:  .8em; line-height: 1.875; }
 
 p + h2,
 p + h3,
@@ -6673,11 +6673,19 @@ a.download {
   color: #89949b;
 }
 
+.track_record h2 {
+  text-align: center;
+}
+
+.track_record h2.preface {
+  text-align: inherit;
+}
+
 .track_record--athletes {
   padding: 20px !important;
 }
 
-.athletes .athlete {
+.track_record--athletes .track_record--athlete {
   display: inline-block;
   border: 1px solid #ccc;
   padding: 20px;
@@ -6688,34 +6696,41 @@ a.download {
   box-shadow:         1px 1px 1px 0px rgba(50, 50, 50, 0.75);
 }
 
-.athletes .athlete header,
+.track_record--athletes .track_record--athlete header,
 .track_record--athletes-athlete header {
   text-align: center;
 }
 
-.athletes .athlete header {
+.track_record--athletes .track_record--athlete header {
   font-size: 1.4em;
   border-bottom: 1px solid #ddd;
   margin-bottom: 15px;
 }
 
-.athletes .athlete .profile,
+.track_record--athletes .track_record--athlete .profile,
 .track_record--athletes-athlete .profile {
   margin-bottom: 15px;
 }
 
-.athletes .athlete .profile img,
-.track_record--athletes-athlete .profile img {
-  width: 130px;
-  height: 130px;
-  border: 1px solid #ddd;
-  border-radius: 10em;
+.track_record img {
   display: block;
   margin-left: auto;
   margin-right: auto;
 }
 
-.athletes .athlete .profile p,
+.track_record--club img {
+  margin-bottom: 35px;
+}
+
+.track_record--athletes .track_record--athlete .profile img,
+.track_record--athletes-athlete .profile img {
+  width: 130px;
+  height: 130px;
+  border: 1px solid #ddd;
+  border-radius: 10em;
+}
+
+.track_record--athletes .track_record--athlete .profile p,
 .track_record--athletes-athlete .profile p {
   margin-top: 15px;
   color: grey;
@@ -6730,6 +6745,47 @@ ul.track_records--records {
 
 ul.track_records--records li {
   margin-bottom: 5px;
+}
+
+.track_record--club {
+  overflow: hidden;
+}
+
+.track_record--club footer,
+.track_record--athletes .track_record--athlete footer {
+  overflow: hidden;
+  background-color: #22CC77;
+  background-image: -webkit-linear-gradient(top,#22CC77,#1EB76b);
+  background-image: -moz-linear-gradient(top,#22CC77,#1EB76b);
+  background-image: -ms-linear-gradient(top,#22CC77,#1EB76b);
+  background-image: -o-linear-gradient(top,#22CC77,#1EB76b);
+  background-image: linear-gradient(top,#22CC77,#1EB76b);
+  border: 1px solid #22CC77;
+  width: 200px;
+  position: absolute;
+  text-align: center;
+  line-height: 50px;
+  letter-spacing: 1px;
+  top: auto;
+  left: auto;
+  right: -60px;
+  bottom: 15px;
+  -webkit-transform: rotate(-45deg);
+  -moz-transform: rotate(-45deg);
+  -ms-transform: rotate(-45deg);
+  transform: rotate(-45deg);
+}
+
+.track_record--club footer a,
+.track_record--athletes .track_record--athlete footer a {
+  color: #f0f0f0;
+  font-size: 16px;
+  text-transform: uppercase;
+}
+
+
+.track_record--club ul.track_records--records li {
+  display: inline;
 }
 
 /** MEDALS */
@@ -6800,3 +6856,44 @@ ul.track_records--records li {
   color: #666;
 }
 
+.track_record--header {
+  background: #00111b;
+  border-bottom: 1px solid #ccc;
+  margin: 0;
+  height: 300px;
+}
+
+.track_record--header header {
+  background: rgba(0,0,0,.75);
+  bottom: 0;
+  margin-bottom: 0;
+  position: absolute;
+  width: 100%;
+  padding: .725em;
+  z-index: 100;
+}
+
+.track_record--header header h1 {
+  padding: 0;
+  font-size: 1.6em;
+  font-weight: bold;
+  color: #f6f6f6;
+  margin: 0 !important;
+  border-bottom: 0;
+}
+
+.track_record--header header h1 span {
+  font-weight: normal;
+  color: #c0c0c0;
+}
+
+.track_record--header--background {
+  background: center center no-repeat;
+  background-size: cover;
+  background-image: url(/sites/all/modules/custom/track_record/images/track-record-background.jpg);
+
+  display: inline-block;
+  width: 100%;
+  padding-top: 5px;
+  margin-right: 5px;
+}

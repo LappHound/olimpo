@@ -20,13 +20,15 @@
         </div>
     </div>
 
-    <div class="gg-row">
-        <h3><?= t('Track record'); ?></h3>
-        <ul>
-            <? foreach ($athlete['records'] as $record) : ?>
-                <li><?= theme('track_record_single_record', $medals[$record['medal']], $record['title']); ?></li>
-            <? endforeach; ?>
-        </ul>
-    </div>
+    <? if (!empty($athlete['records'])) : ?>
+        <div class="gg-row">
+            <h2><?= t('Track record'); ?></h2>
+            <ul>
+                <? foreach ($athlete['records'] as $record) : ?>
+                    <li><?= theme('track_record_single_record', $medals[$record['medal']], $record['title']); ?></li>
+                <? endforeach; ?>
+            </ul>
+        </div>
+    <? endif; ?>
 
 </section>

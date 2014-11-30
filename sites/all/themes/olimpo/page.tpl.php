@@ -106,17 +106,15 @@
 
       <div id="container" class="container">
 
-        <?
-        if (!in_array('page-poker-red-not_found', $template_files)):
-          require("$directory/header.tpl.php");
-        endif;
-        ?>
+        <?php require("$directory/header.tpl.php"); ?>
 
-        <?= isset($takeover) ? $takeover : ''; ?>
+        <?php if (isset($content_top)) : ?>
+          <?php print $content_top; ?>
+        <?php endif; ?>
 
         <div id="main" class="main" role="main">
 
-          <?= ($show_messages && $messages) ? $messages : ''; ?>
+          <?= isset($messages) ? $messages : ''; ?>
           <?= isset($upper_content) ? $upper_content : ''; ?>
 
           <div class="gg-row <?= $extra_class; ?>">
@@ -137,14 +135,9 @@
               <?php print $tabss['primary']; ?>
             <?php endif; ?>
 
-            <?php if (isset($poker_strategy_header)): ?>
-              <?= $poker_strategy_header ?>
-
-            <?php endif; ?>
-
             <?php if ($right): ?>
               <div class="gg-column gg-65pc">
-                <?= $content; ?>
+                <?php print $content; ?>
               </div>
 
               <div class="gg-column gg-30pc">
@@ -152,7 +145,7 @@
               </div>
             <?php else : ?>
               <div class="gg-100pc">
-                <?= $content; ?>
+                <?php print $content; ?>
               </div>
             <?php endif; ?>
 
@@ -174,26 +167,6 @@
         </div>
 
       </div><!-- #container -->
-
-      <?php if (isset($extra_video) && $extra_video): ?>
-      <?php
-         $streaming= "http://www.psimg.com/live/ept/en/640x360/";
-        ?>
-        <div class="block--streaming">
-          <header class="header--gradient--red header--block--streaming">
-            <h1 class="block--streaming__title">Ahora en directo</h1>
-            <ul class="block--streaming__options">
-            <li><button class="btn btn--open-popup js__block--streaming__launch" data-live-report='<?php print $streaming;?>' data-title="<?php print $extra_video['title']; ?>">Abrir en ventana</button></li>
-              <li><button class="btn btn--close js__block--streaming__close">Cerrar</button></li>
-            </ul>
-          </header>
-          <div class="main">
-            <?php print $extra_video['streaming_url']; ?>
-          </div><!-- .main -->
-        </div>
-      <?php endif; ?>
-
-    </div><!-- #container-wrapper -->
 
     <? require($directory . '/footer.tpl.php'); ?>
 
