@@ -3,18 +3,22 @@
 # Spanish translation of Drupal (general)
 # Copyright YEAR NAME <EMAIL@ADDRESS>
 # Generated from files:
-#  track_record_athletes.tpl.php: n/a
-#  track_record_club.tpl.php: n/a
+#  track_record_admin_page.tpl.php: n/a
 #  track_record.admin.inc: n/a
 #  track_record.module: n/a
+#  track_record_athlete.tpl.php: n/a
+#  track_record_athletes.tpl.php: n/a
+#  track_record_club.tpl.php: n/a
+#  track_record_header.tpl.php: n/a
 #  track_record.info: n/a
+#  track_record_club_summary.tpl.php: n/a
 #
 #, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2014-11-07 13:32+0100\n"
-"PO-Revision-Date: 2014-11-07 13:32+0100\n"
+"POT-Creation-Date: 2014-11-30 16:28+0100\n"
+"PO-Revision-Date: 2014-11-30 16:28+0100\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: Spanish <EMAIL@ADDRESS>\n"
 "MIME-Version: 1.0\n"
@@ -22,149 +26,217 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n!=1);\n"
 
-#: track_record_athletes.tpl.php:3
-msgid "@club athletes"
-msgstr "Deportistas del @club"
+#: track_record_admin_page.tpl.php:3 track_record.admin.inc:21 track_record.module:50
+msgid "Club administration"
+msgstr "Administración del club"
 
-#: track_record_athletes.tpl.php:4 track_record_club.tpl.php:5
-msgid "From @date"
-msgstr "Desde @date"
+#: track_record_admin_page.tpl.php:5
+msgid "Edit club information"
+msgstr "Editar la información del club"
 
-#: track_record_athletes.tpl.php:16
+#: track_record_admin_page.tpl.php:6
+msgid "Add and edit club track record information"
+msgstr "Añadir y editar la información del palmarés del club"
+
+#: track_record_admin_page.tpl.php:8 track_record.admin.inc:231 track_record.module:74
+msgid "Athletes administration"
+msgstr "Administración de los deportistas"
+
+#: track_record_admin_page.tpl.php:10
+msgid "Add new athlete"
+msgstr "Añadir nuevo deportista"
+
+#: track_record_admin_page.tpl.php:11
+msgid "Edit athlete track record information"
+msgstr "Editar la información del palmarés del deportista"
+
+#: track_record_athlete.tpl.php:9 track_record_athletes.tpl.php:17
 msgid "@years years old"
 msgstr "@years años"
 
-#: track_record_athletes.tpl.php:21
+#: track_record_athlete.tpl.php:25 track_record_club.tpl.php:25 track_record_header.tpl.php:5 track_record.module:18;42 track_record.info:0
+msgid "Track record"
+msgstr "Palmarés"
+
+#: track_record_athlete.tpl.php:16 track_record_athletes.tpl.php:24 track_record_club.tpl.php:17 track_record_club_summary.tpl.php:11
 msgid "1 medal"
 msgid_plural "@count medals"
 msgstr[0] "1 medalla"
 msgstr[1] "@count medallas"
 
-#: track_record.admin.inc:11
-msgid "Nothing"
-msgstr "Nada"
+#: track_record_athletes.tpl.php:3
+msgid "Athletes"
+msgstr "Deportistas"
 
-#: track_record.admin.inc:12
-msgid "Gold"
-msgstr "Oro"
+#: track_record_header.tpl.php:5
+msgid "From @date"
+msgstr "Desde @date"
 
-#: track_record.admin.inc:13
-msgid "Silver"
-msgstr "Plata"
-
-#: track_record.admin.inc:14
-msgid "Bronze"
-msgstr "Bronze"
-
-#: track_record.admin.inc:30;174;220;270
+#: track_record.admin.inc:12;123;173;340;390;446
 msgid "Title"
 msgstr "Título"
 
-#: track_record.admin.inc:34;174;224;275
+#: track_record.admin.inc:12;127;179;340;395;452
 msgid "Medal"
 msgstr "Medalla"
 
-#: track_record.admin.inc:39;229
-msgid "Save"
-msgstr "Guardar"
+#: track_record.admin.inc:24;345
+msgid "Add to track record"
+msgstr "Añadir al palmarés"
 
-#: track_record.admin.inc:59;83;136
+#: track_record.admin.inc:41;221;245;301
 msgid "Name"
 msgstr "Nombre"
 
-#: track_record.admin.inc:59;87;141
-msgid "Birthday"
-msgstr "Cumpleaños"
+#: track_record.admin.inc:47
+msgid "Descripion"
+msgstr "Descripción"
 
-#: track_record.admin.inc:59;91
-msgid "Photo"
-msgstr "Foto"
+#: track_record.admin.inc:52
+msgid "Establishment date"
+msgstr "Fecha de creación del club"
 
-#: track_record.admin.inc:65
-msgid "Yes"
-msgstr "Sí"
-
-#: track_record.admin.inc:65
-msgid "No"
-msgstr "No"
-
-#: track_record.admin.inc:69
-msgid "Athletes administration"
-msgstr "Administración de deportistas"
-
-#: track_record.admin.inc:95
-msgid "Create athlete"
-msgstr "Crear deportista"
-
-#: track_record.admin.inc:104
-msgid "You have to upload the file"
-msgstr "Tienes que subir el archivo"
-
-#: track_record.admin.inc:156
+#: track_record.admin.inc:65;322
 msgid "New photo"
 msgstr "Nueva foto"
 
-#: track_record.admin.inc:160
-msgid "Update athlete"
-msgstr "Actualizar deportista"
-
-#: track_record.admin.inc:179
-msgid "Add to track record"
-msgstr "Añadir al palmáres"
-
-#: track_record.admin.inc:205
-msgid "Add entry to @name track record"
-msgstr "Añadir al palmáres de @name"
-
-#: track_record.admin.inc:230;287
-msgid "or !cancel"
-msgstr "o !cancel"
-
-#: track_record.admin.inc:230;287
-msgid "Cancel"
-msgstr "Cancelar"
-
-#: track_record.admin.inc:281;296
+#: track_record.admin.inc:69;185;200;458;473
 msgid "Update"
 msgstr "Actualizar"
 
-#: track_record.admin.inc:285
+#: track_record.admin.inc:92
+msgid "Club information was updated"
+msgstr "La información del club ha sido actualizada"
+
+#: track_record.admin.inc:104
+msgid "Nothing"
+msgstr "Nada"
+
+#: track_record.admin.inc:105
+msgid "Gold"
+msgstr "Oro"
+
+#: track_record.admin.inc:106
+msgid "Silver"
+msgstr "Plata"
+
+#: track_record.admin.inc:107
+msgid "Bronze"
+msgstr "Bronce"
+
+#: track_record.admin.inc:132;400
+msgid "Save"
+msgstr "Guardar"
+
+#: track_record.admin.inc:148
+msgid "Club record was added"
+msgstr "El titulo del club se ha añadido"
+
+#: track_record.admin.inc:189;462
 msgid "Delete"
 msgstr "Eliminar"
 
-#: track_record.module:15;40 track_record.info:0
-msgid "Track record"
-msgstr "Palmáres"
+#: track_record.admin.inc:191;401;464
+msgid "or !cancel"
+msgstr "o !cancel"
 
-#: track_record.module:16
+#: track_record.admin.inc:191;401;464
+msgid "Cancel"
+msgstr "Cancelar"
+
+#: track_record.admin.inc:212
+msgid "Club record was updated"
+msgstr "El titulo del club ha sido actualizado"
+
+#: track_record.admin.inc:221;250;307
+msgid "Birthday"
+msgstr "Cumpleaños"
+
+#: track_record.admin.inc:221;254
+msgid "Photo"
+msgstr "Foto"
+
+#: track_record.admin.inc:227
+msgid "Yes"
+msgstr "Sí"
+
+#: track_record.admin.inc:227
+msgid "No"
+msgstr "No"
+
+#: track_record.admin.inc:258
+msgid "Create athlete"
+msgstr "Cread deportista"
+
+#: track_record.admin.inc:276
+msgid "New athlete was added"
+msgstr "Se ha añadido un nuevo deportista"
+
+#: track_record.admin.inc:326
+msgid "Update athlete"
+msgstr "Actualizar deportista"
+
+#: track_record.admin.inc:365
+msgid "Athlete was updated"
+msgstr "El deportista ha sido actualizado"
+
+#: track_record.admin.inc:375
+msgid "Add entry to @name track record"
+msgstr "Añadir titulo al palmarés de @name"
+
+#: track_record.admin.inc:417
+msgid "Athlete record was added"
+msgstr "El titulo del deportista ha sido añadido"
+
+#: track_record.admin.inc:485
+msgid "Athlete record was updated"
+msgstr "El titulo del deportista ha sido actualizado"
+
+#: track_record.module:12
+msgid "view track record"
+msgstr ""
+
+#: track_record.module:12
+msgid "admin track record"
+msgstr ""
+
+#: track_record.module:19
 msgid "Shows all the track records of clubs and athletes"
 msgstr "Muesta el palmarés del club y sus deportistas"
 
-#: track_record.module:23
+#: track_record.module:26
 msgid "Club track record"
 msgstr ""
 
-#: track_record.module:24
+#: track_record.module:27
 msgid "The club track record"
 msgstr "El palmáres del club"
 
-#: track_record.module:31
-msgid "Athletes track record"
+#: track_record.module:34
+msgid "Athlete track record"
+msgstr "El palmáres del deportista"
+
+#: track_record.module:35
+msgid "The athletes track record"
 msgstr "El palmáres de los deportistas"
 
-#: track_record.module:32
-msgid "All the athletes track record"
-msgstr "Todos los premios de los deportistas"
+#: track_record.module:58
+msgid "Club track record administration"
+msgstr "Administración del palmarés del club"
 
-#: track_record.module:64
-msgid "Add and list athletes"
-msgstr "Añadir y listar deportistas"
+#: track_record.module:66
+msgid "Edit club track record"
+msgstr "Editar el palmarés del club"
 
-#: track_record.module:73
-msgid "Edit athlete information"
-msgstr "Editar la información del deportista"
+#: track_record.module:82
+msgid "Athlete administration"
+msgstr "Administración de deportistas"
 
-#: track_record.module:81;89
+#: track_record.module:90
+msgid "Athlete track record administration"
+msgstr "Administración del palmarés del deportista"
+
+#: track_record.module:98
 msgid "Edit athlete track record"
 msgstr "Editar el palmarés del deportista"
 
