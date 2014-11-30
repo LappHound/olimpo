@@ -1,4 +1,4 @@
-<article class="item <?= $class ?> <?= $item->unpublish ? ' unpublished' : ''; ?>" itemtype="http://schema.org/Article" itemscope>
+<article class="item <?= $class ?> <?= $item->unpublish ? ' unpublished' : ''; ?>" itemtype="http://schema.org/Article" itemscope data-creation="<?= $item->created; ?>">
 
   <?php if (isset($image_link)) : ?>
     <figure>
