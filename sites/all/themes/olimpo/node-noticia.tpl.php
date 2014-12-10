@@ -67,7 +67,7 @@
     <?= $node->drophead; ?>
 
     <? if (isset($picture)): ?>
-      <figure class="right">
+      <figure class="newsPic">
         <?= $picture; ?>
       </figure>
     <? endif; ?>
