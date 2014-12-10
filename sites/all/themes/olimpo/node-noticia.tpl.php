@@ -64,8 +64,10 @@
       </div>
     </header>
 
+    <?= $node->drophead; ?>
+
     <? if (isset($picture)): ?>
-      <figure class="newsPic">
+      <figure class="right">
         <?= $picture; ?>
       </figure>
     <? endif; ?>
