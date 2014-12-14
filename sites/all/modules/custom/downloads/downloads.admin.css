@@ -1,0 +1,6 @@
+.download {
+  background-image: url(/sites/all/modules/custom/downloads/download.png);
+  width: 16px;
+  height: 16px;
+  display: block;
+}

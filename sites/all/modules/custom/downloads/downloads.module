@@ -25,10 +25,11 @@ function downloads_menu() {
     'page arguments' => array(),
     'access arguments' => array('admin downloads'),
     'file' => 'downloads.admin.inc',
-    'type' => MENU_DEFAULT_LOCAL_TASK
+    'type' => MENU_CALLBACK
   );
   $items['admin/downloads/list'] = $items['admin/downloads'];
   $items['admin/downloads/list']['title'] = 'List downloads';
+  $items['admin/downloads/list']['type'] = MENU_DEFAULT_LOCAL_TASK;
   $items['admin/downloads/add'] = array(
     'title' => 'Add new download',
     'description' => 'Add new download',
@@ -47,15 +48,7 @@ function downloads_menu() {
     'file' => 'downloads.admin.inc',
     'type' => MENU_CALLBACK
   );
-  $items['admin/downloads/delete'] = array(
-    'title' => 'Delete a download',
-    'description' => 'Delete a download',
-    'page callback' => 'downloads_remove_download_page',
-    'page arguments' => array(),
-    'access arguments' => array('admin downloads'),
-    'file' => 'downloads.admin.inc',
-    'type' => MENU_CALLBACK
-  );
+
   return $items;
 }
 
