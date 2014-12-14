@@ -6642,9 +6642,13 @@ border: 1px solid #E8E8E8;
 }
 
 a.download {
-  background-image: url(../images/paperclip.png);
-  background-repeat: no-repeat;
-  padding: 5px 0 0 40px;
+  background: url(../images/paperclip.png) no-repeat center center;
+  height: 30px;
+  width: 30px;
+
+  display: inline-block;
+  margin-left: 10px;
+  margin-bottom: -5px;
 }
 
 .empty-state {
