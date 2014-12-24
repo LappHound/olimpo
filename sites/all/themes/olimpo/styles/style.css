@@ -6605,6 +6605,7 @@ padding-bottom: 20px;
 
 .item,
 .news,
+.the-gym,
 .downloads,
 .track_record--club,
 .track_record--athletes,
@@ -6616,6 +6617,7 @@ padding: 20px;
 }
 
 .news,
+.the-gym,
 .downloads,
 .node-page {
 margin-bottom: 30px !important;
@@ -6900,4 +6902,13 @@ ul.track_records--records li {
   width: 100%;
   padding-top: 5px;
   margin-right: 5px;
+}
+
+.the-gym > header h1 {
+  border-bottom: 0;
+}
+
+.main-tab-content .node-page {
+  border: 0;
+  padding: 0 20px 0 20px;
 }

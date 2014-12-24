@@ -1,0 +1,75 @@
+<?php
+
+
+define('MISC_FACILITIES_NODE', 14);
+define('MISC_LOCATION_NODE', 16);
+define('MISC_ABOUT_US_NODE', 1839);
+define('MISC_GOALS_NODE', 1885);
+
+
+function misc_menu() {
+  $items = array();
+
+  $items['gym'] = array(
+    'title' => 'The Gym',
+    'page callback' => 'misc_gym_page',
+    'access arguments' => array('access content'),
+    'type' => MENU_NORMAL_ITEM
+  );
+
+  return $items;
+}
+
+
+function misc_gym_page() {
+  drupal_add_js(drupal_get_path('module', 'misc') . '/misc_gym_page.js');
+
+  $nodes = array(
+    MISC_FACILITIES_NODE,
+    MISC_LOCATION_NODE,
+    MISC_ABOUT_US_NODE,
+    MISC_GOALS_NODE
+  );
+
+  return theme('misc_gym_main', $nodes);
+}
+
+
+function misc_theme($existing, $type, $theme, $path) {
+  $items = array();
+
+  $items['misc_gym_main'] = array(
+    'template' => 'misc_gym_main',
+    'arguments' => array(
+      'nodes' => array()
+    )
+  );
+
+  return $items;
+}
+
+
+function misc_preprocess_misc_gym_main(&$variables) {
+  $index = 1;
+  $variables['tabs'] = array();
+  $variables['tab_contents'] = array();
+  $variables['active_tab_identifier'] = $index;
+
+  foreach ($variables['nodes'] as $nid) {
+    if ($node = node_load($nid)) {
+      $variables['tabs'][$index] = array(
+        'title' => $node->title,
+        'path' => "node/$nid",
+        'fragment' => "tab_content_$index",
+        'attributes' => array(
+          'id' => "tab__1_$index",
+          'data-tab' => $index,
+          'class' => 'tab',
+        )
+      );
+      $variables['tab_contents'][$index] = node_view($node);
+
+      $index++;
+    }
+  }
+}
