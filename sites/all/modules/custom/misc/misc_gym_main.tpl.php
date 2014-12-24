@@ -1,6 +1,6 @@
 <div class="the-gym">
     <header>
-        <h1>The Gym</h1>
+        <h1>Gimnasio</h1>
     </header>
 
     <div class="misc_gym_main">

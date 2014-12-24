@@ -62,17 +62,7 @@ function olimpo_get_header_menu() {
     array(
       'name' => 'Descargas',
       'path' => 'downloads',
-      'path_alias' => 'descargas'
-    ),
-    array(
-      'name' => 'Sobre nosotros',
-      'path' => 'node/1839',
-      'path_alias' => 'sobre-nosotros'
-    ),
-    array(
-      'name' => '¿Dónde estamos?',
-      'path' => 'node/16',
-      'path_alias' => 'donde-estamos'
+      'path_alias' => 'descargas',
     ),
   );
 }
