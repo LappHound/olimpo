@@ -50,6 +50,10 @@ function track_record_schema() {
         'length' => 2,
         'not null' => FALSE,
       ),
+      'date' => array(
+        'type' => 'int',
+        'not null' => FALSE,
+      ),
       'club_id' => array(
         'type' => 'int',
         'unsigned' => TRUE,
@@ -101,6 +105,10 @@ function track_record_schema() {
         'length' => 2,
         'not null' => FALSE,
       ),
+      'date' => array(
+        'type' => 'int',
+        'not null' => FALSE,
+      ),
       'athlete_id' => array(
         'type' => 'int',
         'unsigned' => TRUE,
@@ -123,4 +131,12 @@ function track_record_install() {
 
 function track_record_uninstall() {
   drupal_uninstall_schema('track_record');
+}
+
+
+function track_record_update_1() {
+  $ret = array();
+  $ret[] = update_sql('ALTER TABLE {track_record_athlete_records} ADD `date` INT(11) NULL DEFAULT NULL AFTER `medal`');
+  $ret[] = update_sql('ALTER TABLE {track_record_club_records} ADD `date` INT(11) NULL DEFAULT NULL AFTER `medal`');
+  return $ret;
 }
