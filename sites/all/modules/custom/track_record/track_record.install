@@ -50,7 +50,7 @@ function track_record_schema() {
         'length' => 2,
         'not null' => FALSE,
       ),
-      'date' => array(
+      'weight' => array(
         'type' => 'int',
         'not null' => FALSE,
       ),
@@ -105,7 +105,7 @@ function track_record_schema() {
         'length' => 2,
         'not null' => FALSE,
       ),
-      'date' => array(
+      'weight' => array(
         'type' => 'int',
         'not null' => FALSE,
       ),
@@ -138,5 +138,60 @@ function track_record_update_1() {
   $ret = array();
   $ret[] = update_sql('ALTER TABLE {track_record_athlete_records} ADD `date` INT(11) NULL DEFAULT NULL AFTER `medal`');
   $ret[] = update_sql('ALTER TABLE {track_record_club_records} ADD `date` INT(11) NULL DEFAULT NULL AFTER `medal`');
+  return $ret;
+}
+
+
+function track_record_update_2() {
+  $ret = array();
+  $ret[] = update_sql('ALTER TABLE {track_record_athlete_records} ADD `weight` INT(11)');
+  $ret[] = update_sql('ALTER TABLE {track_record_club_records} ADD `weight` INT(11)');
+  return $ret;
+}
+
+
+function track_record_update_3() {
+  $ret = array();
+  $club_records = array();
+  $athlete_records = array();
+
+  $club_record_results = db_query('SELECT * FROM {track_record_club_records} ORDER BY date ASC, id DESC');
+  while ($record = db_fetch_array($club_record_results)) {
+    if (!isset($club_records[$record['club_id']])) {
+      $club_records[$record['club_id']] = array();
+    }
+    $club_records[$record['club_id']][] = $record['id'];
+  }
+
+  $athlete_record_results = db_query('SELECT * FROM {track_record_athlete_records} ORDER BY date ASC, id DESC');
+  while ($record = db_fetch_array($athlete_record_results)) {
+    if (!isset($athlete_records[$record['athlete_id']])) {
+      $athlete_records[$record['athlete_id']] = array();
+    }
+    $athlete_records[$record['athlete_id']][] = $record['id'];
+  }
+
+  foreach($club_records as $club_record_ids) {
+    foreach($club_record_ids as $index => $id) {
+      $ret[] = update_sql('UPDATE {track_record_club_records} SET weight = ' . ($index + 1) . ' WHERE id = ' . $id);
+    }
+  }
+
+  foreach($athlete_records as $athlete_record_ids) {
+    foreach($athlete_record_ids as $index => $id) {
+      $ret[] = update_sql('UPDATE {track_record_athlete_records} SET weight = ' . ($index + 1) . ' WHERE id = ' . $id);
+    }
+  }
+
+  return $ret;
+}
+
+
+function track_record_update_4() {
+  $ret = array();
+
+  $ret[] = update_sql('ALTER TABLE {track_record_club_records} DROP COLUMN `date`');
+  $ret[] = update_sql('ALTER TABLE {track_record_athlete_records} DROP COLUMN `date`');
+
   return $ret;
 }

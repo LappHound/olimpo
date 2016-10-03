@@ -139,10 +139,10 @@ function track_record_add_club_record_form($form_state, $club) {
 function track_record_add_club_record_form_submit($form, &$form_state) {
   $values = $form_state['values'];
   if ($values['medal'] != '') {
-    db_query("INSERT INTO {track_record_club_records} (title, medal, club_id) VALUES ('%s', %d, %d)", $values['title'], $values['medal'], $values['club']);
+    db_query("INSERT INTO {track_record_club_records} (title, medal, weight, club_id) VALUES ('%s', %d, %d)", $values['title'], $values['medal'], $values['weight'], $values['club']);
   }
   else {
-    db_query("INSERT INTO {track_record_club_records} (title, club_id) VALUES ('%s', %d)", $values['title'], $values['club']);
+    db_query("INSERT INTO {track_record_club_records} (title, weight, club_id) VALUES ('%s', %d)", $values['title'], $values['weight'], $values['club']);
   }
 
   drupal_set_message(t('Club record was added'));
@@ -331,13 +331,14 @@ function track_record_update_athlete_form($form_state, array $athlete) {
   foreach ($athlete['records'] as $record) {
     $rows[] = array(
       l($record['title'], "admin/track_record/athletes/{$athlete['id']}/records/{$record['id']}"),
-      $medal_options[$record['medal']]
+      $medal_options[$record['medal']],
+      $record['weight']
     );
   }
 
   $form['track_record'] = array(
     '#type' => 'markup',
-    '#value' => theme('table', array(t('Title'), t('Medal')), $rows)
+    '#value' => theme('table', array(t('Title'), t('Medal'), t('Weight')), $rows)
   );
 
   $form['add_track_record'] = array(
@@ -395,9 +396,10 @@ function track_record_add_athlete_record_form($form_state, $athlete) {
     '#title' => t('Medal'),
     '#options' => track_record_get_medals_for_select()
   );
-  $form['date'] = array(
-    '#type' => 'date',
-    '#title' => t('Date')
+  $form['weight'] = array(
+    '#type' => 'weight',
+    '#title' => t('Weight'),
+    '#delta' => 20
   );
   $form['submit'] = array(
     '#type' => 'submit',
@@ -411,12 +413,11 @@ function track_record_add_athlete_record_form($form_state, $athlete) {
 
 function track_record_add_athlete_record_form_submit($form, &$form_state) {
   $values = $form_state['values'];
-  $date = strtotime("{$form_state['values']['date']['year']}-{$form_state['values']['date']['month']}-{$form_state['values']['date']['day']}");
   if ($values['medal'] != '') {
-    db_query("INSERT INTO {track_record_athlete_records} (title, medal, date, athlete_id) VALUES ('%s', %d, %d, %d)", $values['title'], $values['medal'], $date, $values['athlete_id']);
+    db_query("INSERT INTO {track_record_athlete_records} (title, medal, weight, athlete_id) VALUES ('%s', %d, %d, %d)", $values['title'], $values['medal'], $values['weight'], $values['athlete_id']);
   }
   else {
-    db_query("INSERT INTO {track_record_athlete_records} (title, date, athlete_id) VALUES ('%s', %d, %d)", $values['title'], $date, $values['athlete_id']);
+    db_query("INSERT INTO {track_record_athlete_records} (title, weight, athlete_id) VALUES ('%s', %d, %d)", $values['title'], $values['weight'], $values['athlete_id']);
   }
 
   drupal_set_message(t('Athlete record was added'));
@@ -458,14 +459,10 @@ function track_record_update_athlete_record_form($form_state, $record) {
     '#options' => track_record_get_medals_for_select(),
     '#default_value' => $record['medal']
   );
-  $form['date'] = array(
-    '#type' => 'date',
-    '#title' => t('Date'),
-    '#default_value' => array(
-      'year' => date('Y', $record['date']),
-      'month' => date('n', $record['date']),
-      'day' => date('j', $record['date']),
-    )
+  $form['weight'] = array(
+    '#type' => 'weight',
+    '#title' => t('Weight'),
+    '#delta' => 20
   );
   $form['submit'] = array(
     '#type' => 'submit',
@@ -484,13 +481,12 @@ function track_record_update_athlete_record_form($form_state, $record) {
 
 function track_record_update_athlete_record_form_submit($form, &$form_state) {
   $values = $form_state['values'];
-  $date = strtotime("{$form_state['values']['date']['year']}-{$form_state['values']['date']['month']}-{$form_state['values']['date']['day']}");
   if ($values['op'] == t('Update')) {
     if ($values['medal'] != '') {
-      db_query("UPDATE {track_record_athlete_records} SET title = '%s', medal = %d, date = %d WHERE id = %d", $values['title'], $values['medal'], $date, $values['record']);
+      db_query("UPDATE {track_record_athlete_records} SET title = '%s', medal = %d, weight = %d WHERE id = %d", $values['title'], $values['medal'], $values['weight'], $values['record']);
     }
     else {
-      db_query("UPDATE {track_record_athlete_records} SET title = '%s', medal = NULL, date = %d WHERE id = %d", $values['title'], $date, $values['record']);
+      db_query("UPDATE {track_record_athlete_records} SET title = '%s', medal = NULL, weight = %d WHERE id = %d", $values['title'], $values['weight'], $values['record']);
     }
   }
   else {

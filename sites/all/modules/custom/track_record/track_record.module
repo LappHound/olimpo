@@ -304,7 +304,7 @@ function track_record_get_club_information() {
 
 function track_record_get_club_records(array $club) {
   $records = array();
-  $results = db_query("SELECT * FROM {track_record_club_records} WHERE club_id = %d ORDER BY date DESC", $club['id']);
+  $results = db_query("SELECT * FROM {track_record_club_records} WHERE club_id = %d ORDER BY weight DESC", $club['id']);
   while ($record = db_fetch_array($results)) {
     $records[] = $record;
   }
@@ -342,7 +342,7 @@ function track_record_get_athlete_information($id) {
 
 function track_record_get_athlete_records(array $athlete) {
   $records = array();
-  $results = db_query("SELECT * FROM {track_record_athlete_records} WHERE athlete_id = %d ORDER BY date DESC", $athlete['id']);
+  $results = db_query("SELECT * FROM {track_record_athlete_records} WHERE athlete_id = %d ORDER BY weight DESC", $athlete['id']);
   while ($record = db_fetch_array($results)) {
     $records[] = $record;
   }
