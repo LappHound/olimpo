@@ -139,10 +139,10 @@ function track_record_add_club_record_form($form_state, $club) {
 function track_record_add_club_record_form_submit($form, &$form_state) {
   $values = $form_state['values'];
   if ($values['medal'] != '') {
-    db_query("INSERT INTO {track_record_club_records} (title, medal, weight, club_id) VALUES ('%s', %d, %d)", $values['title'], $values['medal'], $values['weight'], $values['club']);
+    db_query("INSERT INTO {track_record_club_records} (title, medal, weight, club_id) VALUES ('%s', %d, %d, %d)", $values['title'], $values['medal'], $values['weight'], $values['club']);
   }
   else {
-    db_query("INSERT INTO {track_record_club_records} (title, weight, club_id) VALUES ('%s', %d)", $values['title'], $values['weight'], $values['club']);
+    db_query("INSERT INTO {track_record_club_records} (title, weight, club_id) VALUES ('%s', %d, %d)", $values['title'], $values['weight'], $values['club']);
   }
 
   drupal_set_message(t('Club record was added'));
